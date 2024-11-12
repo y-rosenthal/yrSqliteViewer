@@ -6,13 +6,17 @@
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  </head>
-  <body style="background-color: lightgrey">
-    <div style="text-align: center; margin: 10px 0">
-      <h1>yrSqliteViewer (ver 0.1)</h1>
-    </div>
-    <div
-      style="
+    <style>
+      body {
+        background-color: lightgrey;
+      }
+
+      .yrHeader {
+        text-align: center;
+        margin: 10px 0;
+      }
+
+      .yrControlPanel {
         text-align: center;
         margin: 20px 0;
         padding: 20px;
@@ -23,97 +27,179 @@
         align-items: center;
         justify-content: center;
         gap: 20px;
-      "
-    >
-      <div style="display: flex; align-items: center; gap: 10px">
-        <input
-          type="file"
-          id="sqliteFile"
-          accept=".sqlite,.db"
-          style="display: none"
-          onchange="loadDatabase()"
-        />
-        <label
-          for="sqliteFile"
-          style="
-            padding: 10px 20px;
-            font-size: 1.2em;
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            min-width: 160px;
-            text-align: center;
-            display: inline-block;
-          "
-          onmouseover="this.style.backgroundColor='#45a049'"
-          onmouseout="this.style.backgroundColor='#4CAF50'"
-          >Choose File</label
-        >
-        <span
-          id="selectedFileName"
-          style="font-size: 1.2em; color: #666; font-style: italic"
-          >no file chosen yet</span
-        >
-      </div>
-      <button
-        onclick="saveSession()"
-        style="
-          padding: 10px 20px;
-          font-size: 1.2em;
-          background-color: #4caf50;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.3s;
-          min-width: 160px;
-        "
-        onmouseover="this.style.backgroundColor='#45a049'"
-        onmouseout="this.style.backgroundColor='#4CAF50'"
-      >
-        Save Session
-      </button>
-      <button onclick="clearSession()" style="padding: 10px 20px; font-size: 1.2em; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; min-width: 160px;" onmouseover="this.style.backgroundColor='#d32f2f'" onmouseout="this.style.backgroundColor='#f44336'">
-        Clear Session
-      </button>
+      }
+
+      .yrFileInput {
+        display: none;
+      }
+
+      .yrFileInputLabel {
+        padding: 10px 20px;
+        font-size: 1.2em;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        min-width: 160px;
+        text-align: center;
+        display: inline-block;
+      }
+
+      .yrFileInputLabel:hover {
+        background-color: #45a049;
+      }
+
+      .yrFileName {
+        font-size: 1.2em;
+        color: #666;
+        font-style: italic;
+      }
+
+      .yrButton {
+        padding: 10px 20px;
+        font-size: 1.2em;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        min-width: 160px;
+      }
+
+      .yrGreenButton {
+        background-color: #4caf50;
+      }
+
+      .yrGreenButton:hover {
+        background-color: #45a049;
+      }
+
+      .yrRedButton {
+        background-color: #f44336;
+      }
+
+      .yrRedButton:hover {
+        background-color: #d32f2f;
+      }
+
+      .yrTableList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+      }
+
+      .yrQueryInterfaces {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+        padding: 20px;
+      }
+
+      .yrQueryInterface {
+        flex: 0 0 auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 8px;
+      }
+
+      .yrQueryTextarea {
+        width: 100%;
+        margin-bottom: 10px;
+        resize: none;
+        overflow: hidden;
+      }
+
+      .yrTableCard {
+        flex: 0 1 auto;
+        margin: 10px;
+        padding: 15px;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        min-width: 250px;
+      }
+
+      .yrTableName {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+      }
+
+      .yrTableButtons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .yrTableInfo {
+        display: block;
+      }
+
+      .yrDataTable {
+        font-size: 0.9em;
+        margin-top: 10px;
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .yrDataTable th,
+      .yrDataTable td {
+        text-align: left;
+        padding: 5px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .yrOutputContainer {
+        margin-top: 10px;
+        overflow-x: auto;
+      }
+
+      .yrErrorMessage {
+        color: red;
+        margin-bottom: 10px;
+      }
+
+      .yrTableStructure {
+        overflow-x: auto;
+        margin-top: 10px;
+      }
+
+      .yrScrollContainer {
+        overflow-x: auto;
+        margin-top: 10px;
+      }
+
+      .yrFlexContainer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="yrHeader">
+      <h1>yrSqliteViewer (ver 0.1)</h1>
     </div>
+    
+    <div class="yrControlPanel">
+      <div style="display: flex; align-items: center; gap: 10px">
+        <input type="file" id="sqliteFile" class="yrFileInput" accept=".sqlite,.db" onchange="loadDatabase()" />
+        <label for="sqliteFile" class="yrFileInputLabel">Choose File</label>
+        <span id="selectedFileName" class="yrFileName">no file chosen yet</span>
+      </div>
+      <button onclick="saveSession()" class="yrButton yrGreenButton">Save Session</button>
+      <button onclick="clearSession()" class="yrButton yrRedButton">Clear Session</button>
+    </div>
+
     <h2>Database Tables</h2>
-    <div id="tableList" style="display: flex; flex-wrap: wrap; gap: 20px"></div>
-    <div
-      id="queryInterfaces"
-      style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px"
-    >
-      <div
-        style="
-          flex: 0 0 auto;
-          border: 1px solid #ccc;
-          padding: 10px;
-          border-radius: 8px;
-        "
-      >
+    <div id="tableList" class="yrTableList"></div>
+    <div id="queryInterfaces" class="yrQueryInterfaces">
+      <div class="yrQueryInterface">
         <h3>SQL Query Interface 1</h3>
-        <textarea
-          id="sqlQuery"
-          rows="3"
-          placeholder="Enter SQL query here..."
-          style="
-            width: 100%;
-            margin-bottom: 10px;
-            resize: none;
-            overflow: hidden;
-          "
-          oninput="autoResize(this)"
-        ></textarea>
+        <textarea id="sqlQuery" rows="3" placeholder="Enter SQL query here..." class="yrQueryTextarea" oninput="autoResize(this)"></textarea>
         <br />
-        <button
-          onclick="runQuery()"
-          style="/* ... existing button styles ... */"
-        >
-          Run Query
-        </button>
+        <button onclick="runQuery()" class="yrButton yrGreenButton">Run Query</button>
         <div id="output" style="margin-top: 10px; overflow-x: auto"></div>
       </div>
     </div>
@@ -138,24 +224,23 @@
         const fileInput = document.getElementById("sqliteFile");
         const file = fileInput.files[0];
         if (!file) {
-          document.getElementById("output").innerHTML =
-            '<div style="color: red; margin-bottom: 10px;">Please select a file.</div>';
+          document.getElementById("output").innerHTML = '<div class="yrErrorMessage">Please select a file.</div>';
           return;
         }
 
         // Clear existing query interfaces and reset counter
         document.getElementById("queryInterfaces").innerHTML = `
-          <div style="flex: 0 0 auto; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
+          <div class="yrQueryInterface">
             <h3>SQL Query Interface 1</h3>
             <textarea
               id="sqlQuery"
               rows="3"
               placeholder="Enter SQL query here..."
-              style="width: 100%; margin-bottom: 10px; resize: none; overflow: hidden;"
+              class="yrQueryTextarea"
               oninput="autoResize(this)"
             ></textarea>
             <br />
-            <button onclick="runQuery()">Run Query</button>
+            <button onclick="runQuery()" class="yrButton yrGreenButton">Run Query</button>
             <div id="output" style="margin-top: 10px; overflow-x: auto;"></div>
           </div>
         `;
@@ -215,41 +300,19 @@ json.dumps({"tables": table_info})
         let tableListHtml = "";
         Object.entries(data.tables).forEach(([tableName, columns]) => {
           tableListHtml += `
-            <div style="flex: 0 1 auto; margin: 10px; padding: 15px; background-color: #f0f0f0; border-radius: 8px; min-width: 250px;">
-              <div style="font-weight: bold; margin-bottom: 10px; font-size: 1.1em;">${tableName}</div>
-              <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <div class="yrTableCard">
+              <div class="yrTableName">${tableName}</div>
+              <div class="yrTableButtons">
                 <button 
-                  onclick="showTableStructure('${tableName}', ${JSON.stringify(
-            columns
-          ).replace(/"/g, "&quot;")})"
-                  style="
-                    padding: 5px 10px;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    transition: background-color 0.3s;
-                  "
-                  onmouseover="this.style.backgroundColor='#45a049'"
-                  onmouseout="this.style.backgroundColor='#4CAF50'"
+                  onclick="showTableStructure('${tableName}', ${JSON.stringify(columns).replace(/"/g, "&quot;")})"
+                  class="yrButton yrGreenButton"
                 >Show Structure</button>
                 <button 
                   onclick="showTableData('${tableName}')"
-                  style="
-                    padding: 5px 10px;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    transition: background-color 0.3s;
-                  "
-                  onmouseover="this.style.backgroundColor='#45a049'"
-                  onmouseout="this.style.backgroundColor='#4CAF50'"
+                  class="yrButton yrGreenButton"
                 >Show Rows</button>
               </div>
-              <div id="${tableName}_info" style="display: block;"></div>
+              <div id="${tableName}_info" class="yrTableInfo"></div>
             </div>`;
         });
 
@@ -323,28 +386,23 @@ json.dumps({"columns": columns, "rows": rows})
           const newInterfaceId = queryInterfaceCount + 1;
           const newInterface = document.createElement("div");
           newInterface.innerHTML = `
-            <div style="
-                flex: 0 0 auto;
-                border: 1px solid #ccc;
-                padding: 10px;
-                border-radius: 8px;
-            ">
+            <div class="yrQueryInterface">
               <h3>SQL Query Interface ${newInterfaceId}</h3>
               <textarea
                 id="sqlQuery${newInterfaceId}"
                 rows="3"
                 placeholder="Enter SQL query here..."
-                style="width: 100%; margin-bottom: 10px; resize: none; overflow: hidden;"
+                class="yrQueryTextarea"
                 oninput="autoResize(this)"
               ></textarea>
               <br />
-              <button onclick="runQuery(${newInterfaceId})">Run Query</button>
-              <div id="output${newInterfaceId}" style="margin-top: 10px; overflow-x: auto;"></div>
+              <button onclick="runQuery(${newInterfaceId})" class="yrButton yrGreenButton">Run Query</button>
+              <div id="output${newInterfaceId}" class="yrOutputContainer"></div>
             </div>
           `;
           document.getElementById("queryInterfaces").appendChild(newInterface);
         } catch (error) {
-          outputElement.innerHTML = `<div style="color: red">Error executing query: ${error.message}</div>`;
+          outputElement.innerHTML = `<div class="yrErrorMessage">Error executing query: ${error.message}</div>`;
         }
       }
 
@@ -385,21 +443,24 @@ json.dumps({"columns": columns, "rows": rows})
         if (confirm('Are you sure you want to clear the current session? This will remove all queries and results.')) {
           queryHistory = [];
           isSessionSaved = true;
-          // Reset all state variables
-          //queryHistory = [];
           queryInterfaceCount = 0;
           currentDatabaseName = "";
           tableNames = [];
           
-          // Clear UI elements
           document.getElementById('tableList').innerHTML = '';
           document.getElementById('queryInterfaces').innerHTML = `
-            <div style="flex: 0 0 auto; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
+            <div class="yrQueryInterface">
               <h3>SQL Query Interface 1</h3>
-              <textarea id="sqlQuery" rows="3" placeholder="Enter SQL query here..." style="width: 100%; margin-bottom: 10px; resize: none; overflow: hidden;" oninput="autoResize(this)"></textarea>
+              <textarea 
+                id="sqlQuery" 
+                rows="3" 
+                placeholder="Enter SQL query here..." 
+                class="yrQueryTextarea" 
+                oninput="autoResize(this)"
+              ></textarea>
               <br />
-              <button onclick="runQuery()">Run Query</button>
-              <div id="output" style="margin-top: 10px; overflow-x: auto;"></div>
+              <button onclick="runQuery()" class="yrButton yrGreenButton">Run Query</button>
+              <div id="output" class="yrOutputContainer"></div>
             </div>
           `;
           document.getElementById('selectedFileName').textContent = 'no file chosen yet';
@@ -449,23 +510,24 @@ json.dumps({"columns": columns, "rows": rows})
 
       function showTableStructure(tableName, columns) {
         const infoDiv = document.getElementById(`${tableName}_info`);
-
+        
         let structureHtml = `
-          <table style="font-size: 0.9em; margin-top: 10px; width: 100%; border-collapse: collapse;">
-            <tr>
-              <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ddd;">Column</th>
-              <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ddd;">Type</th>
-            </tr>`;
+          <div class="yrTableStructure">
+            <table class="yrDataTable">
+              <tr>
+                <th>Column</th>
+                <th>Type</th>
+              </tr>`;
 
         columns.forEach((col) => {
           structureHtml += `
             <tr>
-              <td style="padding: 5px; border-bottom: 1px solid #ddd;">${col.name}</td>
-              <td style="padding: 5px; border-bottom: 1px solid #ddd;">${col.type}</td>
+              <td>${col.name}</td>
+              <td>${col.type}</td>
             </tr>`;
         });
 
-        structureHtml += `</table>`;
+        structureHtml += `</table></div>`;
         infoDiv.innerHTML = structureHtml;
         infoDiv.style.display = "block";
       }
@@ -488,12 +550,12 @@ json.dumps({"columns": columns, "rows": rows})
           const data = JSON.parse(result);
 
           let tableHtml = `
-            <div style="overflow-x: auto; margin-top: 10px;">
-              <table style="font-size: 0.9em; width: 100%; border-collapse: collapse;">
+            <div class="yrScrollContainer">
+              <table class="yrDataTable">
                 <tr>`;
 
           data.columns.forEach((col) => {
-            tableHtml += `<th style="text-align: left; padding: 5px; border-bottom: 1px solid #ddd;">${col}</th>`;
+            tableHtml += `<th>${col}</th>`;
           });
 
           tableHtml += `</tr>`;
@@ -501,7 +563,7 @@ json.dumps({"columns": columns, "rows": rows})
           data.rows.forEach((row) => {
             tableHtml += `<tr>`;
             row.forEach((cell) => {
-              tableHtml += `<td style="padding: 5px; border-bottom: 1px solid #ddd;">${cell}</td>`;
+              tableHtml += `<td>${cell}</td>`;
             });
             tableHtml += `</tr>`;
           });
@@ -510,7 +572,7 @@ json.dumps({"columns": columns, "rows": rows})
           infoDiv.innerHTML = tableHtml;
           infoDiv.style.display = "block";
         } catch (error) {
-          infoDiv.innerHTML = `<div style="color: red; margin-top: 10px;">Error loading table data: ${error.message}</div>`;
+          infoDiv.innerHTML = `<div class="yrErrorMessage">Error loading table data: ${error.message}</div>`;
           infoDiv.style.display = "block";
         }
       }
