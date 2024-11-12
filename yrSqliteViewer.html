@@ -141,6 +141,24 @@
           return;
         }
 
+        // Clear existing query interfaces and reset counter
+        document.getElementById("queryInterfaces").innerHTML = `
+          <div style="flex: 0 0 auto; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
+            <h3>SQL Query Interface 1</h3>
+            <textarea
+              id="sqlQuery"
+              rows="3"
+              placeholder="Enter SQL query here..."
+              style="width: 100%; margin-bottom: 10px; resize: none; overflow: hidden;"
+              oninput="autoResize(this)"
+            ></textarea>
+            <br />
+            <button onclick="runQuery()">Run Query</button>
+            <div id="output" style="margin-top: 10px; overflow-x: auto;"></div>
+          </div>
+        `;
+        queryInterfaceCount = 0;
+
         // Display filename
         document.getElementById("selectedFileName").textContent = file.name;
 
