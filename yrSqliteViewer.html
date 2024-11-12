@@ -6,6 +6,9 @@
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js"></script>
   </head>
   <body style="background-color: lightgrey">
+    <div style="text-align: center; margin: 10px 0">
+      <h1>yrSqliteViewer (ver 0.1)</h1>
+    </div>
     <div
       style="
         text-align: center;
@@ -74,18 +77,18 @@
     </div>
     <h2>Database Tables</h2>
     <div id="tableList" style="display: flex; flex-wrap: wrap; gap: 20px"></div>
-    <div id="queryInterfaces" style="
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        padding: 20px;
-    ">
-      <div style="
+    <div
+      id="queryInterfaces"
+      style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px"
+    >
+      <div
+        style="
           flex: 0 0 auto;
           border: 1px solid #ccc;
           padding: 10px;
           border-radius: 8px;
-      ">
+        "
+      >
         <h3>SQL Query Interface 1</h3>
         <textarea
           id="sqlQuery"
@@ -363,6 +366,8 @@ json.dumps({"columns": columns, "rows": rows})
           // Save JSON version
           const jsonContent = JSON.stringify(
             {
+              jsonFormatVersion: "0.1",
+              yrSqliteViewerVersion: "0.1",
               databaseName: currentDatabaseName,
               queries: queryHistory,
             },
