@@ -74,16 +74,18 @@
     </div>
     <h2>Database Tables</h2>
     <div id="tableList" style="display: flex; flex-wrap: wrap; gap: 20px"></div>
-    <div id="queryInterfaces" style="display: none">
-      <div
-        style="
-          flex: 0 1 300px;
-          margin-top: 20px;
+    <div id="queryInterfaces" style="
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
+    ">
+      <div style="
+          flex: 0 0 auto;
           border: 1px solid #ccc;
           padding: 10px;
           border-radius: 8px;
-        "
-      >
+      ">
         <h3>SQL Query Interface 1</h3>
         <textarea
           id="sqlQuery"
@@ -293,7 +295,12 @@ json.dumps({"columns": columns, "rows": rows})
           const newInterfaceId = queryInterfaceCount + 1;
           const newInterface = document.createElement("div");
           newInterface.innerHTML = `
-            <div style="flex: 0 1 300px; margin-top: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
+            <div style="
+                flex: 0 0 auto;
+                border: 1px solid #ccc;
+                padding: 10px;
+                border-radius: 8px;
+            ">
               <h3>SQL Query Interface ${newInterfaceId}</h3>
               <textarea
                 id="sqlQuery${newInterfaceId}"
