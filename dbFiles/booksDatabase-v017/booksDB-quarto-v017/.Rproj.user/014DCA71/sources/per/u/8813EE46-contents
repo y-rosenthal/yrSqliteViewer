@@ -1,0 +1,145 @@
+getwd()
+setwd("/Users/yrose/Dropbox (Personal)/website/yu/ids2460-dataMgmtForAnal/83spr23-ids2460-dataManagement/final/beren")
+
+getwd()
+
+dir()
+lines = readLines("joesDiary.txt")
+lines
+cat(lines, sep="\n")
+grep ("pizza", lines, value="TRUE")
+
+
+n=5
+f = function(x,y,z) {sum(x) + length(y) + z}
+n |>
+  rep(2) |>
+  f(c(100,100),c(10,10))
+
+
+install.packages("calendR")
+require(calendR)             # or alternatively library(calendR)
+
+
+stuff =c(
+  "1000 sesame place",   # item 1
+  "one hundred park ave",# item 2
+  "456 east 2 street",   # item 3
+  "1 hacker way",        # item 4
+  "one apple park way",  # item 5
+  "1234",                # item 6
+  "number ten",          # item 7
+  "po box 12345"         # item 8
+)
+
+
+
+# 13. grep("1", stuff, value=FALSE)
+
+# 14. grepl(".1", stuff) # NOTE - grepl not grep
+# 15. grep("e$", stuff, value=TRUE) # NOTE - value=TRUE
+# 16. grep("^....$", stuff, value=FALSE)
+# 17. grep("10|ten", stuff)
+# 18. grep("[0-9]{4,6}", stuff)
+# 19. grep("\\d\\d\\d\\d", stuff)
+# 20. grep("[0-9][^0-9]+[0-9]", stuff)
+# 21. gsub("[0-9]+","x","123 sesame place apt 1")
+
+
+
+courses = data.frame( courseNum=c( 101,102,105,103,104,106 ), 
+                      name=c( 'Intro to Acc','Intermed Acc','Adv Acc','Intro to Fin','Ceramics','Painting' ), 
+                      dept=c( 'ACC','ACC','ACC','FIN','ART','ART' ), 
+                      credits=c( 3,3,4,4,2,2 ) )
+
+courses
+
+offerings = data.frame( crn=c( 1,2,3,4,5,6 ), 
+                        courseNum=c( 101,101,101,101,103,104 ), 
+                        section=c( 'A','B','A','C','C','D' ), 
+                        professor=c( 'Adams','Adams','Anderson','Anderson','Franklin',NA ) )
+
+offerings
+people = data.frame( id=c( 1,2,3,4,5,6,7,8,9,10 ), 
+                        first=c( 'anna','alan','alan','bertha','bob','bert','chelsea','sam','anne','pete' ), 
+                        last=c( 'adams','adams','cole','cole','adams','adams','cole','adams','cole','cole' ), 
+                        sex=c( 'F','M','M','F','M','M','F','M','F','M' ), 
+                        eyeColor=c( 'brown','green','blue','brown','green','brown','brown','blue','green','brown' ) 
+                        )
+people
+
+
+registration = data.frame( studentId=c( 's1','s2','s1','s2','s3','s3' ), 
+                     crn=c( 1,1,5,5,5,4 ), 
+                     grade=c( 90,100,80,90,70,70 ) )
+
+registration
+
+
+
+22. 
+
+sqldf("
+select distinct dept, credits
+from courses
+where courseNum <= 103
+")
+
+23. 
+
+sqldf("
+select left(dept, 2) from courses
+")
+
+24. 
+sqldf("
+select credits / 2 as half from courses
+")
+
+25. 
+sqldf("
+select first from people where first like '%a_a%'
+")
+
+26. 
+sqldf("
+select first from people where first like '____'
+")
+
+(NOTE: those are 4 underscores in a row)
+
+27. What is wrong with the following select statement?
+
+sqldf("
+SELECT name
+FROM courses
+WHERE credits > 3
+ORDER BY name
+")
+
+28. 
+sqldf("
+select crn from offerings
+where professor = NULL
+")
+
+29. 
+sqldf("
+select * from registration
+order by grade desc, studentId, crn
+")
+
+30. 
+sqldf("
+select * from registration
+order by grade
+limit 2 offset 3
+")
+
+31. 
+sqldf("
+select * from registration
+where crn=5 or
+grade between 80 and 100 and
+studentId = 's1' 
+")

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pyodide SQLite Example</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js"></script>
+  </head>
+  <body style="background-color: lightgrey">
+    <input type="file" id="sqliteFile" accept=".sqlite,.db" />
+    <button onclick="loadDatabase()">Load Database</button>
+    <div id="output"></div>
+    <div id="queryInterface" style="display:none">
+      <h3>SQL Query Interface</h3>
+      <textarea id="sqlQuery" rows="4" cols="50" placeholder="Enter SQL query here..."></textarea>
+      <br>
+      <button onclick="runQuery()">Run Query</button>
+      <button onclick="downloadHistory()">Download History</button>
+      <div id="queryHistory"></div>
+    </div>
+
+    <script>
+      let pyodideInstance = null;
+      let queryHistory = [];
+
+      async function loadDatabase() {
+        pyodideInstance = await loadPyodide();
+        await pyodideInstance.loadPackage("sqlite3");
+
+        const fileInput = document.getElementById("sqliteFile");
+        const file = fileInput.files[0];
+        if (!file) {
+          document.getElementById("output").innerHTML = 
+            '<div style="color: red; margin-bottom: 10px;">Please select a file.</div>';
+          return;
+        }
+
+        // Read file as an ArrayBuffer and pass to Pyodide
+        const arrayBuffer = await file.arrayBuffer();
+        const bytes = new Uint8Array(arrayBuffer);
+        pyodideInstance.FS.writeFile("database.sqlite", bytes);
+
+        // Run Python code in Pyodide to check tables
+        const tables = await pyodideInstance.runPythonAsync(`
+import sqlite3
+
+conn = sqlite3.connect("database.sqlite")
+cursor = conn.cursor()
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+tables = cursor.fetchall()
+tables
+        `);
+
+        // Show tables and query interface
+        document.getElementById("output").innerText = `Available Tables: ${tables}`;
+        document.getElementById("queryInterface").style.display = "block";
+      }
+
+      async function runQuery() {
+        if (!pyodideInstance) return;
+        
+        const query = document.getElementById("sqlQuery").value;
+        try {
+          const result = await pyodideInstance.runPythonAsync(`
+import sqlite3
+import json
+
+conn = sqlite3.connect("database.sqlite")
+cursor = conn.cursor()
+cursor.execute("""${query}""")
+columns = [description[0] for description in cursor.description]
+rows = cursor.fetchall()
+json.dumps({"columns": columns, "rows": rows})
+          `);
+          
+          const data = JSON.parse(result);
+          
+          // Create table HTML
+          let tableHtml = '<table border="1"><tr>';
+          data.columns.forEach(col => {
+            tableHtml += `<th>${col}</th>`;
+          });
+          tableHtml += '</tr>';
+          
+          data.rows.forEach(row => {
+            tableHtml += '<tr>';
+            row.forEach(cell => {
+              tableHtml += `<td>${cell}</td>`;
+            });
+            tableHtml += '</tr>';
+          });
+          tableHtml += '</table>';
+          
+          // Add to history
+          queryHistory.push({
+            query: query,
+            timestamp: new Date().toISOString(),
+            result: result
+          });
+          
+          document.getElementById("output").innerHTML = tableHtml;
+        } catch (error) {
+          document.getElementById("output").innerHTML = 
+            `<div style="color: red">Error executing query: ${error.message}</div>`;
+        }
+      }
+
+      function downloadHistory() {
+        const historyBlob = new Blob(
+          [JSON.stringify(queryHistory, null, 2)], 
+          {type: 'application/json'}
+        );
+        const url = URL.createObjectURL(historyBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'query_history.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pyodide SQLite Example</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js"></script>
+  </head>
+  <body style="background-color: lightgrey">
+    <div
+      style="
+        text-align: center;
+        margin: 20px 0;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      "
+    >
+      <div style="display: flex; align-items: center; gap: 10px">
+        <input
+          type="file"
+          id="sqliteFile"
+          accept=".sqlite,.db"
+          style="display: none"
+          onchange="loadDatabase()"
+        />
+        <label
+          for="sqliteFile"
+          style="
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            min-width: 160px;
+            text-align: center;
+            display: inline-block;
+          "
+          onmouseover="this.style.backgroundColor='#45a049'"
+          onmouseout="this.style.backgroundColor='#4CAF50'"
+          >Choose File</label
+        >
+        <span
+          id="selectedFileName"
+          style="font-size: 1.2em; color: #666; font-style: italic"
+          >no file chosen yet</span
+        >
+      </div>
+      <button
+        onclick="saveSession()"
+        style="
+          padding: 10px 20px;
+          font-size: 1.2em;
+          background-color: #4caf50;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+          min-width: 160px;
+        "
+        onmouseover="this.style.backgroundColor='#45a049'"
+        onmouseout="this.style.backgroundColor='#4CAF50'"
+      >
+        Save Session
+      </button>
+    </div>
+    <h2>Database Tables</h2>
+    <div id="tableList" style="display: flex; flex-wrap: wrap; gap: 20px"></div>
+    <div id="queryInterfaces" style="display: none">
+      <div
+        style="
+          flex: 0 1 300px;
+          margin-top: 20px;
+          border: 1px solid #ccc;
+          padding: 10px;
+          border-radius: 8px;
+        "
+      >
+        <h3>SQL Query Interface 1</h3>
+        <textarea
+          id="sqlQuery"
+          rows="3"
+          placeholder="Enter SQL query here..."
+          style="
+            width: 100%;
+            margin-bottom: 10px;
+            resize: none;
+            overflow: hidden;
+          "
+          oninput="autoResize(this)"
+        ></textarea>
+        <br />
+        <button
+          onclick="runQuery()"
+          style="/* ... existing button styles ... */"
+        >
+          Run Query
+        </button>
+        <div id="output" style="margin-top: 10px; overflow-x: auto"></div>
+      </div>
+    </div>
+
+    <script>
+      let pyodideInstance = null;
+      let queryHistory = [];
+      let queryInterfaceCount = 0;
+      let currentDatabaseName = "";
+      let tableNames = [];
+
+      window.onbeforeunload = function (e) {
+        if (queryHistory.length > 0) {
+          e.preventDefault();
+          e.returnValue = "";
+          return "";
+        }
+      };
+
+      async function loadDatabase() {
+        const fileInput = document.getElementById("sqliteFile");
+        const file = fileInput.files[0];
+        if (!file) {
+          document.getElementById("output").innerHTML =
+            '<div style="color: red; margin-bottom: 10px;">Please select a file.</div>';
+          return;
+        }
+
+        // Display filename
+        document.getElementById("selectedFileName").textContent = file.name;
+
+        // Show the query interfaces container
+        document.getElementById("queryInterfaces").style.display = "flex";
+
+        // Initialize Pyodide if not already initialized
+        if (!pyodideInstance) {
+          pyodideInstance = await loadPyodide();
+          await pyodideInstance.loadPackage("sqlite3");
+        }
+
+        currentDatabaseName = file.name;
+
+        // Read file as an ArrayBuffer and pass to Pyodide
+        const arrayBuffer = await file.arrayBuffer();
+        const bytes = new Uint8Array(arrayBuffer);
+        pyodideInstance.FS.writeFile("database.sqlite", bytes);
+
+        // Run Python code in Pyodide to check tables and their schemas
+        const result = await pyodideInstance.runPythonAsync(`
+import sqlite3
+import json
+
+conn = sqlite3.connect("database.sqlite")
+cursor = conn.cursor()
+
+# Get all tables
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+tables = cursor.fetchall()  
+
+# Get schema for each table
+table_info = {}
+for table in tables:
+    table_name = table[0]
+    cursor.execute(f"PRAGMA table_info({table_name})")
+    columns = cursor.fetchall()
+    table_info[table_name] = [
+        {
+            "name": col[1],
+            "type": col[2]
+        } for col in columns
+    ]
+
+json.dumps({"tables": table_info})
+        `);
+
+        const data = JSON.parse(result);
+        tableNames = Object.keys(data.tables);
+
+        // Display tables with buttons
+        let tableListHtml = "";
+        Object.entries(data.tables).forEach(([tableName, columns]) => {
+          tableListHtml += `
+            <div style="flex: 0 1 auto; margin: 10px; padding: 15px; background-color: #f0f0f0; border-radius: 8px; min-width: 250px;">
+              <div style="font-weight: bold; margin-bottom: 10px; font-size: 1.1em;">${tableName}</div>
+              <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button 
+                  onclick="showTableStructure('${tableName}', ${JSON.stringify(
+            columns
+          ).replace(/"/g, "&quot;")})"
+                  style="
+                    padding: 5px 10px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                  "
+                  onmouseover="this.style.backgroundColor='#45a049'"
+                  onmouseout="this.style.backgroundColor='#4CAF50'"
+                >Show Structure</button>
+                <button 
+                  onclick="showTableData('${tableName}')"
+                  style="
+                    padding: 5px 10px;
+                    background-color: #4CAF50;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                  "
+                  onmouseover="this.style.backgroundColor='#45a049'"
+                  onmouseout="this.style.backgroundColor='#4CAF50'"
+                >Show Rows</button>
+              </div>
+              <div id="${tableName}_info" style="display: block;"></div>
+            </div>`;
+        });
+
+        document.getElementById("tableList").innerHTML = tableListHtml;
+
+        // Show structure for all tables by default
+        Object.entries(data.tables).forEach(([tableName, columns]) => {
+          showTableStructure(tableName, columns);
+        });
+      }
+
+      function autoResize(textarea) {
+        textarea.style.height = "auto"; // Reset height to recalculate
+        textarea.style.height = textarea.scrollHeight + "px";
+      }
+
+      async function runQuery(interfaceId = "") {
+        if (!pyodideInstance) return;
+
+        const queryElement = interfaceId
+          ? document.getElementById(`sqlQuery${interfaceId}`)
+          : document.getElementById("sqlQuery");
+        const outputElement = interfaceId
+          ? document.getElementById(`output${interfaceId}`)
+          : document.getElementById("output");
+
+        const query = queryElement.value;
+        try {
+          const result = await pyodideInstance.runPythonAsync(`
+import sqlite3
+import json
+
+conn = sqlite3.connect("database.sqlite")
+cursor = conn.cursor()
+cursor.execute("""${query}""")
+columns = [description[0] for description in cursor.description]
+rows = cursor.fetchall()
+json.dumps({"columns": columns, "rows": rows})
+          `);
+
+          const data = JSON.parse(result);
+
+          // Create table HTML
+          let tableHtml = '<table border="1"><tr>';
+          data.columns.forEach((col) => {
+            tableHtml += `<th>${col}</th>`;
+          });
+          tableHtml += "</tr>";
+
+          data.rows.forEach((row) => {
+            tableHtml += "<tr>";
+            row.forEach((cell) => {
+              tableHtml += `<td>${cell}</td>`;
+            });
+            tableHtml += "</tr>";
+          });
+          tableHtml += "</table>";
+
+          // Add to history with parsed results
+          queryHistory.push({
+            query: query,
+            timestamp: new Date().toISOString(),
+            results: data,
+          });
+
+          outputElement.innerHTML = tableHtml;
+
+          // Always add a new query interface
+          queryInterfaceCount++;
+          const newInterfaceId = queryInterfaceCount + 1;
+          const newInterface = document.createElement("div");
+          newInterface.innerHTML = `
+            <div style="flex: 0 1 300px; margin-top: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
+              <h3>SQL Query Interface ${newInterfaceId}</h3>
+              <textarea
+                id="sqlQuery${newInterfaceId}"
+                rows="3"
+                placeholder="Enter SQL query here..."
+                style="width: 100%; margin-bottom: 10px; resize: none; overflow: hidden;"
+                oninput="autoResize(this)"
+              ></textarea>
+              <br />
+              <button onclick="runQuery(${newInterfaceId})">Run Query</button>
+              <div id="output${newInterfaceId}" style="margin-top: 10px; overflow-x: auto;"></div>
+            </div>
+          `;
+          document.getElementById("queryInterfaces").appendChild(newInterface);
+        } catch (error) {
+          outputElement.innerHTML = `<div style="color: red">Error executing query: ${error.message}</div>`;
+        }
+      }
+
+      function formatQueryResultsAsText(query, results) {
+        let output = `Query: ${query}\n\n`;
+
+        // Find max width for each column
+        const colWidths = results.columns.map((col, i) => {
+          let maxWidth = col.length;
+          results.rows.forEach((row) => {
+            const cellWidth = String(row[i]).length;
+            maxWidth = Math.max(maxWidth, cellWidth);
+          });
+          return maxWidth;
+        });
+
+        // Header
+        output +=
+          results.columns
+            .map((col, i) => col.padEnd(colWidths[i]))
+            .join(" | ") + "\n";
+
+        // Separator
+        output += colWidths.map((w) => "-".repeat(w)).join("-+-") + "\n";
+
+        // Rows
+        results.rows.forEach((row) => {
+          output +=
+            row
+              .map((cell, i) => String(cell).padEnd(colWidths[i]))
+              .join(" | ") + "\n";
+        });
+
+        return output + "\n";
+      }
+
+      function saveSession() {
+        const baseFilename = prompt(
+          "Enter filename (without extension)\nBoth .txt and .json versions will be saved:",
+          "queryDb"
+        );
+
+        if (baseFilename) {
+          // Save JSON version
+          const jsonContent = JSON.stringify(
+            {
+              databaseName: currentDatabaseName,
+              queries: queryHistory,
+            },
+            null,
+            2
+          );
+
+          const jsonBlob = new Blob([jsonContent], {
+            type: "application/json",
+          });
+          const jsonUrl = URL.createObjectURL(jsonBlob);
+          const jsonLink = document.createElement("a");
+          jsonLink.href = jsonUrl;
+          jsonLink.download = `${baseFilename}.json`;
+          document.body.appendChild(jsonLink);
+          jsonLink.click();
+          document.body.removeChild(jsonLink);
+          URL.revokeObjectURL(jsonUrl);
+
+          // Save TXT version
+          let textContent = `Database: ${currentDatabaseName}\n\n`;
+          textContent += `Tables:\n${tableNames.join("\n")}\n\n`;
+          textContent += "Query Results:\n\n";
+
+          queryHistory.forEach((item, index) => {
+            textContent += `--- Query ${index + 1} ---\n`;
+            textContent += formatQueryResultsAsText(item.query, item.results);
+          });
+
+          const textBlob = new Blob([textContent], { type: "text/plain" });
+          const textUrl = URL.createObjectURL(textBlob);
+          const textLink = document.createElement("a");
+          textLink.href = textUrl;
+          textLink.download = `${baseFilename}.txt`;
+          document.body.appendChild(textLink);
+          textLink.click();
+          document.body.removeChild(textLink);
+          URL.revokeObjectURL(textUrl);
+        }
+      }
+
+      function showTableStructure(tableName, columns) {
+        const infoDiv = document.getElementById(`${tableName}_info`);
+
+        let structureHtml = `
+          <table style="font-size: 0.9em; margin-top: 10px; width: 100%; border-collapse: collapse;">
+            <tr>
+              <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ddd;">Column</th>
+              <th style="text-align: left; padding: 5px; border-bottom: 1px solid #ddd;">Type</th>
+            </tr>`;
+
+        columns.forEach((col) => {
+          structureHtml += `
+            <tr>
+              <td style="padding: 5px; border-bottom: 1px solid #ddd;">${col.name}</td>
+              <td style="padding: 5px; border-bottom: 1px solid #ddd;">${col.type}</td>
+            </tr>`;
+        });
+
+        structureHtml += `</table>`;
+        infoDiv.innerHTML = structureHtml;
+        infoDiv.style.display = "block";
+      }
+
+      async function showTableData(tableName) {
+        const infoDiv = document.getElementById(`${tableName}_info`);
+        try {
+          const result = await pyodideInstance.runPythonAsync(`
+            import sqlite3
+            import json
+
+            conn = sqlite3.connect("database.sqlite")
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM '" + "${tableName}" + "'")
+            columns = [description[0] for description in cursor.description]
+            rows = cursor.fetchall()
+            json.dumps({"columns": columns, "rows": rows})
+          `);
+
+          const data = JSON.parse(result);
+
+          let tableHtml = `
+            <div style="overflow-x: auto; margin-top: 10px;">
+              <table style="font-size: 0.9em; width: 100%; border-collapse: collapse;">
+                <tr>`;
+
+          data.columns.forEach((col) => {
+            tableHtml += `<th style="text-align: left; padding: 5px; border-bottom: 1px solid #ddd;">${col}</th>`;
+          });
+
+          tableHtml += `</tr>`;
+
+          data.rows.forEach((row) => {
+            tableHtml += `<tr>`;
+            row.forEach((cell) => {
+              tableHtml += `<td style="padding: 5px; border-bottom: 1px solid #ddd;">${cell}</td>`;
+            });
+            tableHtml += `</tr>`;
+          });
+
+          tableHtml += `</table></div>`;
+          infoDiv.innerHTML = tableHtml;
+          infoDiv.style.display = "block";
+        } catch (error) {
+          infoDiv.innerHTML = `<div style="color: red; margin-top: 10px;">Error loading table data: ${error.message}</div>`;
+          infoDiv.style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>

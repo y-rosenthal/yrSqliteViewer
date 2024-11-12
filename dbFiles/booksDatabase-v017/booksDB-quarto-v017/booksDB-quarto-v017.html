@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>booksDB-quarto-v017</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="booksDB-quarto-v017_files/libs/clipboard/clipboard.min.js"></script>
+<script src="booksDB-quarto-v017_files/libs/quarto-html/quarto.js"></script>
+<script src="booksDB-quarto-v017_files/libs/quarto-html/popper.min.js"></script>
+<script src="booksDB-quarto-v017_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="booksDB-quarto-v017_files/libs/quarto-html/anchor.min.js"></script>
+<link href="booksDB-quarto-v017_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="booksDB-quarto-v017_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="booksDB-quarto-v017_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="booksDB-quarto-v017_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="booksDB-quarto-v017_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#practice-sql-questions-books-database" id="toc-practice-sql-questions-books-database" class="nav-link active" data-scroll-target="#practice-sql-questions-books-database">Practice SQL Questions (Books Database)</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#descriptions-of-each-table" id="toc-descriptions-of-each-table" class="nav-link" data-scroll-target="#descriptions-of-each-table">Descriptions of each table</a>
+  <ul class="collapse">
+  <li><a href="#authors-table" id="toc-authors-table" class="nav-link" data-scroll-target="#authors-table">authors table:</a></li>
+  <li><a href="#publishers-table" id="toc-publishers-table" class="nav-link" data-scroll-target="#publishers-table">publishers table:</a></li>
+  <li><a href="#titles-table" id="toc-titles-table" class="nav-link" data-scroll-target="#titles-table">titles table:</a></li>
+  <li><a href="#title_authors-table" id="toc-title_authors-table" class="nav-link" data-scroll-target="#title_authors-table">title_authors table:</a></li>
+  <li><a href="#royalties-table" id="toc-royalties-table" class="nav-link" data-scroll-target="#royalties-table">royalties table:</a></li>
+  </ul></li>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">The data</a>
+  <ul class="collapse">
+  <li><a href="#authors" id="toc-authors" class="nav-link" data-scroll-target="#authors">Authors:</a></li>
+  <li><a href="#title_authors" id="toc-title_authors" class="nav-link" data-scroll-target="#title_authors">Title_Authors:</a></li>
+  <li><a href="#titles" id="toc-titles" class="nav-link" data-scroll-target="#titles">Titles:</a></li>
+  <li><a href="#royalties" id="toc-royalties" class="nav-link" data-scroll-target="#royalties">Royalties:</a></li>
+  <li><a href="#publishers" id="toc-publishers" class="nav-link" data-scroll-target="#publishers">Publishers:</a></li>
+  </ul></li>
+  <li><a href="#database-diagrams---i.e.-entity-relationship-diagrams-erd" id="toc-database-diagrams---i.e.-entity-relationship-diagrams-erd" class="nav-link" data-scroll-target="#database-diagrams---i.e.-entity-relationship-diagrams-erd">Database Diagrams - i.e.&nbsp;Entity Relationship Diagrams (ERD)</a>
+  <ul class="collapse">
+  <li><a href="#microsoft-format" id="toc-microsoft-format" class="nav-link" data-scroll-target="#microsoft-format">Microsoft format</a></li>
+  <li><a href="#crows-foot-format" id="toc-crows-foot-format" class="nav-link" data-scroll-target="#crows-foot-format">“Crows Foot” format</a></li>
+  </ul></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a>
+  <ul class="collapse">
+  <li><a href="#single-table-queries" id="toc-single-table-queries" class="nav-link" data-scroll-target="#single-table-queries">Single Table queries</a></li>
+  <li><a href="#single-table-queries-with-aggregate-functions-but-no-group-by-i.e.-these-will-return-exactly-one-row-for-each-query." id="toc-single-table-queries-with-aggregate-functions-but-no-group-by-i.e.-these-will-return-exactly-one-row-for-each-query." class="nav-link" data-scroll-target="#single-table-queries-with-aggregate-functions-but-no-group-by-i.e.-these-will-return-exactly-one-row-for-each-query.">Single table queries with aggregate functions but no “group by” (i.e.&nbsp;these will return EXACTLY one row for each query).</a></li>
+  <li><a href="#single-table-queries-with-group-by.-these-can-use-aggregate-functions-but-will-return-at-most-one-row-in-the-output-for-each-group-of-rows-as-defined-in-the-group-by" id="toc-single-table-queries-with-group-by.-these-can-use-aggregate-functions-but-will-return-at-most-one-row-in-the-output-for-each-group-of-rows-as-defined-in-the-group-by" class="nav-link" data-scroll-target="#single-table-queries-with-group-by.-these-can-use-aggregate-functions-but-will-return-at-most-one-row-in-the-output-for-each-group-of-rows-as-defined-in-the-group-by">Single table queries with “group by”. These can use aggregate functions but will return at most one row in the output for each “group” of rows as defined in the “group by”</a></li>
+  <li><a href="#multiple-table-queries-with-group-by" id="toc-multiple-table-queries-with-group-by" class="nav-link" data-scroll-target="#multiple-table-queries-with-group-by">Multiple table queries with group by</a></li>
+  <li><a href="#multiple-table-queries" id="toc-multiple-table-queries" class="nav-link" data-scroll-target="#multiple-table-queries">Multiple table queries</a></li>
+  <li><a href="#subqueries-outer-joins-unions-and-other-stuff" id="toc-subqueries-outer-joins-unions-and-other-stuff" class="nav-link" data-scroll-target="#subqueries-outer-joins-unions-and-other-stuff">Subqueries, outer joins, unions and other stuff …</a></li>
+  <li><a href="#additional-questions" id="toc-additional-questions" class="nav-link" data-scroll-target="#additional-questions">Additional questions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">booksDB-quarto-v017</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="practice-sql-questions-books-database" class="level1">
+<h1>Practice SQL Questions (Books Database)</h1>
+<p>Contents Overview 1 Descriptions of each table 2 The data 3 Database Diagrams - i.e.&nbsp;Entity Relationship Diagrams (ERD) 4 Microsoft format 5 “Crows Foot” format 5 Questions 6 Single Table queries 6 Single table queries with aggregate functions but no “group by” (i.e.&nbsp;these will return EXACTLY one row for each query). 6 Single table queries with calculated values 6 Single table queries with “group by”. These can use aggregate functions but will return at most one row in the output for each “group” of rows as defined in the “group by” 7 Multiple table queries with group by 7 Multiple table queries 7 Subqueries, outer joins, unions and other stuff … 9</p>
+</section>
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>A “relational database” is a collection of one or more “tables” that contain data about a particular topic. Each “table” contains rows and columns of data (very similar to an R dataframes).</p>
+<p>This file contains a description of a “relational database” that contains information about books. The data is spread among five different tables where each table contains a specific subset of the data. The tables are: “titles”, “authors”, “publishers”, “royalties” and “title_authors”. See the following sections for more information.</p>
+<p>SQL (i.e.&nbsp;Structured Query Language) is a standard programming language used for manipulating the contents of “relational databases”. Using SQL commands, you can retrieve data from a database in all sorts of custom arrangements (see more in the examples below).</p>
+<p>At the end of this file are numerous questions that ask you to write SQL code to retrieve data from the books database in a very specific ways.</p>
+<p>NOTE: The terminology used to describe relational databases can be confusing because different books and tutorials refer to the same concepts by different names. For example, “tables” are sometimes alternatively called “entities” or “objects”. The names of the “columns” in a table are sometimes referred to as “fields” or “attributes” of the table.</p>
+</section>
+<section id="descriptions-of-each-table" class="level1">
+<h1>Descriptions of each table</h1>
+<p>The following shows the names of the tables and columns (AKA fileds) in each table.<br>
+For each column, the name of the column is shown as well as the type of data in the column and a description of the data.</p>
+<p>The actual data in the tables is shown in the next section.</p>
+<section id="authors-table" class="level2">
+<h2 class="anchored" data-anchor-id="authors-table">authors table:</h2>
+<p>This table stores one row for each author.</p>
+</section>
+<section id="publishers-table" class="level2">
+<h2 class="anchored" data-anchor-id="publishers-table">publishers table:</h2>
+<p>This table stores one row for each publisher.</p>
+</section>
+<section id="titles-table" class="level2">
+<h2 class="anchored" data-anchor-id="titles-table">titles table:</h2>
+<p>This table stores one row for each book (AKA title).</p>
+</section>
+<section id="title_authors-table" class="level2">
+<h2 class="anchored" data-anchor-id="title_authors-table">title_authors table:</h2>
+<p>Each row in this table represents a relationship between an author and a book that (s)he wrote. If a book has 3 authors, there will be 3 rows in this table for that book. This table has a composite primary key (title_id, au_id). The “royalty_share” field represents the percent of the royalties that this author receives. If there is only one author for a book then this will be 1. If there are two authors for the book, the “royalty_share” could be the same for both or it could be different (e.g.&nbsp;0.6 and 0.4).</p>
+</section>
+<section id="royalties-table" class="level2">
+<h2 class="anchored" data-anchor-id="royalties-table">royalties table:</h2>
+<p>This table the information about royalties that the publisher will pay to the author(s) of a book. “advance” is the fixed amount that the publisher pays the author when (s)he starts to write the book. “royalty_rate” is a decimal value that contains the percent of each book’s sale price that is paid to the author(s). If there is more than one author then the royalties and advaces are split between them</p>
+</section>
+</section>
+<section id="the-data" class="level1">
+<h1>The data</h1>
+<section id="authors" class="level2">
+<h2 class="anchored" data-anchor-id="authors">Authors:</h2>
+</section>
+<section id="title_authors" class="level2">
+<h2 class="anchored" data-anchor-id="title_authors">Title_Authors:</h2>
+</section>
+<section id="titles" class="level2">
+<h2 class="anchored" data-anchor-id="titles">Titles:</h2>
+</section>
+<section id="royalties" class="level2">
+<h2 class="anchored" data-anchor-id="royalties">Royalties:</h2>
+</section>
+<section id="publishers" class="level2">
+<h2 class="anchored" data-anchor-id="publishers">Publishers:</h2>
+</section>
+</section>
+<section id="database-diagrams---i.e.-entity-relationship-diagrams-erd" class="level1">
+<h1>Database Diagrams - i.e.&nbsp;Entity Relationship Diagrams (ERD)</h1>
+<p>The tables in a relational database contain references to each other in the form of primary keys and foreign keys. The structure of the tables and the details of these relationships are captured in diagrams known as an “Entity Relationship Diagrams” (or ERD) - a “table” is also known as an “entity”. Entity Relationship Diagrams come in several different formats. Some formats are more popular, some are less popular. Each format basically describes the same information. However, some formats include slightly more information than others.</p>
+<p>Below are two different formats of Entity Relationship Diagrams (ERD) for the “books database”. The 1st diagram below shows the ERD in a format that was made popular by Microsoft software. The 2nd diagram below is a more popular format for ERDs. It is known as a “crows foot diagram”. The name “crows foot” comes from the symbol (which looks like the foot of a bird) which often appears on this type of diagram. The crows foot diagram includes one additional piece of information that is not found on the Microsoft version. Crows-foot notation is very popular and every symbol should be understood. See these page for more information about the crows foot notation: https://vertabelo.com/blog/crow-s-foot-notation/ https://www.freecodecamp.org/news/crows-foot-notation-relationship-symbols-and-how-to-read-diagrams/</p>
+<p>The Microsoft format of the diagram and the Crows foot format are only two of several different forms of “Entity Relationship Diagrams”. There are other variations on this type of diagram. See this page for an overview of various other formats for ERD’s: https://www.gleek.io/blog/er-symbols-notations</p>
+<p>Each “box” in a database diagram, also known as an “Entity Relationshiop Diagram (ERD)”, represents one of the tables in the database. The name of the table appears at the top of the box. The other words in each box are the names of the columns in that table. The actual rows of data are NOT shown in the diagram.</p>
+<p>The lines that are drawn between the tables show how the tables “relate” to each other.</p>
+<section id="microsoft-format" class="level2">
+<h2 class="anchored" data-anchor-id="microsoft-format">Microsoft format</h2>
+</section>
+<section id="crows-foot-format" class="level2">
+<h2 class="anchored" data-anchor-id="crows-foot-format">“Crows Foot” format</h2>
+<p>There can only be ONE primary key in a table, however, a single primary key may contain more than one field.<br>
+PK stands for “primary key”. The primary key for a table that contains two or more PK fields is known as a “composite primary key”.</p>
+<p>A table MAY contain more than one foreign key. FK1, FK2, etc. identify different foreign keys in the same table.</p>
+</section>
+</section>
+<section id="questions" class="level1">
+<h1>Questions</h1>
+<p>Create the following queries for the “books” database. For each query make sure to only include those tables that are necessary to answer the question. NOTE: the answers shown below are just some possible answers. For some questions there may be more than one possible answer.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: sqldf</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: gsubfn</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: proto</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: RSQLite</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AUTHORS</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  au_id  au_fname    au_lname        phone              address          city
+1   A01     Sarah     Buchman 718-496-7223       75 West 205 St         Bronx
+2   A02     Wendy   Heydemark 303-986-7020     2922 Baseline Rd       Boulder
+3   A03    Hallie        Hull 415-549-4278 3800 Waldo Ave, #14F San Francisco
+4   A04      Klee        Hull 415-549-4278 3800 Waldo Ave, #14F San Francisco
+5   A05 Christian       Kells 212-771-4680       114 Horatio St      New York
+6   A06    Harvey     Kellsey 650-836-7128       390 Serra Mall     Palo Alto
+7   A07     Paddy O'Furniture 941-925-0752         1442 Main St      Sarasota
+  state   zip
+1    NY 10468
+2    CO 80303
+3    CA 94123
+4    CA 94123
+5    NY 10014
+6    CA 94305
+7    FL 34236</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>PUBLISHERS</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  pub_id             pub_name          city state country
+1    P01    Abatis Publishers      New York    NY     USA
+2    P02      Core Dump Books San Francisco    CA     USA
+3    P03 Schandenfreude Press       Hamburg  &lt;NA&gt; Germany
+4    P04    Tneterhooks Press      Berkeley    CA     USA
+5    P05       AAA Publishing      Berkeley    CA     USA</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>TITLES</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   title_id                          title_name       type pub_id pages price
+1       T01                               1977!    history    P01   107 21.99
+2       T02           200 Years of German Humor    history    P03    14 19.95
+3       T03        Ask Yor System Administrator   computer    P02  1226 39.95
+4       T04           But I Did It Unconciously psychology    P01   510 12.99
+5       T05              Exchange of Platitudes psychology    P01   201  6.95
+6       T06                    How About Never?  biography    P01   473 19.95
+7       T07                   I Blame My Mother  biography    P03   333 23.95
+8       T08        Just Wait Until After School   children    P01    86 10.00
+9       T09                     Kiss My Boo Boo   children    P01    22 13.95
+10      T10         Not Without My Fabrerge Egg  biography    P05    NA    NA
+11      T11    Perhaps It's a Glandular Problem psychology    P05   826  7.99
+12      T12           Spontaneous, Not Annoying  biography    P05   507 12.99
+13      T13 What Are The Civilian Applications?    history    P03   802 29.99
+     sales         pubdate
+1      566   8/1/2000 0:00
+2     9566   4/1/1998 0:00
+3    25667   9/1/2000 0:00
+4    13001  5/31/1999 0:00
+5   201440   1/1/2001 0:00
+6    11320  7/31/2000 0:00
+7  1500200  10/1/1999 0:00
+8     4095   6/1/2001 0:00
+9     5000  5/31/2002 0:00
+10      NA            &lt;NA&gt;
+11   94123 11/30/2000 0:00
+12  100001  8/31/2000 0:00
+13   10467  5/31/1999 0:00</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>TITLE_AUTHORS</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   title_id au_id au_order royalty_shares
+1       T01   A01        1            1.0
+2       T02   A01        1            1.0
+3       T03   A05        1            1.0
+4       T04   A03        1            0.6
+5       T04   A04        2            0.4
+6       T05   A04        1            1.0
+7       T06   A02        1            1.0
+8       T07   A02        1            0.5
+9       T07   A04        2            0.5
+10      T08   A06        1            1.0
+11      T09   A06        1            1.0
+12      T10   A02        1            1.0
+13      T11   A03        2            0.3
+14      T11   A04        3            0.3
+15      T11   A06        1            0.4
+16      T12   A02        1            1.0
+17      T13   A01        1            1.0</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>ROYALTIES</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   title_id advance royalty_rate
+1       T01   10000         0.05
+2       T02    1000         0.06
+3       T03   15000         0.07
+4       T04   20000         0.08
+5       T05  100000         0.09
+6       T06   20000         0.08
+7       T07 1000000         0.11
+8       T08       0         0.04
+9       T09       0         0.05
+10      T10      NA           NA
+11      T11  100000         0.07
+12      T12   50000         0.09
+13      T13   20000         0.06</code></pre>
+</div>
+</div>
+<section id="single-table-queries" class="level2">
+<h2 class="anchored" data-anchor-id="single-table-queries">Single Table queries</h2>
+<ol type="1">
+<li><p>List all books (title and number sold) that sold more than 1000 copies. List the books with the most sales at the top.</p></li>
+<li><p>List all authors who are live either in NY or CA and whose last name begins with a “K”.</p></li>
+<li><p>List the first and last names of all authors whose last name starts with a letter from A through J<br>
+(HINT: In the where clause, make sure that the first letter of the last name is both &gt;=“A” and also &lt;“K”) (HINT: another possible solution is to use the LIKE several times - once for A, once for B, once for C, etc up to J. Each LIKE should be separated from the others by OR’s)</p></li>
+<li><p>For each author, show their first initial, followed by a period and a space, followed by their last name. In the 2nd column show the author’s state. Show the column heading for the first column as ‘AuthorName’. Order the results in alphabetical order based on the full name of the person.</p></li>
+<li><p>Show the titles of all books. Also show the length of the title, i.e.&nbsp;how many characters, including spaces and punctuation. Display the 2nd column with the name ‘TitleLength’. Sort the output so that the shortest titles are listed first. If two titles are the same length then sort those titles alphabetically.</p></li>
+</ol>
+</section>
+<section id="single-table-queries-with-aggregate-functions-but-no-group-by-i.e.-these-will-return-exactly-one-row-for-each-query." class="level2">
+<h2 class="anchored" data-anchor-id="single-table-queries-with-aggregate-functions-but-no-group-by-i.e.-these-will-return-exactly-one-row-for-each-query.">Single table queries with aggregate functions but no “group by” (i.e.&nbsp;these will return EXACTLY one row for each query).</h2>
+<ol start="6" type="1">
+<li><p>List the average price of all books.</p></li>
+<li><p>List the average price of history books.</p></li>
+<li><p>List the number of pages in the longest and shortest books (don’t list the actual title of the book).</p></li>
+</ol>
+<p>Single table queries with calculated values</p>
+<ol start="9" type="1">
+<li><p>List the title_name and total revenue for each book. (Revenue for a book is the number sold times the price of the book.)</p></li>
+<li><p>List title of each book and the sale price for the book where the sale price is 10% off of the original price.</p></li>
+</ol>
+</section>
+<section id="single-table-queries-with-group-by.-these-can-use-aggregate-functions-but-will-return-at-most-one-row-in-the-output-for-each-group-of-rows-as-defined-in-the-group-by" class="level2">
+<h2 class="anchored" data-anchor-id="single-table-queries-with-group-by.-these-can-use-aggregate-functions-but-will-return-at-most-one-row-in-the-output-for-each-group-of-rows-as-defined-in-the-group-by">Single table queries with “group by”. These can use aggregate functions but will return at most one row in the output for each “group” of rows as defined in the “group by”</h2>
+<ol start="11" type="1">
+<li><p>For each “type” of book (e.g.&nbsp;biography, children, etc) list the number of pages in the shortest book of that type and the number of pages in the longest book of that type. Sort the results alphabetically by the type of book.</p></li>
+<li><p>List the types of books (e.g.&nbsp;history, biography, etc) and the average price of those books for which the average price of books in that category is at least $12.00.</p></li>
+<li><p>OOPS … this question is exactly the same as the previous question. That was an oversight. Don’t do this question. I left it in this document since I didn’t want to change the numbers of the later questions (I’ll remove this in a later edition of this document).</p>
+<p>List the types of books (e.g.&nbsp;history, biography, etc) and the average price of those books for which the average price of books in that category</p></li>
+<li><p>For each type of book (e.g.&nbsp;biography, children, etc), show the number of those books that are 450 pages or longer. The column heading should be ‘# of long books’. If there are no titles of a particular type that are so long, then don’t show that type at all.</p></li>
+<li><p>Modify the answer to the previous question so that only those types for which there are at least 2 long books are displayed.</p></li>
+</ol>
+</section>
+<section id="multiple-table-queries-with-group-by" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-table-queries-with-group-by">Multiple table queries with group by</h2>
+<ol start="16" type="1">
+<li><p>For each publisher, list the name of the publisher and total number of pages that the publisher has published in all their books (ie. add up all the pages in all books for each publisher). Show the publishers who have published the most pages at the top of the result list.</p></li>
+<li><p>Modify the previous query so that only publishers who have published at least 1250 pages will show up.</p></li>
+<li><p>List each publisher’s name and the numbers of pages in their longest and shortest books. Sort the results by the publisher’s name.</p></li>
+</ol>
+</section>
+<section id="multiple-table-queries" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-table-queries">Multiple table queries</h2>
+<ol start="19" type="1">
+<li><p>List the authors first and last names, the author’s state, the title name, the publisher name and the publishers state for all books.</p></li>
+<li><p>List the title, number of pages, authors first and last names and author’s state for all books that are longer than 150 pages and whose author lives in NY or CA.</p></li>
+<li><p>List the authors first and last names, the author’s state, the title name, the publisher name and the publishers state only for those books where the author and publisher are from the same state. (HINT: specify authors.state [note: there is a period between author and state] in the criteria for the publisher’s state).</p></li>
+<li><p>List the title and authors of all books published by “Abatis Publishers” sort the results in alphabetical order by title and then by the au_order column. Do NOT show that au_order column in the output.</p></li>
+<li><p>List the publisher name, author name, and title name for all books that have at least 100 pages and that sold at least 200 copies. Sort the results in alphabetical order first by publisher and then by author.</p></li>
+<li><p>List authors first and last names and the titles they wrote for publishers whose name (ie. the publisher’s name) begins with “A”, “B” or “C”</p></li>
+<li><p>List the publisher name, author’s name and phone number for all authors that have written books for the publisher’s whose name begins with a letter from A through J. (HINT: specify the publisher’s name twice but only show one of them. In the criteria for one of them list &gt;=“A” and in the criteria for the other list &lt;“K”).</p></li>
+<li><p>List the titles of all books and the number of authors for the book (NOT the actual author names). Sort the results so that the books with the most authors appear on top. All books that have the same number of authors should be listed in alphabetical order.</p></li>
+<li><p>List the titles of all books that have 2 or more authors and that are longer than 50 pages.</p></li>
+<li><p>List all publishers and the number of books that the publisher has published (not the actual titles, just the number of books). Sort the list so that the publisher with the most books appears on top.</p></li>
+<li><p>List the publisher name and total revenue for each for each publisher. (Total revenue for a publisher is the total revenue for all books published by that publisher. Revenue for a book is the number sold times the price of the book.)</p></li>
+<li><p>Modify the previous query to only list those publishers who have at least ten thousand dollars in total revenue.</p></li>
+<li><p>List the title and author of each book. For each author for a particular book, list the amount of the “advance” that (s)he got for that book.</p></li>
+<li><p>List the title and author of each book. For each author for a particular book, list the total amount in royalties that (s)he got for that book.<br>
+Hint: the royalty dollars for a particular book is the “price” times the “sales” times the “royalty_rate” times the “royalty_share”. Sort the results so that the authors who made the most royalty dollars are listed at the top. (NOTE: make sure to read the database description at the top of this document to understand the fields ROYALTIES.ROYALTY_RATE and the field TITLE_AUTHORS.ROYALTY_SHARE).</p></li>
+<li><p>List the name of each author and the total amount of royalty dollars that they received for all of their books (name this column “RoyaltyDollars”). Hint: the royalty dollars for a particular book is the “price” times the “sales” times the “royalty_rate” times the “royalty_share”. Sort the results so that the authors who made the most royalty dollars are listed at the top.</p></li>
+<li><p>Modify the query from the previous question so that the list only includes authors who made more than $50,000.00 in royalties.</p></li>
+</ol>
+</section>
+<section id="subqueries-outer-joins-unions-and-other-stuff" class="level2">
+<h2 class="anchored" data-anchor-id="subqueries-outer-joins-unions-and-other-stuff">Subqueries, outer joins, unions and other stuff …</h2>
+<ol start="35" type="1">
+<li><p>Show the title names and number of pages for those books that are longer than (ie. more pages) the average length of all books.</p></li>
+<li><p>Show the publisher’s name and number of authors who have written books for that publisher:</p></li>
+<li><p>Show the pub_name and the number of titles published by that publisher. Only include publishers for whom at least 5 authors have worked.</p></li>
+<li><p>Show the names of publishers who did not publish any books (I guess they are just getting started :) )</p></li>
+<li><p>List the name of each publisher and the total number of books that each publisher has published. Sort the results so that the publishers who published the most books appear at the top. If two or more publishers published the same number of books then they should be listed in alphabetical order.</p>
+<ol type="a">
+<li><p>The answer should only include publisher who have published some books.</p></li>
+<li><p>This time make sure to also include publishers who have published zero books</p></li>
+</ol></li>
+</ol>
+</section>
+<section id="additional-questions" class="level2">
+<h2 class="anchored" data-anchor-id="additional-questions">Additional questions</h2>
+<ol start="40" type="1">
+<li><p>Show the names of the authors and the publishers who published their books.<br>
+Only show those authors/publishers where the author lives in the same state as the publisher who published the book. Do not show any author/pbulisher names twice.</p></li>
+<li><p>The exchange rate for NIS/USD (i.e.&nbsp;New Israeli Shekel / US Dollar) is 3.3. Write a query that shows the titles and prices for biographies that cost between 10 and 20 dollars.<br>
+Show two columns for the prices. One column for USD and one column for NIS.<br>
+Name the columns “price in USD” and “price in NIS”. Sort the results so that the most expensive books are displayed first.</p></li>
+<li><p>Show those titles for which the price of the book is greater than the average price of all books and the number of pages of the book is less than the average number of pages for all books.</p></li>
+<li><p>Show the authors who have not written any books</p></li>
+<li><p>In each row show an author’s name and the number of books that author wrote. Only show those authors who wrote at least two books. Sort the results alphabetically (last name, first name).</p></li>
+<li><p>Same as previous question. However, this time, only show those authors who wrote biographies, the count of the number of biographies they wrote and only show those authors who wrote at least 2 biographies.</p></li>
+<li><p>Suppose this database is being used by a literary agent who matches up publishers and authors for future projects. The agent is trying to figure out the authors he works with who might be a good match for the publishers he works with. The agent thinks that authors who write books that sell for an above average price are good matches for publishers who publish books that sell for an above average price.<br>
+The agent wants to see a list of the potential match-ups between such authors and such publishers. Write a query that does the following: Each row of your output should show the name of an author and a publisher. The author may have, or may not have, already written a book for that publisher. The authors should be those authors whose average book price for books they wrote is above the average price of all books in the database. The publishers should be those publishers whose average book price for books they published is above the average price of all books in the database.</p></li>
+<li><p>Same as above, except<br>
+The authors should be those authors who have written at least one book for which the price is above the average price of books of the same type.</p></li>
+</ol>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

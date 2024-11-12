@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pyodide SQLite Example</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js"></script>
+  </head>
+  <body>
+    <input type="file" id="sqliteFile" accept=".sqlite,.db" />
+    <button onclick="loadDatabase()">Load Database</button>
+    <div id="output"></div>
+
+    <script>
+      async function loadDatabase() {
+        const pyodide = await loadPyodide();
+        await pyodide.loadPackage("sqlite3");
+
+        const fileInput = document.getElementById("sqliteFile");
+        const file = fileInput.files[0];
+        if (!file) {
+          document.getElementById("output").innerHTML = `
+            <div style="color: red; margin-bottom: 10px;">Please select a file.</div>
+            <div>
+              <h3>SQL Query Interface</h3>
+              <textarea id="sqlQuery" rows="4" cols="50" placeholder="Enter SQL query here..." disabled></textarea>
+              <br>
+              <button onclick="runQuery()" disabled>Run Query</button>
+              <button onclick="downloadHistory()" disabled>Download History</button>
+              <div id="queryHistory"></div>
+            </div>
+          `;
+          return;
+        }
+
+        // Read file as an ArrayBuffer and pass to Pyodide
+        const arrayBuffer = await file.arrayBuffer();
+        const bytes = new Uint8Array(arrayBuffer);
+        pyodide.FS.writeFile("database.sqlite", bytes);
+
+        // Run Python code in Pyodide
+        await pyodide.runPythonAsync(`
+import sqlite3
+
+# Connect to the SQLite database in memory from the file
+#conn = sqlite3.connect("/database.sqlite")
+conn = sqlite3.connect("database.sqlite")
+
+# Define a sample query
+def run_query():
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    tables = cursor.fetchall()
+    return tables
+
+output = run_query()
+output
+            `);
+
+        // Display output
+        const result = pyodide.globals.get("output");
+        document.getElementById("output").innerText = `Tables: ${result}`;
+      }
+    </script>
+  </body>
+</html>

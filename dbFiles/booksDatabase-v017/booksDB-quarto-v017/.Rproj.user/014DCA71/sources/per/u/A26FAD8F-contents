@@ -1,0 +1,13 @@
+cat(r"[## q3\n]
+# Write a query that shows the names of the Male students who are 
+# registered for "Intro to Acc".
+
+# ANSWER
+sqldf("
+select first, last
+from students join registration on students.studentId = registration.studentId
+join offerings on registration.crn = offerings.crn
+join courses on offerings.num = courses.num
+where name ='Intro to Acc' and gender = 'M'
+")
+]")

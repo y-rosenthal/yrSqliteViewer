@@ -1,0 +1,43 @@
+Database: data.sqlite
+
+Tables:
+titles
+authors
+royalties
+publishers
+title_authors
+
+Query Results:
+
+--- Query 1 ---
+Query: Select * from authors;
+
+au_id | au_fname  | au_lname    | phone        | address              | city          | state | zip  
+------+-----------+-------------+--------------+----------------------+---------------+-------+------
+A01   | Sarah     | Buchman     | 718-496-7223 | 75 West 205 St       | Bronx         | NY    | 10468
+A02   | Wendy     | Heydemark   | 303-986-7020 | 2922 Baseline Rd     | Boulder       | CO    | 80303
+A03   | Hallie    | Hull        | 415-549-4278 | 3800 Waldo Ave, #14F | San Francisco | CA    | 94123
+A04   | Klee      | Hull        | 415-549-4278 | 3800 Waldo Ave, #14F | San Francisco | CA    | 94123
+A05   | Christian | Kells       | 212-771-4680 | 114 Horatio St       | New York      | NY    | 10014
+A06   | Harvey    | Kellsey     | 650-836-7128 | 390 Serra Mall       | Palo Alto     | CA    | 94305
+A07   | Paddy     | O'Furniture | 941-925-0752 | 1442 Main St         | Sarasota      | FL    | 34236
+
+--- Query 2 ---
+Query: select * from titles
+
+title_id | title_name                          | type       | pub_id | pages | price | sales   | pubdate            
+---------+-------------------------------------+------------+--------+-------+-------+---------+--------------------
+T01      | 1977!                               | history    | P01    | 107   | 21.99 | 566     | 2000-08-01 00:00:00
+T02      | 200 Years of German Humor           | history    | P03    | 14    | 19.95 | 9566    | 1998-04-01 00:00:00
+T03      | Ask Your System Administrator       | computer   | P02    | 1226  | 39.95 | 25667   | 2000-09-01 00:00:00
+T04      | But I Did It Unconsciously          | psychology | P01    | 510   | 12.99 | 13001   | 1999-05-31 00:00:00
+T05      | Exchange of Platitudes              | psychology | P01    | 201   | 6.95  | 201440  | 2001-01-01 00:00:00
+T06      | How About Never?                    | biography  | P01    | 473   | 19.95 | 11320   | 2000-07-31 00:00:00
+T07      | I Blame My Mother                   | biography  | P03    | 333   | 23.95 | 1500200 | 1999-10-01 00:00:00
+T08      | Just Wait Until After School        | children   | P01    | 86    | 10.00 | 4095    | 2001-06-01 00:00:00
+T09      | Kiss My Boo-Boo                     | children   | P01    | 22    | 13.95 | 5000    | 2002-05-31 00:00:00
+T10      | Not Without My Faberge Egg          | biography  | P05    |       |       |         |                    
+T11      | Perhaps It's a Glandular Problem    | psychology | P05    | 826   | 7.99  | 94123   | 2000-11-30 00:00:00
+T12      | Spontaneous, Not Annoying           | biography  | P05    | 507   | 12.99 | 100001  | 2000-08-31 00:00:00
+T13      | What Are The Civilian Applications? | history    | P03    | 802   | 29.99 | 10467   | 1999-05-31 00:00:00
+
