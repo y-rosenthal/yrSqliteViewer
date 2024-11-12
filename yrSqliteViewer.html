@@ -5,6 +5,7 @@
     <title>yrSqliteViewer</title>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   </head>
   <body style="background-color: lightgrey">
     <div style="text-align: center; margin: 10px 0">
@@ -123,9 +124,10 @@
       let queryInterfaceCount = 0;
       let currentDatabaseName = "";
       let tableNames = [];
+      let isSessionSaved = true;
 
       window.onbeforeunload = function (e) {
-        if (queryHistory.length > 0) {
+        if (queryHistory.length > 0 && !isSessionSaved) {
           e.preventDefault();
           e.returnValue = "";
           return "";
@@ -312,6 +314,7 @@ json.dumps({"columns": columns, "rows": rows})
             timestamp: new Date().toISOString(),
             results: data,
           });
+          isSessionSaved = false;
 
           outputElement.innerHTML = tableHtml;
 
@@ -380,8 +383,10 @@ json.dumps({"columns": columns, "rows": rows})
 
       function clearSession() {
         if (confirm('Are you sure you want to clear the current session? This will remove all queries and results.')) {
-          // Reset all state variables
           queryHistory = [];
+          isSessionSaved = true;
+          // Reset all state variables
+          //queryHistory = [];
           queryInterfaceCount = 0;
           currentDatabaseName = "";
           tableNames = [];
@@ -434,16 +439,11 @@ json.dumps({"columns": columns, "rows": rows})
           });
           zip.file(`${baseFilename}.txt`, textContent);
 
-          // Generate and download ZIP file
+          // Generate and download ZIP file using saveAs
           const zipBlob = await zip.generateAsync({type: "blob"});
-          const zipUrl = URL.createObjectURL(zipBlob);
-          const zipLink = document.createElement("a");
-          zipLink.href = zipUrl;
-          zipLink.download = `${baseFilename}.zip`;
-          document.body.appendChild(zipLink);
-          zipLink.click();
-          document.body.removeChild(zipLink);
-          URL.revokeObjectURL(zipUrl);
+          saveAs(zipBlob, `${baseFilename}.zip`);
+          
+          isSessionSaved = true;
         }
       }
 
