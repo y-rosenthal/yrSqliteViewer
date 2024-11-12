@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>yrSqliteViewer</title>
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   </head>
   <body style="background-color: lightgrey">
     <div style="text-align: center; margin: 10px 0">
@@ -356,14 +357,16 @@ json.dumps({"columns": columns, "rows": rows})
         return output + "\n";
       }
 
-      function saveSession() {
+      async function saveSession() {
         const baseFilename = prompt(
-          "Enter filename (without extension)\nBoth .txt and .json versions will be saved:",
+          "Enter filename (without extension)\nFiles will be saved in a ZIP archive:",
           "queryDb"
         );
 
         if (baseFilename) {
-          // Save JSON version
+          const zip = new JSZip();
+
+          // Prepare JSON content
           const jsonContent = JSON.stringify(
             {
               jsonFormatVersion: "0.1",
@@ -374,20 +377,9 @@ json.dumps({"columns": columns, "rows": rows})
             null,
             2
           );
+          zip.file(`${baseFilename}.json`, jsonContent);
 
-          const jsonBlob = new Blob([jsonContent], {
-            type: "application/json",
-          });
-          const jsonUrl = URL.createObjectURL(jsonBlob);
-          const jsonLink = document.createElement("a");
-          jsonLink.href = jsonUrl;
-          jsonLink.download = `${baseFilename}.json`;
-          document.body.appendChild(jsonLink);
-          jsonLink.click();
-          document.body.removeChild(jsonLink);
-          URL.revokeObjectURL(jsonUrl);
-
-          // Save TXT version
+          // Prepare TXT content
           let textContent = `Database: ${currentDatabaseName}\n\n`;
           textContent += `Tables:\n${tableNames.join("\n")}\n\n`;
           textContent += "Query Results:\n\n";
@@ -396,16 +388,18 @@ json.dumps({"columns": columns, "rows": rows})
             textContent += `--- Query ${index + 1} ---\n`;
             textContent += formatQueryResultsAsText(item.query, item.results);
           });
+          zip.file(`${baseFilename}.txt`, textContent);
 
-          const textBlob = new Blob([textContent], { type: "text/plain" });
-          const textUrl = URL.createObjectURL(textBlob);
-          const textLink = document.createElement("a");
-          textLink.href = textUrl;
-          textLink.download = `${baseFilename}.txt`;
-          document.body.appendChild(textLink);
-          textLink.click();
-          document.body.removeChild(textLink);
-          URL.revokeObjectURL(textUrl);
+          // Generate and download ZIP file
+          const zipBlob = await zip.generateAsync({type: "blob"});
+          const zipUrl = URL.createObjectURL(zipBlob);
+          const zipLink = document.createElement("a");
+          zipLink.href = zipUrl;
+          zipLink.download = `${baseFilename}.zip`;
+          document.body.appendChild(zipLink);
+          zipLink.click();
+          document.body.removeChild(zipLink);
+          URL.revokeObjectURL(zipUrl);
         }
       }
 
