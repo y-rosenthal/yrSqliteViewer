@@ -75,6 +75,9 @@
       >
         Save Session
       </button>
+      <button onclick="clearSession()" style="padding: 10px 20px; font-size: 1.2em; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; min-width: 160px;" onmouseover="this.style.backgroundColor='#d32f2f'" onmouseout="this.style.backgroundColor='#f44336'">
+        Clear Session
+      </button>
     </div>
     <h2>Database Tables</h2>
     <div id="tableList" style="display: flex; flex-wrap: wrap; gap: 20px"></div>
@@ -355,6 +358,29 @@ json.dumps({"columns": columns, "rows": rows})
         });
 
         return output + "\n";
+      }
+
+      function clearSession() {
+        if (confirm('Are you sure you want to clear the current session? This will remove all queries and results.')) {
+          // Reset all state variables
+          queryHistory = [];
+          queryInterfaceCount = 0;
+          currentDatabaseName = "";
+          tableNames = [];
+          
+          // Clear UI elements
+          document.getElementById('tableList').innerHTML = '';
+          document.getElementById('queryInterfaces').innerHTML = `
+            <div style="flex: 0 0 auto; border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
+              <h3>SQL Query Interface 1</h3>
+              <textarea id="sqlQuery" rows="3" placeholder="Enter SQL query here..." style="width: 100%; margin-bottom: 10px; resize: none; overflow: hidden;" oninput="autoResize(this)"></textarea>
+              <br />
+              <button onclick="runQuery()">Run Query</button>
+              <div id="output" style="margin-top: 10px; overflow-x: auto;"></div>
+            </div>
+          `;
+          document.getElementById('selectedFileName').textContent = 'no file chosen yet';
+        }
       }
 
       async function saveSession() {
