@@ -263,7 +263,7 @@
       Click "Choose File" button to load a database file
     </div>
     <div id="tableList" class="yrTableList"></div>
-    <h2>SQL Commands</h2>
+    <h2 id="sqlCommandsHeader">SQL Commands</h2>
     <div id="queryInterfaces" class="yrQueryInterfaces">
       <div class="yrQueryInterface" data-base-font="1">
         <div class="yrFlexContainer">
@@ -435,6 +435,7 @@ json.dumps({"tables": table_info})
 
         // Clear the "no file" message when loading a database
         document.getElementById("noFileMessage").style.display = "none";
+        document.getElementById("sqlCommandsHeader").style.display = "block";
       }
 
       function autoResize(textarea) {
