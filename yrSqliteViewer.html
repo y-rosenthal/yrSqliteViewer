@@ -14,6 +14,9 @@
       .yrHeader {
         text-align: center;
         margin: 5px 0;
+        font-size: 2em;
+        padding: 0 50px;
+        font-weight: bold;
       }
 
       .yrControlPanel {
@@ -186,12 +189,9 @@
     </style>
   </head>
   <body>
-    <div class="yrHeader">
-      <h1>yrSqliteViewer (ver 0.1)</h1>
-    </div>
-
     <div class="yrControlPanel">
       <div style="display: flex; align-items: center; gap: 10px">
+        <span class="yrHeader">yrSqliteViewer (ver 0.1)</span>
         <input
           type="file"
           id="sqliteFile"
