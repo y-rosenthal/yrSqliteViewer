@@ -328,7 +328,7 @@ json.dumps({"tables": table_info})
         Object.entries(data.tables).forEach(([tableName, columns]) => {
           tableListHtml += `
             <div class="yrTableCard">
-              <div class="yrTableName">${tableName}</div>
+              <div class="yrTableName">Table: ${tableName}</div>
               <div class="yrTableButtons">
                 <button 
                   onclick="showTableStructure('${tableName}', ${JSON.stringify(
@@ -369,7 +369,7 @@ json.dumps({"tables": table_info})
           : document.getElementById("output");
 
         const query = queryElement.value;
-        
+
         // If query is empty, don't proceed
         if (!query.trim()) return;
 
@@ -415,11 +415,13 @@ json.dumps({"columns": columns, "rows": rows})
           outputElement.innerHTML = tableHtml;
 
           // Check if there's already a blank query interface at the end
-          const lastInterface = document.querySelector('.yrQueryInterface:last-child');
-          const lastTextarea = lastInterface.querySelector('textarea');
-          
+          const lastInterface = document.querySelector(
+            ".yrQueryInterface:last-child"
+          );
+          const lastTextarea = lastInterface.querySelector("textarea");
+
           // Only add a new interface if the last one isn't empty
-          if (lastTextarea.value.trim() !== '') {
+          if (lastTextarea.value.trim() !== "") {
             queryInterfaceCount++;
             const newInterfaceId = queryInterfaceCount + 1;
             const newInterface = document.createElement("div");
@@ -438,7 +440,9 @@ json.dumps({"columns": columns, "rows": rows})
                 <div id="output${newInterfaceId}" class="yrOutputContainer"></div>
               </div>
             `;
-            document.getElementById("queryInterfaces").appendChild(newInterface);
+            document
+              .getElementById("queryInterfaces")
+              .appendChild(newInterface);
           }
         } catch (error) {
           outputElement.innerHTML = `<div class="yrErrorMessage">Error executing query: ${error.message}</div>`;
