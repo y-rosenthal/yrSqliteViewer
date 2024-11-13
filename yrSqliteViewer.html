@@ -318,10 +318,18 @@
 
     <div class="yrFlexContainer">
       <h2 id="yrDbTablesHeader">Database Tables</h2>
-      <button onclick="showAllTablesStructure()" class="yrButton yrGreyButton" style="font-weight: bold">
+      <button
+        onclick="showAllTablesStructure()"
+        class="yrButton yrGreyButton"
+        style="font-weight: bold"
+      >
         Show Structure <i>(for all tables)</i>
       </button>
-      <button onclick="showAllTablesData()" class="yrButton yrGreyButton" style="font-weight: bold">
+      <button
+        onclick="showAllTablesData()"
+        class="yrButton yrGreyButton"
+        style="font-weight: bold"
+      >
         Show Rows <i>(for all tables)</i>
       </button>
       <div class="yrFontControl">
@@ -418,7 +426,7 @@
     <div id="queryInterfaces" class="yrQueryInterfaces">
       <div class="yrQueryInterface" data-base-font="1">
         <div class="yrFlexContainer">
-          <h3>SQL Query Interface 1</h3>
+          <h3>SQL Command 1</h3>
           <div class="yrFontControl">
             <button
               onclick="adjustFontSize('query_interface_1', -0.1)"
@@ -483,7 +491,7 @@
           document.getElementById("queryInterfaces").innerHTML = `
             <div class="yrQueryInterface" data-base-font="1">
               <div class="yrFlexContainer">
-                <h3>SQL Query Interface 1</h3>
+                <h3>SQL Command 1</h3>
                 <div class="yrFontControl">
                   <button onclick="adjustFontSize('query_interface_1', -0.1)" class="yrFontButton">A-</button>
                   <button onclick="adjustFontSize('query_interface_1', 0.1)" class="yrFontButton">A+</button>
@@ -674,7 +682,7 @@ json.dumps({"columns": columns, "rows": rows})
             newInterface.setAttribute("data-base-font", "1");
             newInterface.innerHTML = `
               <div class="yrFlexContainer">
-                <h3>SQL Query Interface ${newInterfaceId}</h3>
+                <h3>SQL Command ${newInterfaceId}</h3>
                 <div class="yrFontControl">
                   <button onclick="adjustFontSize('query_interface_${newInterfaceId}', -0.1)" class="yrFontButton">A-</button>
                   <button onclick="adjustFontSize('query_interface_${newInterfaceId}', 0.1)" class="yrFontButton">A+</button>
@@ -749,7 +757,7 @@ json.dumps({"columns": columns, "rows": rows})
           document.getElementById("queryInterfaces").innerHTML = `
             <div class="yrQueryInterface" data-base-font="1">
               <div class="yrFlexContainer">
-                <h3>SQL Query Interface 1</h3>
+                <h3>SQL Command 1</h3>
                 <div class="yrFontControl">
                   <button onclick="adjustFontSize('query_interface_1', -0.1)" class="yrFontButton">A-</button>
                   <button onclick="adjustFontSize('query_interface_1', 0.1)" class="yrFontButton">A+</button>
@@ -1019,7 +1027,7 @@ json.dumps({"columns": columns, "rows": rows})
             newInterface.setAttribute("data-base-font", "1");
             newInterface.innerHTML = `
               <div class="yrFlexContainer">
-                <h3>SQL Query Interface ${interfaceId}</h3>
+                <h3>SQL Command ${interfaceId}</h3>
                 <div class="yrFontControl">
                   <button onclick="adjustFontSize('query_interface_${interfaceId}', -0.1)" class="yrFontButton">A-</button>
                   <button onclick="adjustFontSize('query_interface_${interfaceId}', 0.1)" class="yrFontButton">A+</button>
@@ -1076,7 +1084,9 @@ json.dumps({"columns": columns, "rows": rows})
       async function showAllTablesData() {
         const tableCards = document.getElementsByClassName("yrTableCard");
         for (const card of tableCards) {
-          const tableName = card.querySelector(".yrTableName").textContent.replace("Table: ", "");
+          const tableName = card
+            .querySelector(".yrTableName")
+            .textContent.replace("Table: ", "");
           await showTableData(tableName);
         }
       }
@@ -1084,11 +1094,15 @@ json.dumps({"columns": columns, "rows": rows})
       function showAllTablesStructure() {
         const tableCards = document.getElementsByClassName("yrTableCard");
         for (const card of tableCards) {
-          const tableName = card.querySelector(".yrTableName").textContent.replace("Table: ", "");
+          const tableName = card
+            .querySelector(".yrTableName")
+            .textContent.replace("Table: ", "");
           // Get the columns data from the existing button's onclick attribute
           const structureButton = card.querySelector(".yrButton");
           const onclickAttr = structureButton.getAttribute("onclick");
-          const columnsMatch = onclickAttr.match(/showTableStructure\('.*?', (.*?)\)/);
+          const columnsMatch = onclickAttr.match(
+            /showTableStructure\('.*?', (.*?)\)/
+          );
           if (columnsMatch && columnsMatch[1]) {
             const columns = JSON.parse(columnsMatch[1].replace(/&quot;/g, '"'));
             showTableStructure(tableName, columns);
