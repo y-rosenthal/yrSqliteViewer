@@ -203,13 +203,17 @@
         display: flex;
         align-items: center;
         gap: 5px;
+        justify-content: flex-start;
+      }
+
+      .yrFlexContainer h2 {
+        margin-right: 15px;
       }
 
       .yrFontControl {
         display: flex;
         align-items: center;
         gap: 5px;
-        margin-left: auto;
       }
 
       .yrFontButton {
@@ -250,20 +254,52 @@
       </button>
     </div>
 
-    <h2 id="yrDbTablesHeader">Database Tables</h2>
-    <div
-      id="noFileMessage"
-      style="
-        font-style: italic;
-        color: #444;
-        font-size: 1.2em;
-        margin: 20px 10px;
-      "
-    >
+    <div class="yrFlexContainer">
+      <h2 id="yrDbTablesHeader">Database Tables</h2>
+      <div class="yrFontControl">
+        <button onclick="adjustAllTablesFontSize(-0.1)" class="yrFontButton">A-</button>
+        <input 
+          type="number" 
+          step="0.1" 
+          min="0.5" 
+          max="2" 
+          value="1.0" 
+          onchange="setAllTablesFontSize(this.value)" 
+          class="yrFontInput"
+          style="width: 60px;"
+        >
+        <button onclick="adjustAllTablesFontSize(0.1)" class="yrFontButton">A+</button>
+      </div>
+    </div>
+
+    <div id="noFileMessage" style="
+      font-style: italic;
+      color: #444;
+      font-size: 1.2em;
+      margin: 20px 10px;
+    ">
       Click "Choose File" button to load a database file
     </div>
     <div id="tableList" class="yrTableList"></div>
-    <h2 id="sqlCommandsHeader">SQL Commands</h2>
+
+    <div class="yrFlexContainer">
+      <h2 id="sqlCommandsHeader">SQL Commands</h2>
+      <div class="yrFontControl">
+        <button onclick="adjustAllQueryInterfacesFontSize(-0.1)" class="yrFontButton">A-</button>
+        <input 
+          type="number" 
+          step="0.1" 
+          min="0.5" 
+          max="2" 
+          value="1.0" 
+          onchange="setAllQueryInterfacesFontSize(this.value)" 
+          class="yrFontInput"
+          style="width: 60px;"
+        >
+        <button onclick="adjustAllQueryInterfacesFontSize(0.1)" class="yrFontButton">A+</button>
+      </div>
+    </div>
+
     <div id="queryInterfaces" class="yrQueryInterfaces">
       <div class="yrQueryInterface" data-base-font="1">
         <div class="yrFlexContainer">
@@ -760,6 +796,44 @@ json.dumps({"columns": columns, "rows": rows})
 
         element.setAttribute("data-base-font", baseFontSize);
         element.style.fontSize = `${baseFontSize}em`;
+      }
+
+      function adjustAllTablesFontSize(delta) {
+        const tableCards = document.getElementsByClassName('yrTableCard');
+        Array.from(tableCards).forEach(card => {
+          let baseFontSize = parseFloat(card.getAttribute('data-base-font')) || 1;
+          baseFontSize = Math.max(0.5, Math.min(2, baseFontSize + delta));
+          card.setAttribute('data-base-font', baseFontSize);
+          card.style.fontSize = `${baseFontSize}em`;
+        });
+      }
+
+      function setAllTablesFontSize(size) {
+        const tableCards = document.getElementsByClassName('yrTableCard');
+        const newSize = Math.max(0.5, Math.min(2, parseFloat(size)));
+        Array.from(tableCards).forEach(card => {
+          card.setAttribute('data-base-font', newSize);
+          card.style.fontSize = `${newSize}em`;
+        });
+      }
+
+      function adjustAllQueryInterfacesFontSize(delta) {
+        const queryInterfaces = document.getElementsByClassName('yrQueryInterface');
+        Array.from(queryInterfaces).forEach(interface => {
+          let baseFontSize = parseFloat(interface.getAttribute('data-base-font')) || 1;
+          baseFontSize = Math.max(0.5, Math.min(2, baseFontSize + delta));
+          interface.setAttribute('data-base-font', baseFontSize);
+          interface.style.fontSize = `${baseFontSize}em`;
+        });
+      }
+
+      function setAllQueryInterfacesFontSize(size) {
+        const queryInterfaces = document.getElementsByClassName('yrQueryInterface');
+        const newSize = Math.max(0.5, Math.min(2, parseFloat(size)));
+        Array.from(queryInterfaces).forEach(interface => {
+          interface.setAttribute('data-base-font', newSize);
+          interface.style.fontSize = `${newSize}em`;
+        });
       }
     </script>
   </body>
