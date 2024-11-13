@@ -85,6 +85,14 @@
         background-color: #1b4b1d;
       }
 
+      .yrGreyButton {
+        background-color: #666;
+      }
+
+      .yrGreyButton:hover {
+        background-color: #444;
+      }
+
       .yrRedButton {
         background-color: #f44336;
       }
@@ -310,6 +318,12 @@
 
     <div class="yrFlexContainer">
       <h2 id="yrDbTablesHeader">Database Tables</h2>
+      <button onclick="showAllTablesStructure()" class="yrButton yrGreyButton" style="font-weight: bold">
+        Show Structure <i>(for all tables)</i>
+      </button>
+      <button onclick="showAllTablesData()" class="yrButton yrGreyButton" style="font-weight: bold">
+        Show Rows <i>(for all tables)</i>
+      </button>
       <div class="yrFontControl">
         <button
           onclick="adjustAllTablesFontSize(-0.1)"
@@ -428,7 +442,7 @@
           oninput="autoResize(this)"
         ></textarea>
         <br />
-        <button onclick="runQuery()" class="yrButton yrGreenButton">
+        <button onclick="runQuery()" class="yrButton yrGreyButton">
           Run Query
         </button>
         <div id="output" style="margin-top: 10px; overflow-x: auto"></div>
@@ -483,7 +497,7 @@
                 oninput="autoResize(this)"
               ></textarea>
               <br />
-              <button onclick="runQuery()" class="yrButton yrGreenButton">Run Query</button>
+              <button onclick="runQuery()" class="yrButton yrGreyButton">Run Query</button>
               <div id="output" style="margin-top: 10px; overflow-x: auto;"></div>
             </div>
           `;
@@ -558,11 +572,11 @@ json.dumps({"tables": table_info})
                   onclick="showTableStructure('${tableName}', ${JSON.stringify(
               columns
             ).replace(/"/g, "&quot;")})"
-                  class="yrButton yrGreenButton"
+                  class="yrButton yrGreyButton"
                 >Show Structure</button>
                 <button 
                   onclick="showTableData('${tableName}')"
-                  class="yrButton yrGreenButton"
+                  class="yrButton yrGreyButton"
                 >Show Rows</button>
               </div>
               <div id="${tableName}_info" class="yrTableInfo"></div>
@@ -674,7 +688,7 @@ json.dumps({"columns": columns, "rows": rows})
                 oninput="autoResize(this)"
               ></textarea>
               <br />
-              <button onclick="runQuery(${newInterfaceId})" class="yrButton yrGreenButton">Run Query</button>
+              <button onclick="runQuery(${newInterfaceId})" class="yrButton yrGreyButton">Run Query</button>
               <div id="output${newInterfaceId}" class="yrOutputContainer"></div>
             `;
             document
@@ -749,7 +763,7 @@ json.dumps({"columns": columns, "rows": rows})
                 oninput="autoResize(this)"
               ></textarea>
               <br />
-              <button onclick="runQuery()" class="yrButton yrGreenButton">Run Query</button>
+              <button onclick="runQuery()" class="yrButton yrGreyButton">Run Query</button>
               <div id="output" class="yrOutputContainer"></div>
             </div>
           `;
@@ -1019,7 +1033,7 @@ json.dumps({"columns": columns, "rows": rows})
                 oninput="autoResize(this)"
               >${item.query}</textarea>
               <br />
-              <button onclick="runQuery(${interfaceId})" class="yrButton yrGreenButton">Run Query</button>
+              <button onclick="runQuery(${interfaceId})" class="yrButton yrGreyButton">Run Query</button>
               <div id="output${interfaceId}" class="yrOutputContainer"></div>
             `;
             document
@@ -1056,6 +1070,29 @@ json.dumps({"columns": columns, "rows": rows})
         } finally {
           // Clear the file input so the same file can be selected again
           fileInput.value = "";
+        }
+      }
+
+      async function showAllTablesData() {
+        const tableCards = document.getElementsByClassName("yrTableCard");
+        for (const card of tableCards) {
+          const tableName = card.querySelector(".yrTableName").textContent.replace("Table: ", "");
+          await showTableData(tableName);
+        }
+      }
+
+      function showAllTablesStructure() {
+        const tableCards = document.getElementsByClassName("yrTableCard");
+        for (const card of tableCards) {
+          const tableName = card.querySelector(".yrTableName").textContent.replace("Table: ", "");
+          // Get the columns data from the existing button's onclick attribute
+          const structureButton = card.querySelector(".yrButton");
+          const onclickAttr = structureButton.getAttribute("onclick");
+          const columnsMatch = onclickAttr.match(/showTableStructure\('.*?', (.*?)\)/);
+          if (columnsMatch && columnsMatch[1]) {
+            const columns = JSON.parse(columnsMatch[1].replace(/&quot;/g, '"'));
+            showTableStructure(tableName, columns);
+          }
         }
       }
     </script>
