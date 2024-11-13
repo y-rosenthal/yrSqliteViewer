@@ -292,7 +292,7 @@
         type="file"
         id="restoreFile"
         class="yrFileInput"
-        accept=".zip"
+        accept=".yrslv"
         onchange="restoreSession()"
       />
       <label for="restoreFile" class="yrButton yrGreenButton">
@@ -723,7 +723,7 @@ json.dumps({"columns": columns, "rows": rows})
 
       async function saveSession() {
         const baseFilename = prompt(
-          "Enter filename (without extension)\nFiles will be saved in a ZIP archive:",
+          "Enter filename (without extension)\nFile will be saved as a .yrslv file:",
           "queryDb"
         );
 
@@ -758,9 +758,9 @@ json.dumps({"columns": columns, "rows": rows})
           const dbBytes = pyodideInstance.FS.readFile("database.sqlite");
           zip.file(`${currentDatabaseName}`, dbBytes);
 
-          // Generate and download ZIP file using saveAs
+          // Generate and download ZIP file using saveAs, but with .yrslv extension
           const zipBlob = await zip.generateAsync({ type: "blob" });
-          saveAs(zipBlob, `${baseFilename}.zip`);
+          saveAs(zipBlob, `${baseFilename}.yrslv`);
 
           isSessionSaved = true;
         }
