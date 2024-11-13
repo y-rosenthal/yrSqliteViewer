@@ -369,6 +369,10 @@ json.dumps({"tables": table_info})
           : document.getElementById("output");
 
         const query = queryElement.value;
+        
+        // If query is empty, don't proceed
+        if (!query.trim()) return;
+
         try {
           const result = await pyodideInstance.runPythonAsync(`
 import sqlite3
@@ -410,26 +414,32 @@ json.dumps({"columns": columns, "rows": rows})
 
           outputElement.innerHTML = tableHtml;
 
-          // Always add a new query interface
-          queryInterfaceCount++;
-          const newInterfaceId = queryInterfaceCount + 1;
-          const newInterface = document.createElement("div");
-          newInterface.innerHTML = `
-            <div class="yrQueryInterface">
-              <h3>SQL Query Interface ${newInterfaceId}</h3>
-              <textarea
-                id="sqlQuery${newInterfaceId}"
-                rows="3"
-                placeholder="Enter SQL query here..."
-                class="yrQueryTextarea"
-                oninput="autoResize(this)"
-              ></textarea>
-              <br />
-              <button onclick="runQuery(${newInterfaceId})" class="yrButton yrGreenButton">Run Query</button>
-              <div id="output${newInterfaceId}" class="yrOutputContainer"></div>
-            </div>
-          `;
-          document.getElementById("queryInterfaces").appendChild(newInterface);
+          // Check if there's already a blank query interface at the end
+          const lastInterface = document.querySelector('.yrQueryInterface:last-child');
+          const lastTextarea = lastInterface.querySelector('textarea');
+          
+          // Only add a new interface if the last one isn't empty
+          if (lastTextarea.value.trim() !== '') {
+            queryInterfaceCount++;
+            const newInterfaceId = queryInterfaceCount + 1;
+            const newInterface = document.createElement("div");
+            newInterface.innerHTML = `
+              <div class="yrQueryInterface">
+                <h3>SQL Query Interface ${newInterfaceId}</h3>
+                <textarea
+                  id="sqlQuery${newInterfaceId}"
+                  rows="3"
+                  placeholder="Enter SQL query here..."
+                  class="yrQueryTextarea"
+                  oninput="autoResize(this)"
+                ></textarea>
+                <br />
+                <button onclick="runQuery(${newInterfaceId})" class="yrButton yrGreenButton">Run Query</button>
+                <div id="output${newInterfaceId}" class="yrOutputContainer"></div>
+              </div>
+            `;
+            document.getElementById("queryInterfaces").appendChild(newInterface);
+          }
         } catch (error) {
           outputElement.innerHTML = `<div class="yrErrorMessage">Error executing query: ${error.message}</div>`;
         }
