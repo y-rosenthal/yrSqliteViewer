@@ -534,6 +534,10 @@ json.dumps({"columns": columns, "rows": rows})
           });
           zip.file(`${baseFilename}.txt`, textContent);
 
+          // Add the SQLite database file to the ZIP
+          const dbBytes = pyodideInstance.FS.readFile("database.sqlite");
+          zip.file(`${currentDatabaseName}`, dbBytes);
+
           // Generate and download ZIP file using saveAs
           const zipBlob = await zip.generateAsync({ type: "blob" });
           saveAs(zipBlob, `${baseFilename}.zip`);
