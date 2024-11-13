@@ -288,6 +288,16 @@
       <button onclick="saveSession()" class="yrButton yrGreenButton">
         Save Session
       </button>
+      <input
+        type="file"
+        id="restoreFile"
+        class="yrFileInput"
+        accept=".zip"
+        onchange="restoreSession()"
+      />
+      <label for="restoreFile" class="yrButton yrGreenButton">
+        Restore Session
+      </label>
       <button onclick="clearSession()" class="yrButton yrRedButton">
         Clear Session
       </button>
@@ -896,6 +906,109 @@ json.dumps({"columns": columns, "rows": rows})
           interface.setAttribute('data-base-font', newSize);
           interface.style.fontSize = `${newSize}em`;
         });
+      }
+
+      async function restoreSession() {
+        const fileInput = document.getElementById('restoreFile');
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        try {
+          // Read the zip file
+          const zipData = await file.arrayBuffer();
+          const zip = await JSZip.loadAsync(zipData);
+
+          // Find and parse the JSON file
+          const jsonFile = Object.values(zip.files).find(file => file.name.endsWith('.json'));
+          if (!jsonFile) throw new Error('No JSON file found in the archive');
+
+          const jsonContent = await jsonFile.async('string');
+          const sessionData = JSON.parse(jsonContent);
+
+          // Verify format version
+          if (sessionData.jsonFormatVersion !== '0.1') {
+            throw new Error('Incompatible session format version');
+          }
+
+          // Find and extract the database file
+          const dbFile = zip.files[sessionData.databaseName];
+          if (!dbFile) throw new Error('Database file not found in archive');
+
+          // Write the database file to Pyodide's virtual filesystem
+          const dbBytes = await dbFile.async('uint8array');
+          if (!pyodideInstance) {
+            pyodideInstance = await loadPyodide();
+            await pyodideInstance.loadPackage("sqlite3");
+          }
+          pyodideInstance.FS.writeFile("database.sqlite", dbBytes);
+
+          // Restore the session state
+          currentDatabaseName = sessionData.databaseName;
+          queryHistory = sessionData.queries;
+          document.getElementById('selectedFileName').textContent = currentDatabaseName;
+          document.getElementById('noFileMessage').style.display = 'none';
+
+          // Reload the database to refresh table list and structure
+          await loadDatabase();
+
+          // Restore query interfaces
+          document.getElementById('queryInterfaces').innerHTML = '';
+          queryHistory.forEach((item, index) => {
+            const interfaceId = index + 1;
+            const newInterface = document.createElement('div');
+            newInterface.className = 'yrQueryInterface';
+            newInterface.setAttribute('data-base-font', '1');
+            newInterface.innerHTML = `
+              <div class="yrFlexContainer">
+                <h3>SQL Query Interface ${interfaceId}</h3>
+                <div class="yrFontControl">
+                  <button onclick="adjustFontSize('query_interface_${interfaceId}', -0.1)" class="yrFontButton">A-</button>
+                  <button onclick="adjustFontSize('query_interface_${interfaceId}', 0.1)" class="yrFontButton">A+</button>
+                </div>
+              </div>
+              <textarea
+                id="sqlQuery${interfaceId}"
+                rows="3"
+                placeholder="Enter SQL query here..."
+                class="yrQueryTextarea"
+                oninput="autoResize(this)"
+              >${item.query}</textarea>
+              <br />
+              <button onclick="runQuery(${interfaceId})" class="yrButton yrGreenButton">Run Query</button>
+              <div id="output${interfaceId}" class="yrOutputContainer"></div>
+            `;
+            document.getElementById('queryInterfaces').appendChild(newInterface);
+
+            // Restore query results
+            const outputDiv = newInterface.querySelector(`#output${interfaceId}`);
+            if (item.results) {
+              let tableHtml = '<table border="1"><tr>';
+              item.results.columns.forEach(col => {
+                tableHtml += `<th>${col}</th>`;
+              });
+              tableHtml += '</tr>';
+              item.results.rows.forEach(row => {
+                tableHtml += '<tr>';
+                row.forEach(cell => {
+                  tableHtml += `<td>${cell}</td>`;
+                });
+                tableHtml += '</tr>';
+              });
+              tableHtml += '</table>';
+              outputDiv.innerHTML = tableHtml;
+            }
+          });
+
+          queryInterfaceCount = queryHistory.length;
+          isSessionSaved = true;
+
+        } catch (error) {
+          alert(`Error restoring session: ${error.message}`);
+          console.error('Session restore error:', error);
+        } finally {
+          // Clear the file input so the same file can be selected again
+          fileInput.value = '';
+        }
       }
     </script>
   </body>
