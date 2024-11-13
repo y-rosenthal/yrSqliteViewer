@@ -318,6 +318,19 @@
     >
       Click "Choose File" button to load a database file
     </div>
+    <div
+      id="loadingMessage"
+      style="
+        display: none;
+        font-style: italic;
+        color: #444;
+        font-size: 1.2em;
+        margin: 20px 10px;
+      "
+    >
+      <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" alt="Loading..." style="vertical-align: middle; margin-right: 10px;">
+      Loading database file...
+    </div>
     <div id="tableList" class="yrTableList"></div>
 
     <div class="yrFlexContainer">
@@ -396,51 +409,56 @@
           return;
         }
 
-        // Clear existing query interfaces and reset counter
-        document.getElementById("queryInterfaces").innerHTML = `
-          <div class="yrQueryInterface" data-base-font="1">
-            <div class="yrFlexContainer">
-              <h3>SQL Query Interface 1</h3>
-              <div class="yrFontControl">
-                <button onclick="adjustFontSize('query_interface_1', -0.1)" class="yrFontButton">A-</button>
-                <button onclick="adjustFontSize('query_interface_1', 0.1)" class="yrFontButton">A+</button>
+        // Show loading message and hide no file message
+        document.getElementById("noFileMessage").style.display = "none";
+        document.getElementById("loadingMessage").style.display = "block";
+
+        try {
+          // Clear existing query interfaces and reset counter
+          document.getElementById("queryInterfaces").innerHTML = `
+            <div class="yrQueryInterface" data-base-font="1">
+              <div class="yrFlexContainer">
+                <h3>SQL Query Interface 1</h3>
+                <div class="yrFontControl">
+                  <button onclick="adjustFontSize('query_interface_1', -0.1)" class="yrFontButton">A-</button>
+                  <button onclick="adjustFontSize('query_interface_1', 0.1)" class="yrFontButton">A+</button>
+                </div>
               </div>
+              <textarea
+                id="sqlQuery"
+                rows="3"
+                placeholder="Enter SQL query here..."
+                class="yrQueryTextarea"
+                oninput="autoResize(this)"
+              ></textarea>
+              <br />
+              <button onclick="runQuery()" class="yrButton yrGreenButton">Run Query</button>
+              <div id="output" style="margin-top: 10px; overflow-x: auto;"></div>
             </div>
-            <textarea
-              id="sqlQuery"
-              rows="3"
-              placeholder="Enter SQL query here..."
-              class="yrQueryTextarea"
-              oninput="autoResize(this)"
-            ></textarea>
-            <br />
-            <button onclick="runQuery()" class="yrButton yrGreenButton">Run Query</button>
-            <div id="output" style="margin-top: 10px; overflow-x: auto;"></div>
-          </div>
-        `;
-        queryInterfaceCount = 0;
+          `;
+          queryInterfaceCount = 0;
 
-        // Display filename
-        document.getElementById("selectedFileName").textContent = file.name;
+          // Display filename
+          document.getElementById("selectedFileName").textContent = file.name;
 
-        // Show the query interfaces container
-        document.getElementById("queryInterfaces").style.display = "flex";
+          // Show the query interfaces container
+          document.getElementById("queryInterfaces").style.display = "flex";
 
-        // Initialize Pyodide if not already initialized
-        if (!pyodideInstance) {
-          pyodideInstance = await loadPyodide();
-          await pyodideInstance.loadPackage("sqlite3");
-        }
+          // Initialize Pyodide if not already initialized
+          if (!pyodideInstance) {
+            pyodideInstance = await loadPyodide();
+            await pyodideInstance.loadPackage("sqlite3");
+          }
 
-        currentDatabaseName = file.name;
+          currentDatabaseName = file.name;
 
-        // Read file as an ArrayBuffer and pass to Pyodide
-        const arrayBuffer = await file.arrayBuffer();
-        const bytes = new Uint8Array(arrayBuffer);
-        pyodideInstance.FS.writeFile("database.sqlite", bytes);
+          // Read file as an ArrayBuffer and pass to Pyodide
+          const arrayBuffer = await file.arrayBuffer();
+          const bytes = new Uint8Array(arrayBuffer);
+          pyodideInstance.FS.writeFile("database.sqlite", bytes);
 
-        // Run Python code in Pyodide to check tables and their schemas
-        const result = await pyodideInstance.runPythonAsync(`
+          // Run Python code in Pyodide to check tables and their schemas
+          const result = await pyodideInstance.runPythonAsync(`
 import sqlite3
 import json
 
@@ -465,50 +483,54 @@ for table in tables:
     ]
 
 json.dumps({"tables": table_info})
-        `);
+          `);
 
-        const data = JSON.parse(result);
-        tableNames = Object.keys(data.tables);
+          const data = JSON.parse(result);
+          tableNames = Object.keys(data.tables);
 
-        // Display tables with buttons
-        let tableListHtml = "";
-        Object.entries(data.tables).forEach(([tableName, columns]) => {
-          const tableCard = document.createElement("div");
-          tableCard.className = "yrTableCard";
-          tableCard.setAttribute("data-base-font", "1");
-          tableCard.innerHTML = `
-            <div class="yrFlexContainer">
-              <div class="yrTableName">Table: ${tableName}</div>
-              <div class="yrFontControl">
-                <button onclick="adjustFontSize('${tableName}_card', -0.1)" class="yrFontButton">A-</button>
-                <button onclick="adjustFontSize('${tableName}_card', 0.1)" class="yrFontButton">A+</button>
+          // Display tables with buttons
+          let tableListHtml = "";
+          Object.entries(data.tables).forEach(([tableName, columns]) => {
+            const tableCard = document.createElement("div");
+            tableCard.className = "yrTableCard";
+            tableCard.setAttribute("data-base-font", "1");
+            tableCard.innerHTML = `
+              <div class="yrFlexContainer">
+                <div class="yrTableName">Table: ${tableName}</div>
+                <div class="yrFontControl">
+                  <button onclick="adjustFontSize('${tableName}_card', -0.1)" class="yrFontButton">A-</button>
+                  <button onclick="adjustFontSize('${tableName}_card', 0.1)" class="yrFontButton">A+</button>
+                </div>
               </div>
-            </div>
-            <div class="yrTableButtons">
-              <button 
-                onclick="showTableStructure('${tableName}', ${JSON.stringify(
-            columns
-          ).replace(/"/g, "&quot;")})"
-                class="yrButton yrGreenButton"
-              >Show Structure</button>
-              <button 
-                onclick="showTableData('${tableName}')"
-                class="yrButton yrGreenButton"
-              >Show Rows</button>
-            </div>
-            <div id="${tableName}_info" class="yrTableInfo"></div>
-          `;
-          document.getElementById("tableList").appendChild(tableCard);
-        });
+              <div class="yrTableButtons">
+                <button 
+                  onclick="showTableStructure('${tableName}', ${JSON.stringify(
+                columns
+              ).replace(/"/g, "&quot;")})"
+                  class="yrButton yrGreenButton"
+                >Show Structure</button>
+                <button 
+                  onclick="showTableData('${tableName}')"
+                  class="yrButton yrGreenButton"
+                >Show Rows</button>
+              </div>
+              <div id="${tableName}_info" class="yrTableInfo"></div>
+            `;
+            document.getElementById("tableList").appendChild(tableCard);
+          });
 
-        // Show structure for all tables by default
-        Object.entries(data.tables).forEach(([tableName, columns]) => {
-          showTableStructure(tableName, columns);
-        });
+          // Show structure for all tables by default
+          Object.entries(data.tables).forEach(([tableName, columns]) => {
+            showTableStructure(tableName, columns);
+          });
 
-        // Clear the "no file" message when loading a database
-        document.getElementById("noFileMessage").style.display = "none";
-        document.getElementById("sqlCommandsHeader").style.display = "block";
+          // Clear the "no file" message when loading a database
+          document.getElementById("noFileMessage").style.display = "none";
+          document.getElementById("sqlCommandsHeader").style.display = "block";
+        } finally {
+          // Hide loading message when done (whether successful or not)
+          document.getElementById("loadingMessage").style.display = "none";
+        }
       }
 
       function autoResize(textarea) {
