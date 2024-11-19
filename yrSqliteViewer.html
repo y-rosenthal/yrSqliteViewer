@@ -338,12 +338,60 @@ json.dumps({"tables": table_info})
         }
       }
 
+      /*
       function autoResize(textarea) {
+        console.log("starting: autoResize(textarea)");
+        textarea.style.width = "auto"; // Reset height to recalculate
+        textarea.style.width = textarea.scrollWidth + "px";
         textarea.style.height = "auto"; // Reset height to recalculate
+        textarea.style.height = textarea.scrollHeight + "px";
+      }
+      */
+
+      function autoResize(textarea) {
+        console.log("starting: autoResize(textarea)");
+        const EXTRA_SPACE = 50; // Extra pixels to add for width
+        const WIDTH_THRESHOLD = 30; // Minimum change in width before adjusting
+        const MIN_WIDTH = 100;
+        const MAX_WIDTH = Math.min(800, window.innerWidth - 40);
+
+        // Create hidden div for measurement if it doesn't exist
+        let helper = document.getElementById("textarea-helper");
+        if (!helper) {
+          helper = document.createElement("div");
+          helper.id = "textarea-helper";
+          helper.style.position = "absolute";
+          helper.style.visibility = "hidden";
+          helper.style.whiteSpace = "pre";
+          document.body.appendChild(helper);
+        }
+
+        // Copy relevant styles
+        const styles = window.getComputedStyle(textarea);
+        helper.style.fontSize = styles.fontSize;
+        helper.style.fontFamily = styles.fontFamily;
+        helper.style.padding = styles.padding;
+        helper.style.border = styles.border;
+
+        // Measure content
+        helper.textContent = textarea.value;
+        const newWidth = helper.offsetWidth + EXTRA_SPACE;
+        const currentWidth =
+          parseInt(textarea.style.width) || textarea.offsetWidth;
+
+        // Only adjust width if change is significant
+        if (Math.abs(newWidth - currentWidth) > WIDTH_THRESHOLD) {
+          textarea.style.width =
+            Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, newWidth)) + "px";
+        }
+
+        // Adjust height
+        textarea.style.height = "auto";
         textarea.style.height = textarea.scrollHeight + "px";
       }
 
       async function runQuery(interfaceId) {
+        console.log("starting: async function runQuery(interfaceId)");
         if (!pyodideInstance) return;
 
         const queryElement = document.getElementById(`sqlQuery${interfaceId}`);
@@ -437,6 +485,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       function formatQueryResultsAsText(query, results) {
+        console.log("starting: formatQueryResultsAsText(query, results)");
         let output = `Query: ${query}\n\n`;
 
         // Find max width for each column
@@ -470,6 +519,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       function clearSession() {
+        console.log("starting: clearSession()");
         if (
           confirm(
             "Are you sure you want to clear the current session? This will remove all queries and results."
@@ -510,6 +560,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       async function saveSession() {
+        console.log("starting: async function saveSession()");
         const baseFilename = prompt(
           "Enter filename (without extension)\nFile will be saved as a .yrslv file:",
           "yrSqliteViewerSession"
@@ -555,6 +606,9 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       function showTableStructure(tableName, columns) {
+        console.log(
+          "starting: function showTableStructure(tableName, columns)"
+        );
         const infoDiv = document.getElementById(`${tableName}_info`);
 
         let structureHtml = `
@@ -579,6 +633,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       async function showTableData(tableName) {
+        console.log("starting: async function showTableData(tableName)");
         const infoDiv = document.getElementById(`${tableName}_info`);
         try {
           const result = await pyodideInstance.runPythonAsync(`
@@ -624,6 +679,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       function adjustFontSize(elementId, delta) {
+        console.log("starting: function adjustFontSize(elementId, delta)");
         let element;
         if (elementId.includes("query_interface_")) {
           // For query interfaces
@@ -659,6 +715,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       function adjustAllTablesFontSize(delta) {
+        console.log("starting: function adjustAllTablesFontSize(delta)");
         const tableCards = document.getElementsByClassName("yrTableCard");
         Array.from(tableCards).forEach((card) => {
           let baseFontSize =
@@ -670,6 +727,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       function setAllTablesFontSize(size) {
+        console.log("starting: function setAllTablesFontSize(size)");
         const tableCards = document.getElementsByClassName("yrTableCard");
         const newSize = Math.max(0.5, Math.min(3, parseFloat(size)));
         Array.from(tableCards).forEach((card) => {
@@ -679,6 +737,9 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       function adjustAllQueryInterfacesFontSize(delta) {
+        console.log(
+          "starting: function adjustAllQueryInterfacesFontSize(delta)"
+        );
         const queryInterfaces =
           document.getElementsByClassName("yrQueryInterface");
         Array.from(queryInterfaces).forEach((interface) => {
@@ -691,6 +752,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       function setAllQueryInterfacesFontSize(size) {
+        console.log("starting: function setAllQueryInterfacesFontSize(size)");
         const queryInterfaces =
           document.getElementsByClassName("yrQueryInterface");
         const newSize = Math.max(0.5, Math.min(3, parseFloat(size)));
@@ -701,6 +763,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       async function restoreSession() {
+        console.log("starting: async function restoreSession()");
         const fileInput = document.getElementById("restoreFile");
         const file = fileInput.files[0];
         if (!file) return;
@@ -776,6 +839,9 @@ json.dumps({"columns": columns, "rows": rows})
               .getElementById("queryInterfaces")
               .appendChild(newInterface);
 
+            // Resize the textarea
+            autoResize(document.getElementById(`sqlQuery${interfaceId}`));
+
             // Restore query results
             const outputDiv = newInterface.querySelector(
               `#output${interfaceId}`
@@ -810,6 +876,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       async function showAllTablesData() {
+        console.log("starting: async function showAllTablesData()");
         const tableCards = document.getElementsByClassName("yrTableCard");
         for (const card of tableCards) {
           const tableName = card
@@ -820,6 +887,7 @@ json.dumps({"columns": columns, "rows": rows})
       }
 
       function showAllTablesStructure() {
+        console.log("starting: function showAllTablesStructure()");
         const tableCards = document.getElementsByClassName("yrTableCard");
         for (const card of tableCards) {
           const tableName = card
