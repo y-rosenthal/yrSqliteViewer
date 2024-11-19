@@ -206,6 +206,7 @@
       };
 
       async function loadDatabase() {
+        console.log("starting: loadDatabase()");
         const fileInput = document.getElementById("sqliteFile");
         const file = fileInput.files[0];
         if (!file) {
@@ -292,6 +293,9 @@ json.dumps({"tables": table_info})
 
           const data = JSON.parse(result);
           tableNames = Object.keys(data.tables);
+
+          // YR - clear the table list
+          document.getElementById("tableList").innerHTML = "";
 
           // Display tables with buttons
           let tableListHtml = "";
