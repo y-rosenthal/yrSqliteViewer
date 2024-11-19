@@ -1,0 +1,267 @@
+body {
+    background-color: lightgrey;
+  }
+
+  .yrHeader {
+    text-align: center;
+    margin: 5px 0;
+    font-size: 2em;
+    padding: 0 50px;
+    font-weight: bold;
+  }
+
+  .yrControlPanel {
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .yrFileInput {
+    display: none;
+  }
+
+  .yrFileInputLabel {
+    padding: 8px 16px;
+    font-size: 1.1em;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    min-width: 140px;
+    text-align: center;
+    display: inline-block;
+  }
+
+  .yrFileInputLabel:hover {
+    background-color: #1b4b1d;
+  }
+
+  .yrFileName {
+    font-size: 1.3em;
+    color: #666;
+    font-style: italic;
+  }
+
+  .yrButton {
+    padding: 8px 16px;
+    font-size: 0.95em;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    min-width: 140px;
+  }
+
+  .yrGreenButton {
+    background-color: #4caf50;
+  }
+
+  .yrGreenButton:hover {
+    background-color: #1b4b1d;
+  }
+
+  .yrGreyButton {
+    background-color: #666;
+  }
+
+  .yrGreyButton:hover {
+    background-color: #444;
+  }
+
+  .yrRedButton {
+    background-color: #f44336;
+  }
+
+  .yrRedButton:hover {
+    background-color: #771616;
+  }
+
+  .yrTableList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+  }
+
+  .yrQueryInterfaces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    padding: 10px;
+  }
+
+  .yrQueryInterface {
+    flex: 0 0 auto;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    margin: 10px;
+  }
+
+  .yrQueryInterface:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .yrQueryTextarea {
+    width: 100%;
+    margin-bottom: 10px;
+    resize: none;
+    overflow: hidden;
+    font-size: 1em;
+    font-family: inherit;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .yrQueryTextarea:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+  }
+
+  .yrQueryInterface h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  .yrTableCard {
+    flex: 0 1 auto;
+    margin: 5px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    min-width: 250px;
+  }
+
+  .yrTableName {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+  }
+
+  .yrTableButtons {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+
+  .yrTableInfo {
+    display: block;
+  }
+
+  .yrDataTable {
+    font-size: 1em;
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .yrDataTable th,
+  .yrDataTable td {
+    text-align: left;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .yrOutputContainer {
+    margin-top: 5px;
+    overflow-x: auto;
+  }
+
+  .yrErrorMessage {
+    color: red;
+    margin-bottom: 10px;
+  }
+
+  .yrTableStructure {
+    overflow-x: auto;
+    margin-top: 5px;
+  }
+
+  .yrScrollContainer {
+    overflow-x: auto;
+    margin-top: 5px;
+  }
+
+  .yrFlexContainer {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: flex-start;
+  }
+
+  .yrFlexContainer h2 {
+    margin-right: 15px;
+  }
+
+  .yrFontControl {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .yrFontButton {
+    padding: 2px 8px;
+    font-size: 0.9em;
+    color: white;
+    background-color: #666;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .yrHeaderFontButton {
+    padding: 4px 12px;
+    height: 28px;
+    font-size: 1.1em;
+    color: white;
+    background-color: #666;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .yrHeaderFontButton:hover {
+    background-color: #444;
+  }
+
+  .yrFontInput {
+    width: 60px;
+    height: 28px;
+    padding: 4px 8px;
+    font-size: 1.1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    text-align: center;
+  }
+
+  .yrFontInput:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    background-color: white;
+  }
+
+  .yrFontInput:hover {
+    border-color: #999;
+    background-color: white;
+  }
