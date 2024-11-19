@@ -607,7 +607,7 @@ json.dumps({"columns": columns, "rows": rows})
 
       function showTableStructure(tableName, columns) {
         console.log(
-          "starting: function showTableStructure(tableName, columns)"
+          `starting: function showTableStructure(tableName=${tableName}, columns=${columns})`
         );
         const infoDiv = document.getElementById(`${tableName}_info`);
 
