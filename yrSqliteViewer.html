@@ -443,17 +443,17 @@
           </div>
         </div>
         <textarea
-          id="sqlQuery"
+          id="sqlQuery1"
           rows="3"
           placeholder="Enter SQL query here..."
           class="yrQueryTextarea"
           oninput="autoResize(this)"
         ></textarea>
         <br />
-        <button onclick="runQuery()" class="yrButton yrGreyButton">
+        <button onclick="runQuery(1)" class="yrButton yrGreyButton">
           Run Query
         </button>
-        <div id="output" style="margin-top: 10px; overflow-x: auto"></div>
+        <div id="output1" style="margin-top: 10px; overflow-x: auto"></div>
       </div>
     </div>
 
@@ -498,15 +498,15 @@
                 </div>
               </div>
               <textarea
-                id="sqlQuery"
+                id="sqlQuery1"
                 rows="3"
                 placeholder="Enter SQL query here..."
                 class="yrQueryTextarea"
                 oninput="autoResize(this)"
               ></textarea>
               <br />
-              <button onclick="runQuery()" class="yrButton yrGreyButton">Run Query</button>
-              <div id="output" style="margin-top: 10px; overflow-x: auto;"></div>
+              <button onclick="runQuery(1)" class="yrButton yrGreyButton">Run Query</button>
+              <div id="output1" class="yrOutputContainer"></div>
             </div>
           `;
           queryInterfaceCount = 0;
@@ -611,15 +611,11 @@ json.dumps({"tables": table_info})
         textarea.style.height = textarea.scrollHeight + "px";
       }
 
-      async function runQuery(interfaceId = "") {
+      async function runQuery(interfaceId) {
         if (!pyodideInstance) return;
 
-        const queryElement = interfaceId
-          ? document.getElementById(`sqlQuery${interfaceId}`)
-          : document.getElementById("sqlQuery");
-        const outputElement = interfaceId
-          ? document.getElementById(`output${interfaceId}`)
-          : document.getElementById("output");
+        const queryElement = document.getElementById(`sqlQuery${interfaceId}`);
+        const outputElement = document.getElementById(`output${interfaceId}`);
 
         const query = queryElement.value;
 
@@ -764,15 +760,15 @@ json.dumps({"columns": columns, "rows": rows})
                 </div>
               </div>
               <textarea
-                id="sqlQuery"
+                id="sqlQuery1"
                 rows="3"
                 placeholder="Enter SQL query here..."
                 class="yrQueryTextarea"
                 oninput="autoResize(this)"
               ></textarea>
               <br />
-              <button onclick="runQuery()" class="yrButton yrGreyButton">Run Query</button>
-              <div id="output" class="yrOutputContainer"></div>
+              <button onclick="runQuery(1)" class="yrButton yrGreyButton">Run Query</button>
+              <div id="output1" class="yrOutputContainer"></div>
             </div>
           `;
           document.getElementById("selectedFileName").textContent =
