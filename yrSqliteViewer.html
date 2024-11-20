@@ -520,7 +520,10 @@ json.dumps({"columns": columns, "rows": rows})
 
           // Only add a new interface if the last one isn't empty
           if (lastTextarea.getValue().trim() !== "") {
-            const newInterfaceId = queryInterfaceCount + 2;
+            // Count existing interfaces to determine next number
+            const existingInterfaces = document.getElementsByClassName("yrQueryInterface");
+            const newInterfaceId = existingInterfaces.length + 1;
+            
             const newInterface = document.createElement("div");
             newInterface.className = "yrQueryInterface";
             newInterface.setAttribute("data-base-font", "1");
@@ -539,7 +542,7 @@ json.dumps({"columns": columns, "rows": rows})
             `;
             document.getElementById("queryInterfaces").appendChild(newInterface);
             initializeCodeMirror(`sqlQuery${newInterfaceId}`);
-            queryInterfaceCount = newInterfaceId - 1;
+            queryInterfaceCount = newInterfaceId; // Update the counter to match
           }
         } catch (error) {
           outputElement.innerHTML = `<div class="yrErrorMessage">Error executing query: ${error.message}</div>`;
