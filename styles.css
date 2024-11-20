@@ -265,3 +265,16 @@ body {
     border-color: #999;
     background-color: white;
   }
+
+  .CodeMirror {
+    height: auto;
+    min-height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    font-family: monospace;
+  }
+
+  .CodeMirror-scroll {
+    min-height: 100px;
+  }

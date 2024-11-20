@@ -12,7 +12,59 @@
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/sql/sql.min.js"></script>
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- themes for codemirror -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/eclipse.min.css"
+    />
+    <!--
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/idea.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/material.min.css" />
+    -->
+    <style>
+      /* Make comments bold and larger */
+      .CodeMirror .cm-comment {
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 0px;
+        margin: 0px;
+      }
+
+      /* Examples of other syntax elements you can customize */
+      .CodeMirror .cm-keyword {
+        /* SELECT, FROM, WHERE, etc */
+        color: #0000cc;
+      }
+
+      .CodeMirror .cm-string {
+        /* String literals */
+        color: #008800;
+      }
+
+      .CodeMirror .cm-number {
+        /* Numeric literals */
+        color: #aa00aa;
+      }
+
+      .CodeMirror .cm-operator {
+        /* Operators like =, <, > */
+        color: #666666;
+      }
+
+      /* You can also style the editor itself */
+      .CodeMirror {
+        font-family: "Consolas", monospace;
+        line-height: 1.5;
+      }
+    </style>
   </head>
   <body>
     <div class="yrControlPanel">
@@ -201,6 +253,7 @@
       let currentDatabaseName = "";
       let tableNames = [];
       let isSessionSaved = true;
+      let editors = {};
 
       window.onbeforeunload = function (e) {
         if (queryHistory.length > 0 && !isSessionSaved) {
@@ -398,13 +451,12 @@ json.dumps({"tables": table_info})
       }
 
       async function runQuery(interfaceId) {
-        console.log("starting: async function runQuery(interfaceId)");
+        console.log(`starting: runQuery(interfaceId=${interfaceId})`);
         if (!pyodideInstance) return;
 
-        const queryElement = document.getElementById(`sqlQuery${interfaceId}`);
+        const editor = editors[`sqlQuery${interfaceId}`];
         const outputElement = document.getElementById(`output${interfaceId}`);
-
-        const query = queryElement.value;
+        const query = editor.getValue();
 
         // If query is empty, don't proceed
         if (!query.trim()) return;
@@ -471,13 +523,7 @@ json.dumps({"columns": columns, "rows": rows})
                   <button onclick="adjustFontSize('query_interface_${newInterfaceId}', 0.1)" class="yrFontButton">A+</button>
                 </div>
               </div>
-              <textarea
-                id="sqlQuery${newInterfaceId}"
-                rows="3"
-                placeholder="Enter SQL query here..."
-                class="yrQueryTextarea"
-                oninput="autoResize(this)"
-              ></textarea>
+              <div id="sqlQuery${newInterfaceId}" class="yrQueryTextarea"></div>
               <br />
               <button onclick="runQuery(${newInterfaceId})" class="yrButton yrGreyButton">Run Query</button>
               <div id="output${newInterfaceId}" class="yrOutputContainer"></div>
@@ -485,6 +531,7 @@ json.dumps({"columns": columns, "rows": rows})
             document
               .getElementById("queryInterfaces")
               .appendChild(newInterface);
+            initializeCodeMirror(`sqlQuery${newInterfaceId}`);
           }
         } catch (error) {
           outputElement.innerHTML = `<div class="yrErrorMessage">Error executing query: ${error.message}</div>`;
@@ -563,6 +610,7 @@ json.dumps({"columns": columns, "rows": rows})
           document.getElementById("selectedFileName").textContent =
             "no file chosen yet";
           document.getElementById("noFileMessage").style.display = "block";
+          initializeCodeMirror("sqlQuery1");
         }
       }
 
@@ -689,15 +737,15 @@ json.dumps({"columns": columns, "rows": rows})
         console.log("starting: function adjustFontSize(elementId, delta)");
         let element;
         if (elementId.includes("query_interface_")) {
-          // For query interfaces
           const interfaceNumber = elementId.split("_").pop();
-          if (interfaceNumber === "1") {
-            element = document.querySelector(".yrQueryInterface"); // First interface
-          } else {
-            element =
-              document.querySelectorAll(".yrQueryInterface")[
-                interfaceNumber - 1
-              ];
+          const editor = editors[`sqlQuery${interfaceNumber}`];
+          if (editor) {
+            const wrapper = editor.getWrapperElement();
+            let baseFontSize =
+              parseFloat(wrapper.getAttribute("data-base-font")) || 1;
+            baseFontSize = Math.max(0.5, Math.min(2, baseFontSize + delta));
+            wrapper.setAttribute("data-base-font", baseFontSize);
+            wrapper.style.fontSize = `${baseFontSize}em`;
           }
         } else if (elementId.includes("_card")) {
           // For table cards
@@ -841,13 +889,7 @@ json.dumps({"columns": columns, "rows": rows})
                   <button onclick="adjustFontSize('query_interface_${interfaceId}', 0.1)" class="yrFontButton">A+</button>
                 </div>
               </div>
-              <textarea
-                id="sqlQuery${interfaceId}"
-                rows="3"
-                placeholder="Enter SQL query here..."
-                class="yrQueryTextarea"
-                oninput="autoResize(this)"
-              >${item.query}</textarea>
+              <div id="sqlQuery${interfaceId}" class="yrQueryTextarea"></div>
               <br />
               <button onclick="runQuery(${interfaceId})" class="yrButton yrGreyButton">Run Query</button>
               <div id="output${interfaceId}" class="yrOutputContainer"></div>
@@ -856,12 +898,14 @@ json.dumps({"columns": columns, "rows": rows})
               .getElementById("queryInterfaces")
               .appendChild(newInterface);
 
-            // Resize the textarea
-            autoResize(document.getElementById(`sqlQuery${interfaceId}`));
+            // Initialize CodeMirror and set the value
+            const editor = initializeCodeMirror(`sqlQuery${interfaceId}`);
+            editor.setValue(item.query);
+            editor.refresh();
 
-            // Restore query results
-            const outputDiv = newInterface.querySelector(
-              `#output${interfaceId}`
+            // Restore the query results
+            const outputElement = document.getElementById(
+              `output${interfaceId}`
             );
             if (item.results) {
               let tableHtml = '<table border="1"><tr>';
@@ -869,6 +913,7 @@ json.dumps({"columns": columns, "rows": rows})
                 tableHtml += `<th>${col}</th>`;
               });
               tableHtml += "</tr>";
+
               item.results.rows.forEach((row) => {
                 tableHtml += "<tr>";
                 row.forEach((cell) => {
@@ -877,7 +922,7 @@ json.dumps({"columns": columns, "rows": rows})
                 tableHtml += "</tr>";
               });
               tableHtml += "</table>";
-              outputDiv.innerHTML = tableHtml;
+              outputElement.innerHTML = tableHtml;
             }
           });
 
@@ -896,18 +941,14 @@ json.dumps({"columns": columns, "rows": rows})
                 <button onclick="adjustFontSize('query_interface_${newInterfaceId}', 0.1)" class="yrFontButton">A+</button>
               </div>
             </div>
-            <textarea
-              id="sqlQuery${newInterfaceId}"
-              rows="3"
-              placeholder="Enter SQL query here..."
-              class="yrQueryTextarea"
-              oninput="autoResize(this)"
-            ></textarea>
+            <div id="sqlQuery${newInterfaceId}" class="yrQueryTextarea"></div>
             <br />
             <button onclick="runQuery(${newInterfaceId})" class="yrButton yrGreyButton">Run Query</button>
             <div id="output${newInterfaceId}" class="yrOutputContainer"></div>
           `;
           document.getElementById("queryInterfaces").appendChild(newInterface);
+          const editor = initializeCodeMirror(`sqlQuery${newInterfaceId}`);
+          editor.refresh();
           queryInterfaceCount++; // Increment the counter for the new blank interface
 
           isSessionSaved = true;
@@ -949,6 +990,30 @@ json.dumps({"columns": columns, "rows": rows})
             showTableStructure(tableName, columns);
           }
         }
+      }
+
+      function initializeCodeMirror(elementId) {
+        const editor = CodeMirror(document.getElementById(elementId), {
+          mode: "text/x-sql",
+          theme: "eclipse", // Change this to try different themes
+          lineNumbers: true,
+          lineWrapping: true,
+          viewportMargin: Infinity,
+          placeholder: "Enter SQL query here...",
+          extraKeys: {
+            "Ctrl-Enter": function (cm) {
+              const id = elementId.replace("sqlQuery", "");
+              runQuery(id);
+            },
+            "Cmd-Enter": function (cm) {
+              const id = elementId.replace("sqlQuery", "");
+              runQuery(id);
+            },
+          },
+        });
+
+        editors[elementId] = editor;
+        return editor;
       }
 
       // Attach the event listener
