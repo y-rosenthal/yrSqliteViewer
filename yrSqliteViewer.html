@@ -288,19 +288,15 @@
                     <button onclick="adjustFontSize('query_interface_1', 0.1)" class="yrFontButton">A+</button>
                   </div>
                 </div>
-                <textarea
-                  id="sqlQuery1"
-                  rows="3"
-                  placeholder="Enter SQL query here..."
-                  class="yrQueryTextarea"
-                  oninput="autoResize(this)"
-                ></textarea>
+                <div id="sqlQuery1" class="yrQueryTextarea"></div>
                 <br />
                 <button onclick="runQuery(1)" class="yrButton yrGreyButton">Run Query</button>
                 <div id="output1" class="yrOutputContainer"></div>
               </div>
             `;
             queryInterfaceCount = 0;
+            // Initialize CodeMirror for the first interface
+            initializeCodeMirror('sqlQuery1');
           }
 
           // Display filename
