@@ -882,6 +882,34 @@ json.dumps({"columns": columns, "rows": rows})
           });
 
           queryInterfaceCount = queryHistory.length;
+
+          // After restoring all query interfaces, add a blank one
+          const newInterfaceId = queryInterfaceCount + 1;
+          const newInterface = document.createElement("div");
+          newInterface.className = "yrQueryInterface";
+          newInterface.setAttribute("data-base-font", "1");
+          newInterface.innerHTML = `
+            <div class="yrFlexContainer">
+              <h3>SQL Command ${newInterfaceId}</h3>
+              <div class="yrFontControl">
+                <button onclick="adjustFontSize('query_interface_${newInterfaceId}', -0.1)" class="yrFontButton">A-</button>
+                <button onclick="adjustFontSize('query_interface_${newInterfaceId}', 0.1)" class="yrFontButton">A+</button>
+              </div>
+            </div>
+            <textarea
+              id="sqlQuery${newInterfaceId}"
+              rows="3"
+              placeholder="Enter SQL query here..."
+              class="yrQueryTextarea"
+              oninput="autoResize(this)"
+            ></textarea>
+            <br />
+            <button onclick="runQuery(${newInterfaceId})" class="yrButton yrGreyButton">Run Query</button>
+            <div id="output${newInterfaceId}" class="yrOutputContainer"></div>
+          `;
+          document.getElementById("queryInterfaces").appendChild(newInterface);
+          queryInterfaceCount++; // Increment the counter for the new blank interface
+
           isSessionSaved = true;
         } catch (error) {
           alert(`Error restoring session: ${error.message}`);
