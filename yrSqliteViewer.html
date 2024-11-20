@@ -69,7 +69,7 @@
   <body>
     <div class="yrControlPanel">
       <div style="display: flex; align-items: center; gap: 10px">
-        <span class="yrHeader">yrSqliteViewer (ver 0.1)</span>
+        <span class="yrHeader">yrSqliteViewer (ver 0.2)</span>
 
         <!--
         <input type="file" id="sqliteFile" class="yrFileInput" accept=".sqlite,.db" onchange="loadDatabase()" />
@@ -465,7 +465,8 @@ json.dumps({"tables": table_info})
         if (!query.trim()) return;
 
         try {
-          const result = await pyodideInstance.runPythonAsync(`
+          const result = await pyodideInstance.runPythonAsync(
+            `
 import sqlite3
 import json
 
@@ -475,7 +476,8 @@ cursor.execute("""${query}""")
 columns = [description[0] for description in cursor.description]
 rows = cursor.fetchall()
 json.dumps({"columns": columns, "rows": rows})
-          `.trim());
+          `.trim()
+          );
 
           const data = JSON.parse(result);
 
@@ -515,15 +517,19 @@ json.dumps({"columns": columns, "rows": rows})
           outputElement.innerHTML = tableHtml;
 
           // Check if there's already a blank query interface at the end
-          const lastInterface = document.querySelector(".yrQueryInterface:last-child");
-          const lastTextarea = lastInterface.querySelector(".CodeMirror").CodeMirror;
+          const lastInterface = document.querySelector(
+            ".yrQueryInterface:last-child"
+          );
+          const lastTextarea =
+            lastInterface.querySelector(".CodeMirror").CodeMirror;
 
           // Only add a new interface if the last one isn't empty
           if (lastTextarea.getValue().trim() !== "") {
             // Count existing interfaces to determine next number
-            const existingInterfaces = document.getElementsByClassName("yrQueryInterface");
+            const existingInterfaces =
+              document.getElementsByClassName("yrQueryInterface");
             const newInterfaceId = existingInterfaces.length + 1;
-            
+
             const newInterface = document.createElement("div");
             newInterface.className = "yrQueryInterface";
             newInterface.setAttribute("data-base-font", "1");
@@ -540,7 +546,9 @@ json.dumps({"columns": columns, "rows": rows})
               <button onclick="runQuery(${newInterfaceId})" class="yrButton yrGreyButton">Run Query</button>
               <div id="output${newInterfaceId}" class="yrOutputContainer"></div>
             `;
-            document.getElementById("queryInterfaces").appendChild(newInterface);
+            document
+              .getElementById("queryInterfaces")
+              .appendChild(newInterface);
             initializeCodeMirror(`sqlQuery${newInterfaceId}`);
             queryInterfaceCount = newInterfaceId; // Update the counter to match
           }
@@ -641,7 +649,8 @@ json.dumps({"columns": columns, "rows": rows})
           const zip = new JSZip();
 
           // Update queryHistory with current state of all editors
-          const queryInterfaces = document.getElementsByClassName("yrQueryInterface");
+          const queryInterfaces =
+            document.getElementsByClassName("yrQueryInterface");
           let updatedHistory = [];
 
           Array.from(queryInterfaces).forEach((interface, index) => {
@@ -649,20 +658,21 @@ json.dumps({"columns": columns, "rows": rows})
             const editor = editors[`sqlQuery${interfaceId}`];
             if (editor) {
               const currentQuery = editor.getValue().trim();
-              if (currentQuery) {  // Only save non-empty queries
+              if (currentQuery) {
+                // Only save non-empty queries
                 let historyEntry;
                 // Try to find existing history entry
                 const existingEntry = queryHistory[index];
                 if (existingEntry) {
                   historyEntry = {
                     ...existingEntry,
-                    query: currentQuery
+                    query: currentQuery,
                   };
                 } else {
                   historyEntry = {
                     query: currentQuery,
                     timestamp: new Date().toISOString(),
-                    results: null  // No results if query hasn't been run
+                    results: null, // No results if query hasn't been run
                   };
                 }
                 updatedHistory.push(historyEntry);
@@ -910,7 +920,8 @@ json.dumps({"columns": columns, "rows": rows})
 
           // Restore the session state
           currentDatabaseName = sessionData.databaseName;
-          document.getElementById("selectedFileName").textContent = currentDatabaseName;
+          document.getElementById("selectedFileName").textContent =
+            currentDatabaseName;
           document.getElementById("noFileMessage").style.display = "none";
 
           // Create a File object from the database bytes
@@ -941,7 +952,9 @@ json.dumps({"columns": columns, "rows": rows})
               <button onclick="runQuery(${interfaceId})" class="yrButton yrGreyButton">Run Query</button>
               <div id="output${interfaceId}" class="yrOutputContainer"></div>
             `;
-            document.getElementById("queryInterfaces").appendChild(newInterface);
+            document
+              .getElementById("queryInterfaces")
+              .appendChild(newInterface);
 
             // Initialize CodeMirror and set the value
             const editor = initializeCodeMirror(`sqlQuery${interfaceId}`);
