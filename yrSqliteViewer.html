@@ -18,16 +18,21 @@
     <div class="yrControlPanel">
       <div style="display: flex; align-items: center; gap: 10px">
         <span class="yrHeader">yrSqliteViewer (ver 0.1)</span>
+
+        <!--
+        <input type="file" id="sqliteFile" class="yrFileInput" accept=".sqlite,.db" onchange="loadDatabase()" />
+        <label for="sqliteFile" class="yrFileInputLabel">Load Database File</label>
+        -->
         <input
           type="file"
           id="sqliteFile"
           class="yrFileInput"
           accept=".sqlite,.db"
-          onchange="loadDatabase()"
         />
         <label for="sqliteFile" class="yrFileInputLabel"
           >Load Database File</label
         >
+
         <span id="selectedFileName" class="yrFileName">no file chosen yet</span>
       </div>
       <button onclick="saveSession()" class="yrButton yrGreenButton">
@@ -205,12 +210,10 @@
         }
       };
 
-      async function loadDatabase() {
-        console.log("starting: loadDatabase()");
-        const fileInput = document.getElementById("sqliteFile");
-        const file = fileInput.files[0];
+      async function loadDatabase(file) {
+        console.log(`starting: loadDatabase(${file})`);
         if (!file) {
-          document.getElementById("output").innerHTML =
+          document.getElementById("output1").innerHTML =
             '<div class="yrErrorMessage">Please select a file.</div>';
           return;
         }
@@ -810,8 +813,18 @@ json.dumps({"columns": columns, "rows": rows})
             currentDatabaseName;
           document.getElementById("noFileMessage").style.display = "none";
 
+          /*
           // Reload the database to refresh table list and structure
-          await loadDatabase();
+          await loadDatabase(currentDatabaseName);
+          */
+
+          // Create a File object from the database bytes
+          const databaseFile = new File([dbBytes], sessionData.databaseName, {
+            type: "application/x-sqlite3",
+          });
+
+          // Pass the File object to loadDatabase
+          await loadDatabase(databaseFile);
 
           // Restore query interfaces
           document.getElementById("queryInterfaces").innerHTML = "";
@@ -909,6 +922,16 @@ json.dumps({"columns": columns, "rows": rows})
           }
         }
       }
+
+      // Attach the event listener
+      document.addEventListener("DOMContentLoaded", () => {
+        document
+          .getElementById("sqliteFile")
+          .addEventListener("input", async (event) => {
+            const file = event.target.files[0];
+            await loadDatabase(file);
+          });
+      });
     </script>
   </body>
 </html>
