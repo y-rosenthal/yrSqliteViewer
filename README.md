@@ -1,6 +1,6 @@
 # yrSqliteViewer
 
-**An "all in one" html file for viewing sqlite databases.**
+*An "all in one" html file for viewing sqlite databases.*
 
 ## What is yrSqliteViewer
 
