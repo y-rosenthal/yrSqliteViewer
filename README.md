@@ -1,5 +1,6 @@
 # yrSqliteViewer - all in one html file for viewing sqlite databases
 
+
 ## What is yrSqliteViewer
 
 I created yrSqliteViewer out of frustration when trying to teach the basics of SQL to computer novices. 
@@ -18,6 +19,40 @@ available when you're reading this, perhaps try it - and let me know about it :)
 
 FYI - the "yr" in the name "yrSqliteViewer" are my initials. I know the name doesn't have great marketing
 appeal but there already was a product named "Sqlite Viewer" :)
+
+
+## Quick Start
+
+To get started quickly do the following:
+
+1. Navigate to https://github.com/y-rosenthal/yrSqliteViewer and download the following files   
+   * yrSqliteViewer.html
+   * sampleDatabase-books-v025.sqlite
+   * yrSqliteViewerSession-sample.yrslv
+
+2. open yrSqliteViewer.html with a web browser. 
+   Probably best to use Chrome. You can try other browsers but they weren't tested as well as Chrome was.
+
+3. Press the "Load Database File" button and choose the file sampleDatabase-books-v025.sqlite.
+   Wait a few seconds for the database file to load.
+ 
+4. Click the "Show Rows (for all tables)" button to see the rows in the tables.
+
+5. Click the "Show Structure (for all tables)" button to see the structure of the tables.
+ 
+6. Type a SQL select statement (e.g. select * from title where price < 20)  in the box entitled "SQL Command 1". 
+   Then press the "Run Query" button.
+ 
+7. Type another SQL select statement in the box entitled "SQL Command 2", etc.
+ 
+8. Press the "Save Session" button (at the top of the page). Specifiy a filename. This file will contain
+   both the database file you were using as well as the queries that you have run.
+ 
+9. Close your browser. Then open the yrSqliteViewer.html file again in the browser. This time 
+   press the "Restore Session" button and choose the file you saved in the previous step. 
+   You can continue from where you left off. If you want to see a session that has been saved already
+   you can instead press the "Restore Session" button and choose the file yrSqliteViewerSession-sample.yrslv 
+   file that you downloaded in the first step above.
 
 ## Features
 
