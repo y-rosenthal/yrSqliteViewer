@@ -28,13 +28,21 @@ To get started quickly do the following:
 
 1. Navigate to https://github.com/y-rosenthal/yrSqliteViewer and download the following files.
 
-| File | Description |
-|------|-------------|
-| <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/yrSqliteViewer.html" download>yrSqliteViewer.html</a> | This is the only file you really need. | 
-| <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/sampleDatabase-books-v025.sqlite" download>sampleDatabase-books-v025.sqlite</a> | sample sqlite database (you can use any sqlite database file) |
-| <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/yrSqliteViewerSession-sample.yrsl" download>yrSqliteViewerSession-sample.yrslv</a> | sample session file (see below) |
+   > NOTE:
+   >  To download the first file (yrSqliteViewer.html) right click on the link below and choose "Save Link As" or "Save As".
+   >  To download the 2nd and 3rd files below just click on the link. 
 
 
+
+   * <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/yrSqliteViewer.html" download>yrSqliteViewer.html</a> (right click and choose "save link as") - *this is the only file you really need*
+     
+
+   * <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/sampleDatabase-books-v025.sqlite" download>sampleDatabase-books-v025.sqlite</a> - *sample sqlite database (you can use any sqlite database file)*
+
+   * <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/yrSqliteViewerSession-sample.yrsl" download>yrSqliteViewerSession-sample.yrslv</a> | sample session file (see below) |
+
+
+     
    * yrSqliteViewer.html - *this is the only file you really need*
 
    * sampleDatabase-books-v025.sqlite - *you can use any sqlite database file, this is a sample*
