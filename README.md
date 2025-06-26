@@ -26,16 +26,18 @@ appeal but there already was a product named "Sqlite Viewer" :)
 
 To get started quickly do the following:
 
-1. Navigate to https://github.com/y-rosenthal/yrSqliteViewer and download the following files.
+1. Navigate to https://github.com/y-rosenthal/yrSqliteViewer and download the following file
+   (*this is the only file you really need*)
+
+   * <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/yrSqliteViewer.html" download>yrSqliteViewer.html</a> *right click and choose "Save Link As" or "Save As"*
 
    > NOTE:
-   >  To download the first file (yrSqliteViewer.html) right click on the link below and choose "Save Link As" or "Save As".
-   >  To download the 2nd and 3rd files below just click on the link. 
+   > Due to technical considerations to download this first file (yrSqliteViewer.html)
+   > right click on the link and choose "Save Link As" or "Save As".
+   > The other files below can be downloaded by just clicking on the links.
 
 
-
-   * <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/yrSqliteViewer.html" download>yrSqliteViewer.html</a> (right click and choose "save link as") - *this is the only file you really need*
-     
+2. Download these additiional file (*optional*).
 
    * <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/sampleDatabase-books-v025.sqlite" download>sampleDatabase-books-v025.sqlite</a> - *sample sqlite database (you can use any sqlite database file)*
 
@@ -59,25 +61,25 @@ To get started quickly do the following:
    Note that the download process is a little quirky for people who are not technical. 
    This can be improved simply.
 
-2. open yrSqliteViewer.html with a web browser. 
+3. open yrSqliteViewer.html with a web browser. 
    Probably best to use Chrome. You can try other browsers but they weren't tested as well as Chrome was.
 
-3. Press the "Load Database File" button and choose the file sampleDatabase-books-v025.sqlite.
+4. Press the "Load Database File" button and choose the file sampleDatabase-books-v025.sqlite.
    Wait a few seconds for the database file to load.
  
-4. Click the "Show Rows (for all tables)" button to see the rows in the tables.
+5. Click the "Show Rows (for all tables)" button to see the rows in the tables.
 
-5. Click the "Show Structure (for all tables)" button to see the structure of the tables.
+6. Click the "Show Structure (for all tables)" button to see the structure of the tables.
  
-6. Type a SQL select statement (e.g. select * from title where price < 20)  in the box entitled "SQL Command 1". 
+7. Type a SQL select statement (e.g. select * from title where price < 20)  in the box entitled "SQL Command 1". 
    Then press the "Run Query" button.
  
-7. Type another SQL select statement in the box entitled "SQL Command 2", etc.
+8. Type another SQL select statement in the box entitled "SQL Command 2", etc.
  
-8. Press the "Save Session" button (at the top of the page). Specifiy a filename. This file will contain
+9. Press the "Save Session" button (at the top of the page). Specifiy a filename. This file will contain
    both the database file you were using as well as the queries that you have run.
  
-9. Close your browser. Then open the yrSqliteViewer.html file again in the browser. This time 
+10. Close your browser. Then open the yrSqliteViewer.html file again in the browser. This time 
    press the "Restore Session" button and choose the file you saved in the previous step. 
    You can continue from where you left off. If you want to see a session that has been saved already
    you can instead press the "Restore Session" button and choose the file yrSqliteViewerSession-sample.yrslv 
