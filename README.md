@@ -54,12 +54,12 @@ To get started quickly do the following:
 
 6. Click the "Show Structure (for all tables)" button to see the structure of the tables.
  
-7. Type a SQL select statement (e.g. select * from title where price < 20)  in the box entitled "SQL Command 1". 
+7. Type a SQL select statement - *e.g. select * from title where price < 20* - in the box entitled "SQL Command 1". 
    Then press the "Run Query" button.
  
-8. Type another SQL select statement (e.g. select pub_name, city from publishers) in the box entitled "SQL Command 2", etc.
+8. Type another SQL select statement - *e.g. select pub_name, city from publishers* - in the box entitled "SQL Command 2", etc.
  
-9. Press the "Save Session" button (at the top of the page). Specifiy a filename. This file will contain
+9. Press the "Save Session" button (*at the top of the page*). Specifiy a filename. This file will contain
    both the database file you were using as well as the queries that you have run.
  
 10. Close your browser. Then open the yrSqliteViewer.html file again in the browser. This time 
@@ -75,15 +75,15 @@ To get started quickly do the following:
 The current version has the following features:
 
 - load a sqlite database
-- view the **structure** of the database (column names and datatypes) without running ANY SQL commands
-- view the **data** in the database (i.e. the actual rows) without running ANY SQL commands
+- view the **structure** of the database (*column names and datatypes*) without running ANY SQL commands
+- view the **data** in the database (*i.e. the actual rows*) without running ANY SQL commands
 - execute SELECT statements against the loaded database
 - **save a session** and **restore a session**
   The session is saved in a file with a .yrslv extension.
   If you open a saved session (by pressing "Restore Session" button) you will automatically load the database file
   as well as any SQL commands that were typed when you saved the session file.
 
-## NOT currently supported (but may be in the future)
+## NOT currently supported (*but may be in the future*)
 
 There are MANY additional features that could be added to this. The following are NOT currently
 supported but may be added in the future:
@@ -94,20 +94,6 @@ supported but may be added in the future:
 - showing the "entity relationship diagram" (either via image files or mermaid ERDs or similar)
 - many other features ...
 
-- **Loading a database**
-
-  The most stragightforward way to load a database is to press
-  the **Load Database File button** to load a sqlite database file (e.g. *.db or *.sqlite).
-
-- **
-  Alternatively once you have used yrSqliteViewer and have some queries, you can 
-
-  * **Load Database File button**
-
-    This should be the first thing that you do. 
-    This prompts you to open a sqlite database file. The tables are displayed on the top of web page,
-    You can switch between the **structure** of the tables and the **actual data** in the tables
-    by pressing the buttons "Show Structure (for all tables)" or "Show Rows (for all tables)"
 
 ## Sample database (yrSqliteViewer-sample-v025.sqlite)
 
