@@ -27,7 +27,9 @@ appeal but there already was a product named "Sqlite Viewer" :)
 To get started quickly do the following:
 
 1. Navigate to https://github.com/y-rosenthal/yrSqliteViewer and download the following file
-   (*this is the only file you really need*)
+   (*this is the only file you really need*). After downloading the file double-click on the file
+   to open it in your browser. ***(I recommend using Chrome. Other browsers should also work fine
+   but they haven't been tested as well).***
 
    * <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/yrSqliteViewer.html" download>yrSqliteViewer.html</a> *right click and choose "Save Link As" or "Save As"*
 
