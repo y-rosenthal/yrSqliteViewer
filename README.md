@@ -62,13 +62,20 @@ To get started quickly do the following:
 9. Press the "Save Session" button (*at the top of the page*). Specifiy a filename. This file will contain
    both the database file you were using as well as the queries that you have run.
  
-10. Close your browser. Then open the yrSqliteViewer.html file again in the browser. This time 
-   press the "Restore Session" button and choose the file you saved in the previous step. 
-   This opens the database as well as restores the SQL statements that you had run before.
-
-   You can instead press the "Restore Session" button and choose the file ***yrSqliteViewerSession-sample.yrslv***
-   file that you downloaded in the first step above to view the sample SQL statements that were
-   included in that file.
+10. If you followed the instructions in the previous step, you can restore the session 
+    that you saved. Alternatively, you can restore the sample session that is saved in the file
+    ***yrSqliteViewerSession-sample.yrslv*** that you downloaded in the first step above.
+    \
+    Restoring a session reloads the database as well as any SQL statements that were in
+    the interface when the session file was saved. 
+    \
+    To restore a session, close your browser. 
+    Then open the ***yrSqliteViewer.html file*** again in the browser. 
+    Press the "Restore Session" button and choose the file that contains the saved session
+    (i.e. either the file you specified in the previous step or the file 
+    ***yrSqliteViewerSession-sample.yrslv*** that you downloaded in the first step above. 
+    This opens the database as well as restores the SQL statements that were saved with the session.
+    
 
 ## Features
 
@@ -95,7 +102,7 @@ supported but may be added in the future:
 - many other features ...
 
 
-## Sample database (yrSqliteViewer-sample-v025.sqlite)
+## Sample database (sampleDatabase-books-v025.sqlite)
 
 There is a sample database included in the repo (sampleDatabase-books-v025.sqlite). 
 The "-v025" is my own version number of this sqlite file - I've been using this database to teach my classes
