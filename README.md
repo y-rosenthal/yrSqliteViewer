@@ -33,10 +33,10 @@ To get started quickly do the following:
 
    * <a href="https://github.com/y-rosenthal/yrSqliteViewer/raw/master/yrSqliteViewer.html" download>yrSqliteViewer.html</a> *right click and choose "Save Link As" or "Save As"*
 
-   > NOTE:
-   > Due to technical considerations to download this first file (yrSqliteViewer.html)
-   > right click on the link and choose "Save Link As" or "Save As".
-   > The other files below can be downloaded by just clicking on the links.
+     ***NOTE:
+     Due to technical considerations to download this file 
+     right click on the link and choose "Save Link As" or "Save As".
+     The other files below can be downloaded by just clicking on the links.***
 
 
 2. Download these additiional file (*optional*).
