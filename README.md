@@ -65,10 +65,10 @@ To get started quickly do the following:
 10. If you followed the instructions in the previous step, you can restore the session 
     that you saved. Alternatively, you can restore the sample session that is saved in the file
     ***yrSqliteViewerSession-sample.yrslv*** that you downloaded in the first step above.
-    \
+    
     Restoring a session reloads the database as well as any SQL statements that were in
     the interface when the session file was saved. 
-    \
+    
     To restore a session, close your browser. 
     Then open the ***yrSqliteViewer.html file*** again in the browser. 
     Press the "Restore Session" button and choose the file that contains the saved session
