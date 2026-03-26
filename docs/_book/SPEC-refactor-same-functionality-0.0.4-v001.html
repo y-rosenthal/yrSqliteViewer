@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; SPEC: Refactor With Same Functionality – yrSqliteViewer Documentation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./USER-GUIDE-0.0.2-v001.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-6f4b1f402eae9ee02f91586e947af111.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./SPEC-refactor-same-functionality-0.0.4-v001.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SPEC: Refactor With Same Functionality</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">yrSqliteViewer Documentation</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">README</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./DEVELOPER-GUIDE-0.0.3-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">yrSqliteViewer Developer Guide</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./USER-GUIDE-0.0.2-v001.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">yrSqliteViewer User Guide</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./SPEC-refactor-same-functionality-0.0.4-v001.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SPEC: Refactor With Same Functionality</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#document-purpose" id="toc-document-purpose" class="nav-link active" data-scroll-target="#document-purpose"><span class="header-section-number">5</span> Document purpose</a></li>
+  <li><a href="#scope-and-source-of-truth" id="toc-scope-and-source-of-truth" class="nav-link" data-scroll-target="#scope-and-source-of-truth"><span class="header-section-number">6</span> Scope and source of truth</a></li>
+  <li><a href="#product-definition-current-system" id="toc-product-definition-current-system" class="nav-link" data-scroll-target="#product-definition-current-system"><span class="header-section-number">7</span> Product definition (current system)</a>
+  <ul class="collapse">
+  <li><a href="#what-the-app-is" id="toc-what-the-app-is" class="nav-link" data-scroll-target="#what-the-app-is"><span class="header-section-number">7.1</span> What the app is</a></li>
+  <li><a href="#what-the-app-is-not" id="toc-what-the-app-is-not" class="nav-link" data-scroll-target="#what-the-app-is-not"><span class="header-section-number">7.2</span> What the app is not</a></li>
+  </ul></li>
+  <li><a href="#runtime-architecture-current" id="toc-runtime-architecture-current" class="nav-link" data-scroll-target="#runtime-architecture-current"><span class="header-section-number">8</span> Runtime architecture (current)</a>
+  <ul class="collapse">
+  <li><a href="#external-browser-dependencies-cdn" id="toc-external-browser-dependencies-cdn" class="nav-link" data-scroll-target="#external-browser-dependencies-cdn"><span class="header-section-number">8.1</span> External browser dependencies (CDN)</a></li>
+  <li><a href="#core-runtime-model" id="toc-core-runtime-model" class="nav-link" data-scroll-target="#core-runtime-model"><span class="header-section-number">8.2</span> Core runtime model</a></li>
+  <li><a href="#state-variables-js" id="toc-state-variables-js" class="nav-link" data-scroll-target="#state-variables-js"><span class="header-section-number">8.3</span> State variables (JS)</a></li>
+  <li><a href="#high-level-flow" id="toc-high-level-flow" class="nav-link" data-scroll-target="#high-level-flow"><span class="header-section-number">8.4</span> High-level flow</a></li>
+  </ul></li>
+  <li><a href="#ui-specification-current" id="toc-ui-specification-current" class="nav-link" data-scroll-target="#ui-specification-current"><span class="header-section-number">9</span> UI specification (current)</a>
+  <ul class="collapse">
+  <li><a href="#global-page-layout" id="toc-global-page-layout" class="nav-link" data-scroll-target="#global-page-layout"><span class="header-section-number">9.1</span> Global page layout</a></li>
+  <li><a href="#control-panel-contents" id="toc-control-panel-contents" class="nav-link" data-scroll-target="#control-panel-contents"><span class="header-section-number">9.2</span> Control panel contents</a></li>
+  <li><a href="#database-tables-section" id="toc-database-tables-section" class="nav-link" data-scroll-target="#database-tables-section"><span class="header-section-number">9.3</span> Database tables section</a></li>
+  <li><a href="#sql-commands-section" id="toc-sql-commands-section" class="nav-link" data-scroll-target="#sql-commands-section"><span class="header-section-number">9.4</span> SQL commands section</a></li>
+  </ul></li>
+  <li><a href="#functional-behavior-specification" id="toc-functional-behavior-specification" class="nav-link" data-scroll-target="#functional-behavior-specification"><span class="header-section-number">10</span> Functional behavior specification</a>
+  <ul class="collapse">
+  <li><a href="#load-database-behavior" id="toc-load-database-behavior" class="nav-link" data-scroll-target="#load-database-behavior"><span class="header-section-number">10.1</span> Load database behavior</a></li>
+  <li><a href="#query-execution-behavior" id="toc-query-execution-behavior" class="nav-link" data-scroll-target="#query-execution-behavior"><span class="header-section-number">10.2</span> Query execution behavior</a></li>
+  <li><a href="#table-structure-and-row-display" id="toc-table-structure-and-row-display" class="nav-link" data-scroll-target="#table-structure-and-row-display"><span class="header-section-number">10.3</span> Table structure and row display</a>
+  <ul class="collapse">
+  <li><a href="#structure" id="toc-structure" class="nav-link" data-scroll-target="#structure"><span class="header-section-number">10.3.1</span> Structure</a></li>
+  <li><a href="#rows" id="toc-rows" class="nav-link" data-scroll-target="#rows"><span class="header-section-number">10.3.2</span> Rows</a></li>
+  <li><a href="#bulk-operations" id="toc-bulk-operations" class="nav-link" data-scroll-target="#bulk-operations"><span class="header-section-number">10.3.3</span> Bulk operations</a></li>
+  </ul></li>
+  <li><a href="#font-size-controls" id="toc-font-size-controls" class="nav-link" data-scroll-target="#font-size-controls"><span class="header-section-number">10.4</span> Font-size controls</a></li>
+  <li><a href="#session-save-behavior-.yrslv" id="toc-session-save-behavior-.yrslv" class="nav-link" data-scroll-target="#session-save-behavior-.yrslv"><span class="header-section-number">10.5</span> Session save behavior (<code>.yrslv</code>)</a></li>
+  <li><a href="#session-restore-behavior-.yrslv" id="toc-session-restore-behavior-.yrslv" class="nav-link" data-scroll-target="#session-restore-behavior-.yrslv"><span class="header-section-number">10.6</span> Session restore behavior (<code>.yrslv</code>)</a></li>
+  <li><a href="#clear-session-behavior" id="toc-clear-session-behavior" class="nav-link" data-scroll-target="#clear-session-behavior"><span class="header-section-number">10.7</span> Clear session behavior</a></li>
+  <li><a href="#unsaved-change-warning" id="toc-unsaved-change-warning" class="nav-link" data-scroll-target="#unsaved-change-warning"><span class="header-section-number">10.8</span> Unsaved-change warning</a></li>
+  </ul></li>
+  <li><a href="#session-file-format-specification-current" id="toc-session-file-format-specification-current" class="nav-link" data-scroll-target="#session-file-format-specification-current"><span class="header-section-number">11</span> Session file format specification (current)</a>
+  <ul class="collapse">
+  <li><a href="#container" id="toc-container" class="nav-link" data-scroll-target="#container"><span class="header-section-number">11.1</span> Container</a></li>
+  <li><a href="#required-archive-members" id="toc-required-archive-members" class="nav-link" data-scroll-target="#required-archive-members"><span class="header-section-number">11.2</span> Required archive members</a></li>
+  <li><a href="#json-schema-current" id="toc-json-schema-current" class="nav-link" data-scroll-target="#json-schema-current"><span class="header-section-number">11.3</span> JSON schema (current)</a></li>
+  </ul></li>
+  <li><a href="#rebuild-fidelity-requirements-must-preserve-for-same-functionality" id="toc-rebuild-fidelity-requirements-must-preserve-for-same-functionality" class="nav-link" data-scroll-target="#rebuild-fidelity-requirements-must-preserve-for-same-functionality"><span class="header-section-number">12</span> Rebuild fidelity requirements (must preserve for “same functionality”)</a></li>
+  <li><a href="#current-known-quirks-and-technical-debt-preserve-or-explicitly-fix" id="toc-current-known-quirks-and-technical-debt-preserve-or-explicitly-fix" class="nav-link" data-scroll-target="#current-known-quirks-and-technical-debt-preserve-or-explicitly-fix"><span class="header-section-number">13</span> Current known quirks and technical debt (preserve or explicitly fix)</a></li>
+  <li><a href="#screenshot-plan-and-placeholders" id="toc-screenshot-plan-and-placeholders" class="nav-link" data-scroll-target="#screenshot-plan-and-placeholders"><span class="header-section-number">14</span> Screenshot plan and placeholders</a></li>
+  <li><a href="#acceptance-test-checklist-for-same-functionality-rebuild" id="toc-acceptance-test-checklist-for-same-functionality-rebuild" class="nav-link" data-scroll-target="#acceptance-test-checklist-for-same-functionality-rebuild"><span class="header-section-number">15</span> Acceptance test checklist for “same functionality” rebuild</a>
+  <ul class="collapse">
+  <li><a href="#functional-smoke-tests" id="toc-functional-smoke-tests" class="nav-link" data-scroll-target="#functional-smoke-tests"><span class="header-section-number">15.1</span> Functional smoke tests</a></li>
+  <li><a href="#compatibility-tests" id="toc-compatibility-tests" class="nav-link" data-scroll-target="#compatibility-tests"><span class="header-section-number">15.2</span> Compatibility tests</a></li>
+  <li><a href="#data-fidelity-tests" id="toc-data-fidelity-tests" class="nav-link" data-scroll-target="#data-fidelity-tests"><span class="header-section-number">15.3</span> Data fidelity tests</a></li>
+  </ul></li>
+  <li><a href="#future-modifications-specification-requested" id="toc-future-modifications-specification-requested" class="nav-link" data-scroll-target="#future-modifications-specification-requested"><span class="header-section-number">16</span> Future modifications specification (requested)</a>
+  <ul class="collapse">
+  <li><a href="#m1-full-sqlite-command-support" id="toc-m1-full-sqlite-command-support" class="nav-link" data-scroll-target="#m1-full-sqlite-command-support"><span class="header-section-number">16.1</span> M1: Full SQLite command support</a>
+  <ul class="collapse">
+  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal"><span class="header-section-number">16.1.1</span> Goal</a></li>
+  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements"><span class="header-section-number">16.1.2</span> Requirements</a></li>
+  </ul></li>
+  <li><a href="#m2-tabbed-collections-of-sql-command-windows" id="toc-m2-tabbed-collections-of-sql-command-windows" class="nav-link" data-scroll-target="#m2-tabbed-collections-of-sql-command-windows"><span class="header-section-number">16.2</span> M2: Tabbed collections of SQL command windows</a>
+  <ul class="collapse">
+  <li><a href="#goal-1" id="toc-goal-1" class="nav-link" data-scroll-target="#goal-1"><span class="header-section-number">16.2.1</span> Goal</a></li>
+  <li><a href="#requirements-1" id="toc-requirements-1" class="nav-link" data-scroll-target="#requirements-1"><span class="header-section-number">16.2.2</span> Requirements</a></li>
+  </ul></li>
+  <li><a href="#m3-expandcollapse-for-teaching-visibility-control" id="toc-m3-expandcollapse-for-teaching-visibility-control" class="nav-link" data-scroll-target="#m3-expandcollapse-for-teaching-visibility-control"><span class="header-section-number">16.3</span> M3: Expand/collapse for teaching visibility control</a>
+  <ul class="collapse">
+  <li><a href="#goal-2" id="toc-goal-2" class="nav-link" data-scroll-target="#goal-2"><span class="header-section-number">16.3.1</span> Goal</a></li>
+  <li><a href="#requirements-2" id="toc-requirements-2" class="nav-link" data-scroll-target="#requirements-2"><span class="header-section-number">16.3.2</span> Requirements</a></li>
+  </ul></li>
+  <li><a href="#m4-mermaid-er-diagrams-in-sessions" id="toc-m4-mermaid-er-diagrams-in-sessions" class="nav-link" data-scroll-target="#m4-mermaid-er-diagrams-in-sessions"><span class="header-section-number">16.4</span> M4: Mermaid ER diagrams in sessions</a>
+  <ul class="collapse">
+  <li><a href="#goal-3" id="toc-goal-3" class="nav-link" data-scroll-target="#goal-3"><span class="header-section-number">16.4.1</span> Goal</a></li>
+  <li><a href="#requirements-3" id="toc-requirements-3" class="nav-link" data-scroll-target="#requirements-3"><span class="header-section-number">16.4.2</span> Requirements</a></li>
+  </ul></li>
+  <li><a href="#m5-multi-target-architecture-next.js-offline-options" id="toc-m5-multi-target-architecture-next.js-offline-options" class="nav-link" data-scroll-target="#m5-multi-target-architecture-next.js-offline-options"><span class="header-section-number">16.5</span> M5: Multi-target architecture (Next.js + offline options)</a>
+  <ul class="collapse">
+  <li><a href="#goal-4" id="toc-goal-4" class="nav-link" data-scroll-target="#goal-4"><span class="header-section-number">16.5.1</span> Goal</a></li>
+  <li><a href="#requirements-4" id="toc-requirements-4" class="nav-link" data-scroll-target="#requirements-4"><span class="header-section-number">16.5.2</span> Requirements</a></li>
+  <li><a href="#suggested-target-architecture" id="toc-suggested-target-architecture" class="nav-link" data-scroll-target="#suggested-target-architecture"><span class="header-section-number">16.5.3</span> Suggested target architecture</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#proposed-phased-implementation-plan-post-spec" id="toc-proposed-phased-implementation-plan-post-spec" class="nav-link" data-scroll-target="#proposed-phased-implementation-plan-post-spec"><span class="header-section-number">17</span> Proposed phased implementation plan (post-spec)</a></li>
+  <li><a href="#definition-of-done-for-refactor-program" id="toc-definition-of-done-for-refactor-program" class="nav-link" data-scroll-target="#definition-of-done-for-refactor-program"><span class="header-section-number">18</span> Definition of done for refactor program</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SPEC: Refactor With Same Functionality</span></h1>
+<p class="subtitle lead">yrSqliteViewer 0.0.4 - v001</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="document-purpose" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Document purpose</h1>
+<p>This document is a rebuild specification for the current <code>yrSqliteViewer</code> system.<br>
+Goal: enable a modern AI coding workflow to recreate the existing product behavior as-is (including quirks), then evolve it safely.</p>
+</section>
+<section id="scope-and-source-of-truth" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Scope and source of truth</h1>
+<ul>
+<li>Primary implementation source: <code>yrSqliteViewer.html</code> (single-file app, current working version shows <code>ver 0.0.3</code> in UI).</li>
+<li>Supporting style file exists: <code>yrSqliteViewer-styles.css</code>, but current HTML also embeds large inline CSS blocks.</li>
+<li>Session sample source: <code>yrSqliteViewerSession-sample.yrslv</code>.</li>
+<li>Product context and user-facing guidance source: <code>README.md</code>.</li>
+</ul>
+</section>
+<section id="product-definition-current-system" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Product definition (current system)</h1>
+<section id="what-the-app-is" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="what-the-app-is"><span class="header-section-number">7.1</span> What the app is</h2>
+<ul>
+<li>A browser-based SQLite viewer/query runner.</li>
+<li>Designed for non-technical teaching/learning use.</li>
+<li>Operates by loading a local SQLite file into an in-browser Python runtime (Pyodide).</li>
+<li>Supports saving and restoring sessions that bundle:
+<ul>
+<li>SQLite DB file</li>
+<li>SQL query text/history</li>
+<li>Stored query result snapshots</li>
+</ul></li>
+</ul>
+</section>
+<section id="what-the-app-is-not" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="what-the-app-is-not"><span class="header-section-number">7.2</span> What the app is not</h2>
+<ul>
+<li>Not a production-grade DB admin tool.</li>
+<li>Not a multi-user app.</li>
+<li>Not currently a full SQL editor with advanced object management.</li>
+<li>Not currently a true offline-first packaged app (depends on CDN assets in current implementation).</li>
+</ul>
+</section>
+</section>
+<section id="runtime-architecture-current" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Runtime architecture (current)</h1>
+<section id="external-browser-dependencies-cdn" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="external-browser-dependencies-cdn"><span class="header-section-number">8.1</span> External browser dependencies (CDN)</h2>
+<ul>
+<li>Pyodide <code>v0.23.0</code></li>
+<li>JSZip <code>3.10.1</code></li>
+<li>FileSaver.js <code>2.0.5</code></li>
+<li>CodeMirror <code>5.65.2</code> core + SQL mode + eclipse theme</li>
+</ul>
+</section>
+<section id="core-runtime-model" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="core-runtime-model"><span class="header-section-number">8.2</span> Core runtime model</h2>
+<ol type="1">
+<li>User selects <code>.sqlite</code>/<code>.db</code> file.</li>
+<li>File is loaded into browser memory and written to Pyodide FS as <code>database.sqlite</code>.</li>
+<li>Python <code>sqlite3</code> executes metadata queries and user SQL.</li>
+<li>Results are serialized to JSON and returned to JS for rendering.</li>
+<li>UI maintains query cards and output cards in DOM.</li>
+</ol>
+</section>
+<section id="state-variables-js" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="state-variables-js"><span class="header-section-number">8.3</span> State variables (JS)</h2>
+<ul>
+<li><code>pyodideInstance</code>: singleton runtime, lazy-initialized.</li>
+<li><code>queryHistory</code>: array of query objects with <code>query</code>, <code>timestamp</code>, <code>results</code>.</li>
+<li><code>queryInterfaceCount</code>: current query card count tracker.</li>
+<li><code>currentDatabaseName</code>: active DB filename.</li>
+<li><code>tableNames</code>: table list from schema scan.</li>
+<li><code>isSessionSaved</code>: dirty-state flag used by <code>beforeunload</code>.</li>
+<li><code>editors</code>: map of CodeMirror instances keyed by <code>sqlQuery&lt;id&gt;</code>.</li>
+</ul>
+</section>
+<section id="high-level-flow" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="high-level-flow"><span class="header-section-number">8.4</span> High-level flow</h2>
+<pre class="mermaid"><code>flowchart TD
+  appLoad[AppLoaded] --&gt; chooseDb[ChooseSQLiteFile]
+  chooseDb --&gt; initPyodide[InitPyodideIfNeeded]
+  initPyodide --&gt; writeFs[Writedatabase.sqlite]
+  writeFs --&gt; inspectSchema[ReadTablesAndColumns]
+  inspectSchema --&gt; renderTableCards[RenderTableCards]
+  renderTableCards --&gt; showDefaultStructure[ShowStructureForAllTables]
+  showDefaultStructure --&gt; queryWork[UserRunsQueries]
+  queryWork --&gt; saveSession[SaveSessionToYRSLV]
+  queryWork --&gt; restoreSession[RestoreSessionFromYRSLV]</code></pre>
+</section>
+</section>
+<section id="ui-specification-current" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> UI specification (current)</h1>
+<section id="global-page-layout" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="global-page-layout"><span class="header-section-number">9.1</span> Global page layout</h2>
+<p>Order from top to bottom:</p>
+<ol type="1">
+<li>Control panel</li>
+<li>Database tables header + global table controls</li>
+<li>Initial no-file instructional message (hidden after DB load)</li>
+<li>Loading message area</li>
+<li>Dynamic table cards area</li>
+<li>SQL commands header + global SQL font controls</li>
+<li>Dynamic SQL command cards area</li>
+</ol>
+</section>
+<section id="control-panel-contents" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="control-panel-contents"><span class="header-section-number">9.2</span> Control panel contents</h2>
+<ul>
+<li>Title text: <code>yrSqliteViewer (ver 0.0.3)</code> (current working file).</li>
+<li>Small instructions link to repository.</li>
+<li><code>Load Database File</code> pseudo-button (hidden file input label).</li>
+<li>Selected filename text (<code>no file chosen yet</code> by default).</li>
+<li><code>Save Session</code> button.</li>
+<li><code>Restore Session</code> pseudo-button (hidden file input label).</li>
+<li><code>Clear Session</code> button.</li>
+</ul>
+</section>
+<section id="database-tables-section" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="database-tables-section"><span class="header-section-number">9.3</span> Database tables section</h2>
+<p>Header: <code>Database Tables</code>.</p>
+<p>Controls:</p>
+<ul>
+<li><code>Show Structure (for all tables)</code></li>
+<li><code>Show Rows (for all tables)</code></li>
+<li>Global font controls for table cards:
+<ul>
+<li><code>A-</code>, <code>A+</code>, numeric input (range clamped 0.5 to 3)</li>
+</ul></li>
+</ul>
+<p>Dynamic content:</p>
+<ul>
+<li>One card per table.</li>
+<li>Each card has:
+<ul>
+<li><code>Table: &lt;name&gt;</code></li>
+<li>table-local <code>A-</code>, <code>A+</code></li>
+<li><code>Show Structure</code></li>
+<li><code>Show Rows</code></li>
+<li>output region (<code>&lt;tableName&gt;_info</code>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="sql-commands-section" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="sql-commands-section"><span class="header-section-number">9.4</span> SQL commands section</h2>
+<p>Header: <code>SQL Commands</code>.</p>
+<p>Controls:</p>
+<ul>
+<li>Global query interface font controls:
+<ul>
+<li><code>A-</code>, <code>A+</code>, numeric input (range clamped 0.5 to 3)</li>
+</ul></li>
+</ul>
+<p>Dynamic content:</p>
+<ul>
+<li>Starts with one query card labeled <code>SQL Command 1</code>.</li>
+<li>Each query card has:
+<ul>
+<li>local <code>A-</code>, <code>A+</code></li>
+<li>CodeMirror SQL editor area</li>
+<li><code>Run Query</code> button</li>
+<li>output region</li>
+</ul></li>
+<li>Auto-growth behavior:
+<ul>
+<li>After running a non-empty query in last card, app auto-adds a new blank query card.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="functional-behavior-specification" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Functional behavior specification</h1>
+<section id="load-database-behavior" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="load-database-behavior"><span class="header-section-number">10.1</span> Load database behavior</h2>
+<p>Trigger:</p>
+<ul>
+<li>File input event on <code>sqliteFile</code>.</li>
+</ul>
+<p>Expected behavior:</p>
+<ol type="1">
+<li>If no file selected:
+<ul>
+<li>Show error in output area: <code>Please select a file.</code></li>
+</ul></li>
+<li>Hide no-file message, show loading message.</li>
+<li>If not restoring:
+<ul>
+<li>Reset SQL card area to one fresh query card.</li>
+</ul></li>
+<li>Initialize Pyodide/sqlite3 if first run.</li>
+<li>Write uploaded bytes to <code>database.sqlite</code>.</li>
+<li>Query sqlite metadata:
+<ul>
+<li><code>SELECT name FROM sqlite_master WHERE type='table';</code></li>
+<li><code>PRAGMA table_info(&lt;table&gt;)</code></li>
+</ul></li>
+<li>Render table cards and default each card to structure view.</li>
+<li>Hide loading message.</li>
+</ol>
+</section>
+<section id="query-execution-behavior" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="query-execution-behavior"><span class="header-section-number">10.2</span> Query execution behavior</h2>
+<p>Trigger:</p>
+<ul>
+<li><code>Run Query</code> button on a card.</li>
+<li>Keyboard shortcut <code>Ctrl-Enter</code> or <code>Cmd-Enter</code> in CodeMirror.</li>
+</ul>
+<p>Behavior:</p>
+<ol type="1">
+<li>If Pyodide not initialized: return silently.</li>
+<li>Read SQL text from relevant CodeMirror editor.</li>
+<li>If blank after trim: return silently.</li>
+<li>Execute query in Python:
+<ul>
+<li><code>cursor.execute("""&lt;query&gt;""")</code></li>
+<li><code>columns = [description[0] for description in cursor.description]</code></li>
+<li><code>rows = cursor.fetchall()</code></li>
+</ul></li>
+<li>Render HTML table output.</li>
+<li>Update or append matching <code>queryHistory</code> entry by card index.</li>
+<li>Mark <code>isSessionSaved = false</code>.</li>
+<li>Ensure there is always one blank trailing query card.</li>
+</ol>
+<p>Important current limitation:</p>
+<ul>
+<li>The code assumes <code>cursor.description</code> exists.</li>
+<li>For non-<code>SELECT</code> commands, <code>cursor.description</code> may be <code>None</code>, causing error output.</li>
+<li>This is one reason current product effectively behaves as <code>SELECT</code>-oriented.</li>
+</ul>
+</section>
+<section id="table-structure-and-row-display" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="table-structure-and-row-display"><span class="header-section-number">10.3</span> Table structure and row display</h2>
+<section id="structure" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="structure"><span class="header-section-number">10.3.1</span> Structure</h3>
+<ul>
+<li><code>showTableStructure(tableName, columns)</code> renders a two-column table:
+<ul>
+<li>Column</li>
+<li>Type</li>
+</ul></li>
+</ul>
+</section>
+<section id="rows" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="rows"><span class="header-section-number">10.3.2</span> Rows</h3>
+<ul>
+<li><code>showTableData(tableName)</code> executes:
+<ul>
+<li><code>SELECT * FROM '&lt;tableName&gt;'</code></li>
+</ul></li>
+<li>Renders all rows in a scrollable HTML table.</li>
+<li>On error, shows red error message in table info panel.</li>
+</ul>
+</section>
+<section id="bulk-operations" class="level3" data-number="10.3.3">
+<h3 data-number="10.3.3" class="anchored" data-anchor-id="bulk-operations"><span class="header-section-number">10.3.3</span> Bulk operations</h3>
+<ul>
+<li><code>showAllTablesStructure()</code> loops all table cards and reconstructs column metadata by parsing each structure button <code>onclick</code> string (string-parsing based; fragile but current behavior).</li>
+<li><code>showAllTablesData()</code> loops table cards and awaits row loading table-by-table.</li>
+</ul>
+</section>
+</section>
+<section id="font-size-controls" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="font-size-controls"><span class="header-section-number">10.4</span> Font-size controls</h2>
+<p>Implemented at three levels:</p>
+<ol type="1">
+<li>Per query editor wrapper</li>
+<li>Per table card</li>
+<li>Global for all table cards / all query cards</li>
+</ol>
+<p>Current clamp behavior:</p>
+<ul>
+<li>Per-card adjustments in <code>adjustFontSize</code>: 0.5 to 2 for specific target handling.</li>
+<li>Global setter/adjusters: typically 0.5 to 3.</li>
+</ul>
+</section>
+<section id="session-save-behavior-.yrslv" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="session-save-behavior-.yrslv"><span class="header-section-number">10.5</span> Session save behavior (<code>.yrslv</code>)</h2>
+<p>Trigger:</p>
+<ul>
+<li><code>Save Session</code> button.</li>
+</ul>
+<p>Flow:</p>
+<ol type="1">
+<li>Prompt for base filename (default <code>yrSqliteViewerSession</code>).</li>
+<li>Rebuild <code>queryHistory</code> from current editor contents:
+<ul>
+<li>Saves non-empty query cards only.</li>
+<li>Preserves prior results when available.</li>
+</ul></li>
+<li>Build JSON metadata file.</li>
+<li>Build TXT summary file.</li>
+<li>Read current <code>database.sqlite</code> from Pyodide FS.</li>
+<li>Zip JSON + TXT + DB into one <code>.yrslv</code>.</li>
+<li>Download with FileSaver.</li>
+<li>Mark session saved.</li>
+</ol>
+</section>
+<section id="session-restore-behavior-.yrslv" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="session-restore-behavior-.yrslv"><span class="header-section-number">10.6</span> Session restore behavior (<code>.yrslv</code>)</h2>
+<p>Trigger:</p>
+<ul>
+<li><code>Restore Session</code> file input change.</li>
+</ul>
+<p>Flow:</p>
+<ol type="1">
+<li>Read archive with JSZip.</li>
+<li>Locate <code>.json</code> entry.</li>
+<li>Parse and validate:
+<ul>
+<li><code>jsonFormatVersion</code> must equal <code>"0.1"</code>.</li>
+</ul></li>
+<li>Extract DB by <code>databaseName</code>.</li>
+<li>Write DB into Pyodide FS.</li>
+<li>Load database via <code>loadDatabase(file, true)</code> (restore mode).</li>
+<li>Recreate query cards from session queries.</li>
+<li>Re-hydrate editor text and stored results tables.</li>
+<li>Add one extra blank query card at end.</li>
+<li>Reset restore input value for reselecting same file.</li>
+</ol>
+</section>
+<section id="clear-session-behavior" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="clear-session-behavior"><span class="header-section-number">10.7</span> Clear session behavior</h2>
+<p>Trigger:</p>
+<ul>
+<li><code>Clear Session</code> button.</li>
+</ul>
+<p>Flow:</p>
+<ol type="1">
+<li>Confirmation dialog.</li>
+<li>Reset in-memory state.</li>
+<li>Clear table list.</li>
+<li>Reset to one query card.</li>
+<li>Reset selected filename label.</li>
+<li>Re-show initial no-file instructional message.</li>
+</ol>
+</section>
+<section id="unsaved-change-warning" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="unsaved-change-warning"><span class="header-section-number">10.8</span> Unsaved-change warning</h2>
+<ul>
+<li><code>window.onbeforeunload</code> prompts user if:
+<ul>
+<li><code>queryHistory.length &gt; 0</code></li>
+<li>and <code>isSessionSaved === false</code></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="session-file-format-specification-current" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Session file format specification (current)</h1>
+<section id="container" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="container"><span class="header-section-number">11.1</span> Container</h2>
+<ul>
+<li>Extension: <code>.yrslv</code></li>
+<li>Actual format: ZIP archive</li>
+</ul>
+</section>
+<section id="required-archive-members" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="required-archive-members"><span class="header-section-number">11.2</span> Required archive members</h2>
+<ul>
+<li>One JSON metadata file (name usually <code>&lt;baseFilename&gt;.json</code>)</li>
+<li>One TXT summary file (name usually <code>&lt;baseFilename&gt;.txt</code>)</li>
+<li>One SQLite file (name equals <code>databaseName</code>)</li>
+</ul>
+</section>
+<section id="json-schema-current" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="json-schema-current"><span class="header-section-number">11.3</span> JSON schema (current)</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"jsonFormatVersion"</span><span class="fu">:</span> <span class="st">"0.1"</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"yrSqliteViewerVersion"</span><span class="fu">:</span> <span class="st">"0.1"</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"databaseName"</span><span class="fu">:</span> <span class="st">"sampleDatabase-books-v025.sqlite"</span><span class="fu">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"queries"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"query"</span><span class="fu">:</span> <span class="st">"select ..."</span><span class="fu">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"timestamp"</span><span class="fu">:</span> <span class="st">"2025-06-26T15:53:40.968Z"</span><span class="fu">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"results"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"columns"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"colA"</span><span class="ot">,</span> <span class="st">"colB"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"rows"</span><span class="fu">:</span> <span class="ot">[[</span><span class="st">"v1"</span><span class="ot">,</span> <span class="st">"v2"</span><span class="ot">]]</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notes:</p>
+<ul>
+<li><code>yrSqliteViewerVersion</code> in saved JSON is currently hardcoded to <code>"0.1"</code> and does not match displayed UI version.</li>
+<li><code>results</code> may be <code>null</code> for query text never executed before save.</li>
+</ul>
+</section>
+</section>
+<section id="rebuild-fidelity-requirements-must-preserve-for-same-functionality" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Rebuild fidelity requirements (must preserve for “same functionality”)</h1>
+<p>To claim equivalent behavior, the rebuilt app must preserve:</p>
+<ol type="1">
+<li>Load/inspect SQLite from local file.</li>
+<li>Table cards with structure and row actions.</li>
+<li>SQL query cards with run button and keyboard shortcuts.</li>
+<li>Auto-add blank query card after executing last non-empty query.</li>
+<li>Save/restore <code>.yrslv</code> with ZIP JSON/TXT/DB.</li>
+<li>Restore previously captured query results tables.</li>
+<li>Font scaling controls (global and local).</li>
+<li>Unsaved-session warning behavior.</li>
+<li>Clear-session reset flow.</li>
+</ol>
+</section>
+<section id="current-known-quirks-and-technical-debt-preserve-or-explicitly-fix" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Current known quirks and technical debt (preserve or explicitly fix)</h1>
+<ol type="1">
+<li>Mixed textarea/CodeMirror markup patterns due iterative edits.</li>
+<li>Some duplicated/legacy commented blocks remain.</li>
+<li><code>showAllTablesStructure()</code> depends on regex parsing <code>onclick</code> string.</li>
+<li>Query execution assumes resultset exists; non-SELECT commands error.</li>
+<li>Version values are inconsistent:
+<ul>
+<li>UI currently shows <code>0.0.3</code></li>
+<li>session JSON writes <code>"yrSqliteViewerVersion": "0.1"</code></li>
+</ul></li>
+<li>Single large HTML file combines styles, markup, and logic.</li>
+<li>CDN dependency means pure offline use is limited unless assets cached.</li>
+</ol>
+</section>
+<section id="screenshot-plan-and-placeholders" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> Screenshot plan and placeholders</h1>
+<p>If screenshots are available, include at minimum these states in future revisions of this spec:</p>
+<ol type="1">
+<li>Initial page before DB load (no-file instructional message visible).</li>
+<li>After loading sample DB (table cards visible).</li>
+<li>Structure view example for one table.</li>
+<li>Rows view example for one table.</li>
+<li>Multiple SQL command cards with outputs.</li>
+<li>Save session prompt and downloaded file confirmation.</li>
+<li>Restored session showing previously saved queries and outputs.</li>
+</ol>
+<p>Suggested filenames under <code>docs/images/spec-current/</code>:</p>
+<ul>
+<li><code>01-initial-no-db.png</code></li>
+<li><code>02-db-loaded-table-cards.png</code></li>
+<li><code>03-table-structure.png</code></li>
+<li><code>04-table-rows.png</code></li>
+<li><code>05-multi-query-output.png</code></li>
+<li><code>06-save-session.png</code></li>
+<li><code>07-restore-session.png</code></li>
+</ul>
+</section>
+<section id="acceptance-test-checklist-for-same-functionality-rebuild" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> Acceptance test checklist for “same functionality” rebuild</h1>
+<section id="functional-smoke-tests" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="functional-smoke-tests"><span class="header-section-number">15.1</span> Functional smoke tests</h2>
+<ul>
+<li>Load <code>sampleDatabase-books-v025.sqlite</code>.</li>
+<li>Confirm table list appears.</li>
+<li>Confirm “Show Structure (for all tables)” renders all structure sections.</li>
+<li>Confirm “Show Rows (for all tables)” renders all row tables.</li>
+<li>Run at least 3 SELECT queries in different cards.</li>
+<li>Confirm automatic blank next SQL card appears.</li>
+<li>Save session as <code>.yrslv</code>.</li>
+<li>Reload app and restore session.</li>
+<li>Confirm query text and prior results are restored.</li>
+</ul>
+</section>
+<section id="compatibility-tests" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="compatibility-tests"><span class="header-section-number">15.2</span> Compatibility tests</h2>
+<ul>
+<li>Chrome latest (primary target, existing recommendation).</li>
+<li>At least one other Chromium-based browser.</li>
+</ul>
+</section>
+<section id="data-fidelity-tests" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="data-fidelity-tests"><span class="header-section-number">15.3</span> Data fidelity tests</h2>
+<ul>
+<li>Compare row/column counts for representative tables between original and rebuilt app.</li>
+<li>Validate restored session JSON schema and content fields.</li>
+</ul>
+</section>
+</section>
+<section id="future-modifications-specification-requested" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> Future modifications specification (requested)</h1>
+<p>This section specifies desired enhancements <strong>after</strong> preserving current behavior baseline.</p>
+<section id="m1-full-sqlite-command-support" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="m1-full-sqlite-command-support"><span class="header-section-number">16.1</span> M1: Full SQLite command support</h2>
+<section id="goal" class="level3" data-number="16.1.1">
+<h3 data-number="16.1.1" class="anchored" data-anchor-id="goal"><span class="header-section-number">16.1.1</span> Goal</h3>
+<p>Support full SQLite command set (DDL, DML, PRAGMA, transaction control), not only SELECT-style outputs.</p>
+</section>
+<section id="requirements" class="level3" data-number="16.1.2">
+<h3 data-number="16.1.2" class="anchored" data-anchor-id="requirements"><span class="header-section-number">16.1.2</span> Requirements</h3>
+<ul>
+<li>Execute commands like:
+<ul>
+<li><code>CREATE TABLE</code></li>
+<li><code>INSERT/UPDATE/DELETE</code></li>
+<li><code>ALTER TABLE</code></li>
+<li><code>DROP</code></li>
+<li><code>PRAGMA</code></li>
+<li>transaction commands</li>
+</ul></li>
+<li>For non-result commands, display structured success metadata:
+<ul>
+<li>rows affected</li>
+<li>last insert rowid (if available)</li>
+<li>execution time</li>
+</ul></li>
+<li>Allow multi-statement execution with clear per-statement status/output blocks.</li>
+<li>Add safe-guard mode option for teaching:
+<ul>
+<li>read-only mode toggle</li>
+<li>confirm destructive statements</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="m2-tabbed-collections-of-sql-command-windows" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="m2-tabbed-collections-of-sql-command-windows"><span class="header-section-number">16.2</span> M2: Tabbed collections of SQL command windows</h2>
+<section id="goal-1" class="level3" data-number="16.2.1">
+<h3 data-number="16.2.1" class="anchored" data-anchor-id="goal-1"><span class="header-section-number">16.2.1</span> Goal</h3>
+<p>Allow grouping SQL command cards into named tab collections; support multiple collections.</p>
+</section>
+<section id="requirements-1" class="level3" data-number="16.2.2">
+<h3 data-number="16.2.2" class="anchored" data-anchor-id="requirements-1"><span class="header-section-number">16.2.2</span> Requirements</h3>
+<ul>
+<li>Introduce “workspace tabs” (collection-level tabs).</li>
+<li>Each collection contains multiple SQL command cards.</li>
+<li>User can:
+<ul>
+<li>create/delete/rename collection tabs</li>
+<li>reorder collections</li>
+<li>duplicate collection</li>
+<li>move SQL cards between collections</li>
+</ul></li>
+<li>Session format must persist full tab/collection structure.</li>
+</ul>
+</section>
+</section>
+<section id="m3-expandcollapse-for-teaching-visibility-control" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="m3-expandcollapse-for-teaching-visibility-control"><span class="header-section-number">16.3</span> M3: Expand/collapse for teaching visibility control</h2>
+<section id="goal-2" class="level3" data-number="16.3.1">
+<h3 data-number="16.3.1" class="anchored" data-anchor-id="goal-2"><span class="header-section-number">16.3.1</span> Goal</h3>
+<p>Enable quick focus while preserving ability to view many outputs at once.</p>
+</section>
+<section id="requirements-2" class="level3" data-number="16.3.2">
+<h3 data-number="16.3.2" class="anchored" data-anchor-id="requirements-2"><span class="header-section-number">16.3.2</span> Requirements</h3>
+<ol type="1">
+<li>Table area:
+<ul>
+<li>Each table card must have collapse/expand for output panel.</li>
+<li>Global expand/collapse all for table outputs.</li>
+</ul></li>
+<li>SQL area:
+<ul>
+<li>Each SQL card must have independent collapse/expand for:
+<ul>
+<li>query editor panel</li>
+<li>output panel</li>
+</ul></li>
+<li>Global controls for expand/collapse all SQL editors and outputs.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="m4-mermaid-er-diagrams-in-sessions" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="m4-mermaid-er-diagrams-in-sessions"><span class="header-section-number">16.4</span> M4: Mermaid ER diagrams in sessions</h2>
+<section id="goal-3" class="level3" data-number="16.4.1">
+<h3 data-number="16.4.1" class="anchored" data-anchor-id="goal-3"><span class="header-section-number">16.4.1</span> Goal</h3>
+<p>Allow saving/rendering ER diagrams as Mermaid text with session portability.</p>
+</section>
+<section id="requirements-3" class="level3" data-number="16.4.2">
+<h3 data-number="16.4.2" class="anchored" data-anchor-id="requirements-3"><span class="header-section-number">16.4.2</span> Requirements</h3>
+<ul>
+<li>Add Mermaid editor panel(s) in UI.</li>
+<li>Support rendering Mermaid diagrams inline.</li>
+<li>Persist diagrams in session archive JSON.</li>
+<li>Restore diagrams exactly on session load.</li>
+<li>Include export options:
+<ul>
+<li>Mermaid source text</li>
+<li>rendered image (optional future enhancement)</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="m5-multi-target-architecture-next.js-offline-options" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="m5-multi-target-architecture-next.js-offline-options"><span class="header-section-number">16.5</span> M5: Multi-target architecture (Next.js + offline options)</h2>
+<section id="goal-4" class="level3" data-number="16.5.1">
+<h3 data-number="16.5.1" class="anchored" data-anchor-id="goal-4"><span class="header-section-number">16.5.1</span> Goal</h3>
+<p>Build a modern app architecture that supports:</p>
+<ol type="1">
+<li>Next.js connected mode</li>
+<li>Disconnected desktop app (Electron or similar) for macOS + Windows</li>
+<li>Optional pure <code>.html</code> mode (possibly SELECT-only)</li>
+</ol>
+</section>
+<section id="requirements-4" class="level3" data-number="16.5.2">
+<h3 data-number="16.5.2" class="anchored" data-anchor-id="requirements-4"><span class="header-section-number">16.5.2</span> Requirements</h3>
+<ul>
+<li>Define shared core domain package:
+<ul>
+<li>SQL execution abstraction</li>
+<li>session schema</li>
+<li>query history model</li>
+<li>table metadata model</li>
+</ul></li>
+<li>Ensure cross-target session compatibility:
+<ul>
+<li>same session format family</li>
+<li>forward/backward compatibility strategy</li>
+</ul></li>
+<li>Connected mode can add online-only features later without breaking offline core.</li>
+<li>Desktop app must function fully disconnected.</li>
+<li>Pure HTML mode may have constrained feature set (acceptable).</li>
+</ul>
+</section>
+<section id="suggested-target-architecture" class="level3" data-number="16.5.3">
+<h3 data-number="16.5.3" class="anchored" data-anchor-id="suggested-target-architecture"><span class="header-section-number">16.5.3</span> Suggested target architecture</h3>
+<pre class="mermaid"><code>flowchart LR
+  sharedCore[SharedCoreDomain] --&gt; nextApp[NextJsApp]
+  sharedCore --&gt; desktopApp[ElectronDesktopApp]
+  sharedCore --&gt; htmlLite[StandaloneHtmlLite]
+  nextApp --&gt; sessionFmt[SharedSessionFormat]
+  desktopApp --&gt; sessionFmt
+  htmlLite --&gt; sessionFmt</code></pre>
+</section>
+</section>
+</section>
+<section id="proposed-phased-implementation-plan-post-spec" class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> Proposed phased implementation plan (post-spec)</h1>
+<ol type="1">
+<li>Freeze baseline:
+<ul>
+<li>lock current behavior with acceptance tests and golden session files.</li>
+</ul></li>
+<li>Rebuild parity:
+<ul>
+<li>implement same-functionality modern codebase first.</li>
+</ul></li>
+<li>Add M1 (full SQL support) with test matrix.</li>
+<li>Add M2 + M3 UI structure.</li>
+<li>Add M4 Mermaid session support.</li>
+<li>Add M5 multi-target packaging and compatibility testing.</li>
+</ol>
+</section>
+<section id="definition-of-done-for-refactor-program" class="level1" data-number="18">
+<h1 data-number="18"><span class="header-section-number">18</span> Definition of done for refactor program</h1>
+<ul>
+<li>A new codebase reproduces baseline functionality with documented parity evidence.</li>
+<li>New features M1 to M5 implemented with user guides and migration notes.</li>
+<li>Session compatibility rules documented and tested.</li>
+<li>Non-technical student workflow remains simple and reliable.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./USER-GUIDE-0.0.2-v001.html" class="pagination-link" aria-label="yrSqliteViewer User Guide">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">yrSqliteViewer User Guide</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
