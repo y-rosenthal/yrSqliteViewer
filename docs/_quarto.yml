@@ -1,0 +1,14 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "yrSqliteViewer Documentation"
+  chapters:
+    - index.qmd
+    - DEVELOPER-GUIDE-0.0.3-v001.qmd
+    - USER-GUIDE-0.0.2-v001.qmd
+
+format:
+  html:
+    toc: true

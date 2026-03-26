@@ -1,0 +1,182 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "yrSqliteViewer Documentation",
+    "section": "",
+    "text": "1 yrSqliteViewer\nAn “all in one” html file for viewing sqlite databases.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>README</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#what-is-yrsqliteviewer",
+    "href": "index.html#what-is-yrsqliteviewer",
+    "title": "yrSqliteViewer Documentation",
+    "section": "1.1 What is yrSqliteViewer",
+    "text": "1.1 What is yrSqliteViewer\nI created yrSqliteViewer out of frustration when trying to teach the basics of SQL to computer novices. I decided to focus on SQLite databases since a server is not needed. I wanted something that could be run in a web browser without students needing to install any other software. I did this quickly by “vibe-coding” yrSqliteViewer with Cursor in the 2023/2024 timeframe.\nThis product is intended for teaching/learning purposes and is not intended a “production” level product. I recommend using small databases (i.e. a few tables and not an overwhelming amount of data in each table).\nAlternatives are packages such as DB Browser or SQLite Viewer. However, I needed to support students with all sorts of computers (windows, mac, chromebook, etc) and I didn’t want to spend a lot of time teaching a particular software package. I wanted to focus on the SQL commands. I thought a browser interface would be best and I couldn’t find anything that I wanted to use. If something else is available when you’re reading this, perhaps try it - and let me know about it :)\nFYI - the “yr” in the name “yrSqliteViewer” are my initials. I know the name doesn’t have great marketing appeal but there already was a product named “Sqlite Viewer” :)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>README</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#quick-start",
+    "href": "index.html#quick-start",
+    "title": "yrSqliteViewer Documentation",
+    "section": "1.2 Quick Start",
+    "text": "1.2 Quick Start\nTo get started quickly do the following:\n\nNavigate to https://github.com/y-rosenthal/yrSqliteViewer and download the following file (this is the only file you really need).\n\nyrSqliteViewer.html NOTE: Due to technical considerations to download this file right click on the link and choose “Save Link As” or “Save As”. The other files below can be downloaded by just clicking on the links.\n\nAfter downloading the file double-click on the file to open it in your browser. (I recommend using Chrome. Other browsers should also work fine but they haven’t been tested as well).\nDownload these additiional file (optional).\n\nsampleDatabase-books-v025.sqlite - sample sqlite database (you can use any sqlite database file)\nyrSqliteViewerSession-sample.yrslv - sample session file (see below)\n\nopen yrSqliteViewer.html with a web browser. Probably best to use Chrome. You can try other browsers but they weren’t tested as well as Chrome was.\nPress the “Load Database File” button and choose the file sampleDatabase-books-v025.sqlite that you downloaded above. Wait a few seconds for the database file to load.\nClick the “Show Rows (for all tables)” button to see the rows in the tables.\nClick the “Show Structure (for all tables)” button to see the structure of the tables.\nType a SQL select statement - e.g. select  from title where price &lt; 20* - in the box entitled “SQL Command 1”. Then press the “Run Query” button.\nType another SQL select statement - e.g. select pub_name, city from publishers - in the box entitled “SQL Command 2”, etc.\nPress the “Save Session” button (at the top of the page). Specifiy a filename. This file will contain both the database file you were using as well as the queries that you have run.\nIf you followed the instructions in the previous step, you can restore the session that you saved. Alternatively, you can restore the sample session that is saved in the file yrSqliteViewerSession-sample.yrslv that you downloaded in the first step above.\nRestoring a session reloads the database as well as any SQL statements that were in the interface when the session file was saved.\nTo restore a session, close your browser. Then open the yrSqliteViewer.html file again in the browser. Press the “Restore Session” button and choose the file that contains the saved session (i.e. either the file you specified in the previous step or the file yrSqliteViewerSession-sample.yrslv that you downloaded in the first step above. This opens the database as well as restores the SQL statements that were saved with the session.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>README</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#features",
+    "href": "index.html#features",
+    "title": "yrSqliteViewer Documentation",
+    "section": "1.3 Features",
+    "text": "1.3 Features\nThe current version has the following features:\n\nload a sqlite database\nview the structure of the database (column names and datatypes) without running ANY SQL commands\nview the data in the database (i.e. the actual rows) without running ANY SQL commands\nexecute SELECT statements against the loaded database\nsave a session and restore a session The session is saved in a file with a .yrslv extension. If you open a saved session (by pressing “Restore Session” button) you will automatically load the database file as well as any SQL commands that were typed when you saved the session file.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>README</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#not-currently-supported-but-may-be-in-the-future",
+    "href": "index.html#not-currently-supported-but-may-be-in-the-future",
+    "title": "yrSqliteViewer Documentation",
+    "section": "1.4 NOT currently supported (but may be in the future)",
+    "text": "1.4 NOT currently supported (but may be in the future)\nThere are MANY additional features that could be added to this. The following are NOT currently supported but may be added in the future:\n\nthe current version does NOT support sql commands other than SELECT (e.g. update, delete, etc)\nreordering the existing queries in the interface\nbetter support for large databases\nshowing the “entity relationship diagram” (either via image files or mermaid ERDs or similar)\nmany other features …",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>README</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#sample-database-sampledatabase-books-v025.sqlite",
+    "href": "index.html#sample-database-sampledatabase-books-v025.sqlite",
+    "title": "yrSqliteViewer Documentation",
+    "section": "1.5 Sample database (sampleDatabase-books-v025.sqlite)",
+    "text": "1.5 Sample database (sampleDatabase-books-v025.sqlite)\nThere is a sample database included in the repo (sampleDatabase-books-v025.sqlite). The “-v025” is my own version number of this sqlite file - I’ve been using this database to teach my classes for several years and I’ve modified the database slightly every now and then.\nThere is also a “session” file (yrSqliteViewerSession-sample.yrslv) in the repo that contains this database along with a few sample queries (see explanation of session files in the features section above).\nThe sample database is derived from the database that was used in the following book. It is a wonderful book for learning SQL but unfortunately it seems to currently be out of print.\n\nSQL: Visual QuickStart Guide, 3rd Edition By Chris Fehily Published Jun 4, 2008 by Peachpit Press",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>README</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#about-the-code",
+    "href": "index.html#about-the-code",
+    "title": "yrSqliteViewer Documentation",
+    "section": "1.6 About the code",
+    "text": "1.6 About the code\nThe code uses Pyodide to enable running Python directly in a browser. The code then uses standard Python packages to interact with the sqlite files.\nThe code is very messy. It was “vibe-coded” circal 2023/2024. It worked for my purposes but attempts to improve the functionality became difficult with just “vibe coding”. I didn’t have time to focus on turning this into a real product (I started but didn’t have time to focus on this).\nIn the time since I first coded this, vibe coding has gotten a LOT better. Claude Code Max is currently amazing (June 2025) and could possibly recreate this with a few prompts. However, I don’t have time now to focus on a new implementation. Simple changes could probably be done with the existing code base without too much difficulty. If you want to add a lot more functionality, I recommend possibly starting from scratch.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>README</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#download-older-versions-of-yrsqliteviewer.html",
+    "href": "index.html#download-older-versions-of-yrsqliteviewer.html",
+    "title": "yrSqliteViewer Documentation",
+    "section": "1.7 Download older versions of yrSqliteViewer.html",
+    "text": "1.7 Download older versions of yrSqliteViewer.html\nIf you need an older version (for example if a newer version has a bug), use these steps:\n\nGo to the repo on GitHub: https://github.com/y-rosenthal/yrSqliteViewer\nClick the folder named archived-versions.\nClick the specific version file you want (for example yrSqliteViewer-v0.0.2.html).\nOn that file page, click the Raw button.\nWhen the raw file opens in your browser, right-click and choose Save As… (or Save Page As…).\nSave the file to your computer, then double-click it to open it in your browser.\n\nDirect link to the current archived version:\n\nhttps://github.com/y-rosenthal/yrSqliteViewer/raw/master/archived-versions/yrSqliteViewer-v0.0.2.html",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>README</span>"
+    ]
+  },
+  {
+    "objectID": "DEVELOPER-GUIDE-0.0.3-v001.html",
+    "href": "DEVELOPER-GUIDE-0.0.3-v001.html",
+    "title": "2  yrSqliteViewer Developer Guide",
+    "section": "",
+    "text": "3 Purpose\nThis guide documents how version files are maintained so students and instructors can always access prior working copies of yrSqliteViewer.html from GitHub without using git.\n\n\n4 Versioning approach\n\nThe main application file is yrSqliteViewer.html.\nThe visible version string in the UI should follow semantic style (for example 0.0.3).\nArchived copies are stored in archived-versions/.\nArchive filenames use this pattern:\n\nyrSqliteViewer-v&lt;version&gt;.html\nExample:\nyrSqliteViewer-v0.0.2.html\n\n\n5 Archive policy (important)\nWhen yrSqliteViewer.html changes and you are preparing a commit:\n\nDetermine the currently committed version (the one in HEAD before your new commit).\nCopy that committed file into archived-versions/ using the filename pattern above.\nMake sure the new development copy (yrSqliteViewer.html) has the next intended version label.\nUpdate links/instructions in README.md if needed.\nCommit both:\n\nthe new main yrSqliteViewer.html\nthe new archived file in archived-versions/\n\n\nThis keeps an easily downloadable history in the repository itself.\n\n\n6 Current archived structure\n\nFolder name: archived-versions\nExample archived file already added:\n\narchived-versions/yrSqliteViewer-v0.0.2.html\n\n\n\n\n7 Why this is required\n\nMost students are non-technical and may not be able to run git commands.\nIf a breaking change is accidentally introduced, students can quickly download a prior version directly from GitHub.\nInstructors can distribute a known-stable file with a specific versioned filename.\n\n\n\n8 Suggested release checklist\nBefore publishing a new version:\n\nOpen and smoke test yrSqliteViewer.html in Chrome.\nConfirm key features still work:\n\nload database\nrun SELECT query\nsave session\nrestore session\n\nAdd prior committed version file to archived-versions/.\nConfirm README download links are correct.\nCommit and push.\n\n\n\n9 User-facing download path\nStudents can get archived files from:\n\nRepo root: https://github.com/y-rosenthal/yrSqliteViewer\nFolder: archived-versions\n\nDirect raw-file pattern:\nhttps://github.com/y-rosenthal/yrSqliteViewer/raw/master/archived-versions/yrSqliteViewer-v&lt;version&gt;.html",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>yrSqliteViewer Developer Guide</span>"
+    ]
+  },
+  {
+    "objectID": "USER-GUIDE-0.0.2-v001.html",
+    "href": "USER-GUIDE-0.0.2-v001.html",
+    "title": "3  yrSqliteViewer User Guide",
+    "section": "",
+    "text": "4 What this tool is\nyrSqliteViewer is a single HTML file that lets you open and explore SQLite databases in a web browser.\nYou do not need to install database software.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+    ]
+  },
+  {
+    "objectID": "USER-GUIDE-0.0.2-v001.html#see-all-tables",
+    "href": "USER-GUIDE-0.0.2-v001.html#see-all-tables",
+    "title": "3  yrSqliteViewer User Guide",
+    "section": "8.1 See all tables",
+    "text": "8.1 See all tables\nUse the interface section that shows database tables after loading your file.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+    ]
+  },
+  {
+    "objectID": "USER-GUIDE-0.0.2-v001.html#view-table-data-quickly",
+    "href": "USER-GUIDE-0.0.2-v001.html#view-table-data-quickly",
+    "title": "3  yrSqliteViewer User Guide",
+    "section": "8.2 View table data quickly",
+    "text": "8.2 View table data quickly\nUse buttons such as:\n\nShow Rows (for all tables)\nShow Structure (for all tables)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+    ]
+  },
+  {
+    "objectID": "USER-GUIDE-0.0.2-v001.html#run-a-query",
+    "href": "USER-GUIDE-0.0.2-v001.html#run-a-query",
+    "title": "3  yrSqliteViewer User Guide",
+    "section": "8.3 Run a query",
+    "text": "8.3 Run a query\nType a query like:\nselect * from title where price &lt; 20;\nThen press Run Query.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+    ]
+  },
+  {
+    "objectID": "USER-GUIDE-0.0.2-v001.html#save-session",
+    "href": "USER-GUIDE-0.0.2-v001.html#save-session",
+    "title": "3  yrSqliteViewer User Guide",
+    "section": "9.1 Save session",
+    "text": "9.1 Save session\n\nClick Save Session.\nChoose a filename.\nA .yrslv file is downloaded.\n\nThis session file includes:\n\nyour loaded database\nyour SQL commands in the interface",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+    ]
+  },
+  {
+    "objectID": "USER-GUIDE-0.0.2-v001.html#restore-session",
+    "href": "USER-GUIDE-0.0.2-v001.html#restore-session",
+    "title": "3  yrSqliteViewer User Guide",
+    "section": "9.2 Restore session",
+    "text": "9.2 Restore session\n\nOpen yrSqliteViewer.html in your browser.\nClick Restore Session.\nSelect your .yrslv file.\n\nYour database and SQL text boxes are restored.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+    ]
+  },
+  {
+    "objectID": "USER-GUIDE-0.0.2-v001.html#the-file-opens-as-text-not-as-an-app",
+    "href": "USER-GUIDE-0.0.2-v001.html#the-file-opens-as-text-not-as-an-app",
+    "title": "3  yrSqliteViewer User Guide",
+    "section": "11.1 The file opens as text, not as an app",
+    "text": "11.1 The file opens as text, not as an app\n\nMake sure the filename ends with .html\nRe-download and use Save As",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+    ]
+  },
+  {
+    "objectID": "USER-GUIDE-0.0.2-v001.html#query-does-not-run",
+    "href": "USER-GUIDE-0.0.2-v001.html#query-does-not-run",
+    "title": "3  yrSqliteViewer User Guide",
+    "section": "11.2 Query does not run",
+    "text": "11.2 Query does not run\n\nCheck that your SQL is a SELECT statement\nVerify table names and column names\nMake sure a database is loaded first",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+    ]
+  },
+  {
+    "objectID": "USER-GUIDE-0.0.2-v001.html#nothing-happens-after-loading-a-large-database",
+    "href": "USER-GUIDE-0.0.2-v001.html#nothing-happens-after-loading-a-large-database",
+    "title": "3  yrSqliteViewer User Guide",
+    "section": "11.3 Nothing happens after loading a large database",
+    "text": "11.3 Nothing happens after loading a large database\n\nWait a little longer; large files can take time\nStart with a smaller database when learning",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+    ]
+  }
+]

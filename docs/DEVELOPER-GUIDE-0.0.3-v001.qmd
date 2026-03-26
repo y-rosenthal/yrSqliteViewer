@@ -1,0 +1,73 @@
+---
+title: "yrSqliteViewer Developer Guide"
+subtitle: "Version 0.0.3 - v001"
+format: gfm
+---
+
+# Purpose
+
+This guide documents how version files are maintained so students and instructors can always access prior working copies of `yrSqliteViewer.html` from GitHub without using git.
+
+# Versioning approach
+
+- The main application file is `yrSqliteViewer.html`.
+- The visible version string in the UI should follow semantic style (for example `0.0.3`).
+- Archived copies are stored in `archived-versions/`.
+- Archive filenames use this pattern:
+
+`yrSqliteViewer-v<version>.html`
+
+Example:
+
+`yrSqliteViewer-v0.0.2.html`
+
+# Archive policy (important)
+
+When `yrSqliteViewer.html` changes and you are preparing a commit:
+
+1. Determine the currently committed version (the one in `HEAD` before your new commit).
+2. Copy that committed file into `archived-versions/` using the filename pattern above.
+3. Make sure the new development copy (`yrSqliteViewer.html`) has the next intended version label.
+4. Update links/instructions in `README.md` if needed.
+5. Commit both:
+   - the new main `yrSqliteViewer.html`
+   - the new archived file in `archived-versions/`
+
+This keeps an easily downloadable history in the repository itself.
+
+# Current archived structure
+
+- Folder name: `archived-versions`
+- Example archived file already added:
+  - `archived-versions/yrSqliteViewer-v0.0.2.html`
+
+# Why this is required
+
+- Most students are non-technical and may not be able to run git commands.
+- If a breaking change is accidentally introduced, students can quickly download a prior version directly from GitHub.
+- Instructors can distribute a known-stable file with a specific versioned filename.
+
+# Suggested release checklist
+
+Before publishing a new version:
+
+1. Open and smoke test `yrSqliteViewer.html` in Chrome.
+2. Confirm key features still work:
+   - load database
+   - run SELECT query
+   - save session
+   - restore session
+3. Add prior committed version file to `archived-versions/`.
+4. Confirm README download links are correct.
+5. Commit and push.
+
+# User-facing download path
+
+Students can get archived files from:
+
+- Repo root: `https://github.com/y-rosenthal/yrSqliteViewer`
+- Folder: `archived-versions`
+
+Direct raw-file pattern:
+
+`https://github.com/y-rosenthal/yrSqliteViewer/raw/master/archived-versions/yrSqliteViewer-v<version>.html`

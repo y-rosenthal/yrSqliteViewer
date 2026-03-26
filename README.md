@@ -136,3 +136,18 @@ In the time since I first coded this, vibe coding has gotten a LOT better. Claud
 amazing (June 2025) and could possibly recreate this with a few prompts. However, I don't have time 
 now to focus on a new implementation. Simple changes could probably be done with the existing code base
 without too much difficulty. If you want to add a lot more functionality, I recommend possibly starting from scratch. 
+
+## Download older versions of yrSqliteViewer.html
+
+If you need an older version (for example if a newer version has a bug), use these steps:
+
+1. Go to the repo on GitHub: https://github.com/y-rosenthal/yrSqliteViewer
+2. Click the folder named **archived-versions**.
+3. Click the specific version file you want (for example **yrSqliteViewer-v0.0.2.html**).
+4. On that file page, click the **Raw** button.
+5. When the raw file opens in your browser, right-click and choose **Save As...** (or **Save Page As...**).
+6. Save the file to your computer, then double-click it to open it in your browser.
+
+Direct link to the current archived version:
+
+- https://github.com/y-rosenthal/yrSqliteViewer/raw/master/archived-versions/yrSqliteViewer-v0.0.2.html

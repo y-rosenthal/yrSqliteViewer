@@ -1,0 +1,118 @@
+---
+title: "yrSqliteViewer User Guide"
+subtitle: "For non-technical users"
+format: gfm
+---
+
+# What this tool is
+
+`yrSqliteViewer` is a single HTML file that lets you open and explore SQLite databases in a web browser.
+
+You do **not** need to install database software.
+
+# What you can do
+
+- Load a SQLite database file (`.sqlite` or `.db`)
+- View table names and columns
+- View table rows
+- Run SQL `SELECT` queries
+- Save your work as a session file (`.yrslv`)
+- Restore a saved session later
+
+# Files you may use
+
+- Main app: `yrSqliteViewer.html`
+- Optional sample database: `sampleDatabase-books-v025.sqlite`
+- Optional sample session: `yrSqliteViewerSession-sample.yrslv`
+
+# Quick start
+
+1. Download `yrSqliteViewer.html` from GitHub.
+2. Save the file to your computer.
+3. Double-click the file to open it in your web browser (Chrome recommended).
+4. Click **Load Database File** and choose your SQLite file.
+5. Use one or more SQL command boxes to type a `SELECT` query.
+6. Click **Run Query** for the box you used.
+
+# Common tasks
+
+## See all tables
+
+Use the interface section that shows database tables after loading your file.
+
+## View table data quickly
+
+Use buttons such as:
+
+- **Show Rows (for all tables)**
+- **Show Structure (for all tables)**
+
+## Run a query
+
+Type a query like:
+
+```sql
+select * from title where price < 20;
+```
+
+Then press **Run Query**.
+
+# Save and restore your work
+
+## Save session
+
+1. Click **Save Session**.
+2. Choose a filename.
+3. A `.yrslv` file is downloaded.
+
+This session file includes:
+
+- your loaded database
+- your SQL commands in the interface
+
+## Restore session
+
+1. Open `yrSqliteViewer.html` in your browser.
+2. Click **Restore Session**.
+3. Select your `.yrslv` file.
+
+Your database and SQL text boxes are restored.
+
+# Getting an older version if needed
+
+If a newer file has a problem, you can download an older one:
+
+1. Open the repository: `https://github.com/y-rosenthal/yrSqliteViewer`
+2. Open folder `archived-versions`
+3. Click the version file you want (example: `yrSqliteViewer-v0.0.2.html`)
+4. Click **Raw**
+5. Save the page/file to your computer
+6. Double-click it to run in your browser
+
+# Troubleshooting
+
+## The file opens as text, not as an app
+
+- Make sure the filename ends with `.html`
+- Re-download and use **Save As**
+
+## Query does not run
+
+- Check that your SQL is a `SELECT` statement
+- Verify table names and column names
+- Make sure a database is loaded first
+
+## Nothing happens after loading a large database
+
+- Wait a little longer; large files can take time
+- Start with a smaller database when learning
+
+# Current limitations
+
+- This tool is mainly for learning SQL basics.
+- It is designed for `SELECT`-style querying.
+- It is not intended to be a production database admin tool.
+
+# Recommended browser
+
+Chrome is recommended because it has been tested the most.
