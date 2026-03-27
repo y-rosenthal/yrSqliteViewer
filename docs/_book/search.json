@@ -86,397 +86,417 @@
     "section": "",
     "text": "3 Purpose\nThis guide documents how version files are maintained so students and instructors can always access prior working copies of yrSqliteViewer.html from GitHub without using git.\n\n\n4 Versioning approach\n\nThe main application file is yrSqliteViewer.html.\nThe visible version string in the UI should follow semantic style (for example 0.0.3).\nArchived copies are stored in archived-versions/.\nArchive filenames use this pattern:\n\nyrSqliteViewer-v&lt;version&gt;.html\nExample:\nyrSqliteViewer-v0.0.2.html\n\n\n5 Archive policy (important)\nWhen yrSqliteViewer.html changes and you are preparing a commit:\n\nDetermine the currently committed version (the one in HEAD before your new commit).\nCopy that committed file into archived-versions/ using the filename pattern above.\nMake sure the new development copy (yrSqliteViewer.html) has the next intended version label.\nUpdate links/instructions in README.md if needed.\nCommit both:\n\nthe new main yrSqliteViewer.html\nthe new archived file in archived-versions/\n\n\nThis keeps an easily downloadable history in the repository itself.\n\n\n6 Current archived structure\n\nFolder name: archived-versions\nExample archived file already added:\n\narchived-versions/yrSqliteViewer-v0.0.2.html\n\n\n\n\n7 Why this is required\n\nMost students are non-technical and may not be able to run git commands.\nIf a breaking change is accidentally introduced, students can quickly download a prior version directly from GitHub.\nInstructors can distribute a known-stable file with a specific versioned filename.\n\n\n\n8 Suggested release checklist\nBefore publishing a new version:\n\nOpen and smoke test yrSqliteViewer.html in Chrome.\nConfirm key features still work:\n\nload database\nrun SELECT query\nsave session\nrestore session\n\nAdd prior committed version file to archived-versions/.\nConfirm README download links are correct.\nCommit and push.\n\n\n\n9 User-facing download path\nStudents can get archived files from:\n\nRepo root: https://github.com/y-rosenthal/yrSqliteViewer\nFolder: archived-versions\n\nDirect raw-file pattern:\nhttps://github.com/y-rosenthal/yrSqliteViewer/raw/master/archived-versions/yrSqliteViewer-v&lt;version&gt;.html",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>yrSqliteViewer Developer Guide</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>DEVELOPER-GUIDE-0.0.3-v001.qmd</span>"
     ]
   },
   {
     "objectID": "USER-GUIDE-0.0.2-v001.html",
     "href": "USER-GUIDE-0.0.2-v001.html",
-    "title": "3  yrSqliteViewer User Guide",
+    "title": "3  USER-GUIDE-0.0.2-v001.qmd",
     "section": "",
     "text": "4 What this tool is\nyrSqliteViewer is a single HTML file that lets you open and explore SQLite databases in a web browser.\nYou do not need to install database software.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>USER-GUIDE-0.0.2-v001.qmd</span>"
     ]
   },
   {
     "objectID": "USER-GUIDE-0.0.2-v001.html#see-all-tables",
     "href": "USER-GUIDE-0.0.2-v001.html#see-all-tables",
-    "title": "3  yrSqliteViewer User Guide",
+    "title": "3  USER-GUIDE-0.0.2-v001.qmd",
     "section": "8.1 See all tables",
     "text": "8.1 See all tables\nUse the interface section that shows database tables after loading your file.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>USER-GUIDE-0.0.2-v001.qmd</span>"
     ]
   },
   {
     "objectID": "USER-GUIDE-0.0.2-v001.html#view-table-data-quickly",
     "href": "USER-GUIDE-0.0.2-v001.html#view-table-data-quickly",
-    "title": "3  yrSqliteViewer User Guide",
+    "title": "3  USER-GUIDE-0.0.2-v001.qmd",
     "section": "8.2 View table data quickly",
     "text": "8.2 View table data quickly\nUse buttons such as:\n\nShow Rows (for all tables)\nShow Structure (for all tables)",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>USER-GUIDE-0.0.2-v001.qmd</span>"
     ]
   },
   {
     "objectID": "USER-GUIDE-0.0.2-v001.html#run-a-query",
     "href": "USER-GUIDE-0.0.2-v001.html#run-a-query",
-    "title": "3  yrSqliteViewer User Guide",
+    "title": "3  USER-GUIDE-0.0.2-v001.qmd",
     "section": "8.3 Run a query",
     "text": "8.3 Run a query\nType a query like:\nselect * from title where price &lt; 20;\nThen press Run Query.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>USER-GUIDE-0.0.2-v001.qmd</span>"
     ]
   },
   {
     "objectID": "USER-GUIDE-0.0.2-v001.html#save-session",
     "href": "USER-GUIDE-0.0.2-v001.html#save-session",
-    "title": "3  yrSqliteViewer User Guide",
+    "title": "3  USER-GUIDE-0.0.2-v001.qmd",
     "section": "9.1 Save session",
     "text": "9.1 Save session\n\nClick Save Session.\nChoose a filename.\nA .yrslv file is downloaded.\n\nThis session file includes:\n\nyour loaded database\nyour SQL commands in the interface",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>USER-GUIDE-0.0.2-v001.qmd</span>"
     ]
   },
   {
     "objectID": "USER-GUIDE-0.0.2-v001.html#restore-session",
     "href": "USER-GUIDE-0.0.2-v001.html#restore-session",
-    "title": "3  yrSqliteViewer User Guide",
+    "title": "3  USER-GUIDE-0.0.2-v001.qmd",
     "section": "9.2 Restore session",
     "text": "9.2 Restore session\n\nOpen yrSqliteViewer.html in your browser.\nClick Restore Session.\nSelect your .yrslv file.\n\nYour database and SQL text boxes are restored.",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>USER-GUIDE-0.0.2-v001.qmd</span>"
     ]
   },
   {
     "objectID": "USER-GUIDE-0.0.2-v001.html#the-file-opens-as-text-not-as-an-app",
     "href": "USER-GUIDE-0.0.2-v001.html#the-file-opens-as-text-not-as-an-app",
-    "title": "3  yrSqliteViewer User Guide",
+    "title": "3  USER-GUIDE-0.0.2-v001.qmd",
     "section": "11.1 The file opens as text, not as an app",
     "text": "11.1 The file opens as text, not as an app\n\nMake sure the filename ends with .html\nRe-download and use Save As",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>USER-GUIDE-0.0.2-v001.qmd</span>"
     ]
   },
   {
     "objectID": "USER-GUIDE-0.0.2-v001.html#query-does-not-run",
     "href": "USER-GUIDE-0.0.2-v001.html#query-does-not-run",
-    "title": "3  yrSqliteViewer User Guide",
+    "title": "3  USER-GUIDE-0.0.2-v001.qmd",
     "section": "11.2 Query does not run",
     "text": "11.2 Query does not run\n\nCheck that your SQL is a SELECT statement\nVerify table names and column names\nMake sure a database is loaded first",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>USER-GUIDE-0.0.2-v001.qmd</span>"
     ]
   },
   {
     "objectID": "USER-GUIDE-0.0.2-v001.html#nothing-happens-after-loading-a-large-database",
     "href": "USER-GUIDE-0.0.2-v001.html#nothing-happens-after-loading-a-large-database",
-    "title": "3  yrSqliteViewer User Guide",
+    "title": "3  USER-GUIDE-0.0.2-v001.qmd",
     "section": "11.3 Nothing happens after loading a large database",
     "text": "11.3 Nothing happens after loading a large database\n\nWait a little longer; large files can take time\nStart with a smaller database when learning",
     "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>yrSqliteViewer User Guide</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>USER-GUIDE-0.0.2-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "",
     "text": "5 Document purpose\nThis document is a rebuild specification for the current yrSqliteViewer system.\nGoal: enable a modern AI coding workflow to recreate the existing product behavior as-is (including quirks), then evolve it safely.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#what-the-app-is",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#what-the-app-is",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "7.1 What the app is",
     "text": "7.1 What the app is\n\nA browser-based SQLite viewer/query runner.\nDesigned for non-technical teaching/learning use.\nOperates by loading a local SQLite file into an in-browser Python runtime (Pyodide).\nSupports saving and restoring sessions that bundle:\n\nSQLite DB file\nSQL query text/history\nStored query result snapshots",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#what-the-app-is-not",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#what-the-app-is-not",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "7.2 What the app is not",
     "text": "7.2 What the app is not\n\nNot a production-grade DB admin tool.\nNot a multi-user app.\nNot currently a full SQL editor with advanced object management.\nNot currently a true offline-first packaged app (depends on CDN assets in current implementation).",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#external-browser-dependencies-cdn",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#external-browser-dependencies-cdn",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "8.1 External browser dependencies (CDN)",
     "text": "8.1 External browser dependencies (CDN)\n\nPyodide v0.23.0\nJSZip 3.10.1\nFileSaver.js 2.0.5\nCodeMirror 5.65.2 core + SQL mode + eclipse theme",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#core-runtime-model",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#core-runtime-model",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "8.2 Core runtime model",
     "text": "8.2 Core runtime model\n\nUser selects .sqlite/.db file.\nFile is loaded into browser memory and written to Pyodide FS as database.sqlite.\nPython sqlite3 executes metadata queries and user SQL.\nResults are serialized to JSON and returned to JS for rendering.\nUI maintains query cards and output cards in DOM.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#state-variables-js",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#state-variables-js",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "8.3 State variables (JS)",
     "text": "8.3 State variables (JS)\n\npyodideInstance: singleton runtime, lazy-initialized.\nqueryHistory: array of query objects with query, timestamp, results.\nqueryInterfaceCount: current query card count tracker.\ncurrentDatabaseName: active DB filename.\ntableNames: table list from schema scan.\nisSessionSaved: dirty-state flag used by beforeunload.\neditors: map of CodeMirror instances keyed by sqlQuery&lt;id&gt;.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#high-level-flow",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#high-level-flow",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "8.4 High-level flow",
     "text": "8.4 High-level flow\nflowchart TD\n  appLoad[AppLoaded] --&gt; chooseDb[ChooseSQLiteFile]\n  chooseDb --&gt; initPyodide[InitPyodideIfNeeded]\n  initPyodide --&gt; writeFs[Writedatabase.sqlite]\n  writeFs --&gt; inspectSchema[ReadTablesAndColumns]\n  inspectSchema --&gt; renderTableCards[RenderTableCards]\n  renderTableCards --&gt; showDefaultStructure[ShowStructureForAllTables]\n  showDefaultStructure --&gt; queryWork[UserRunsQueries]\n  queryWork --&gt; saveSession[SaveSessionToYRSLV]\n  queryWork --&gt; restoreSession[RestoreSessionFromYRSLV]",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#global-page-layout",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#global-page-layout",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "9.1 Global page layout",
     "text": "9.1 Global page layout\nOrder from top to bottom:\n\nControl panel\nDatabase tables header + global table controls\nInitial no-file instructional message (hidden after DB load)\nLoading message area\nDynamic table cards area\nSQL commands header + global SQL font controls\nDynamic SQL command cards area",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#control-panel-contents",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#control-panel-contents",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "9.2 Control panel contents",
     "text": "9.2 Control panel contents\n\nTitle text: yrSqliteViewer (ver 0.0.3) (current working file).\nSmall instructions link to repository.\nLoad Database File pseudo-button (hidden file input label).\nSelected filename text (no file chosen yet by default).\nSave Session button.\nRestore Session pseudo-button (hidden file input label).\nClear Session button.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#database-tables-section",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#database-tables-section",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "9.3 Database tables section",
     "text": "9.3 Database tables section\nHeader: Database Tables.\nControls:\n\nShow Structure (for all tables)\nShow Rows (for all tables)\nGlobal font controls for table cards:\n\nA-, A+, numeric input (range clamped 0.5 to 3)\n\n\nDynamic content:\n\nOne card per table.\nEach card has:\n\nTable: &lt;name&gt;\ntable-local A-, A+\nShow Structure\nShow Rows\noutput region (&lt;tableName&gt;_info)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#sql-commands-section",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#sql-commands-section",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "9.4 SQL commands section",
     "text": "9.4 SQL commands section\nHeader: SQL Commands.\nControls:\n\nGlobal query interface font controls:\n\nA-, A+, numeric input (range clamped 0.5 to 3)\n\n\nDynamic content:\n\nStarts with one query card labeled SQL Command 1.\nEach query card has:\n\nlocal A-, A+\nCodeMirror SQL editor area\nRun Query button\noutput region\n\nAuto-growth behavior:\n\nAfter running a non-empty query in last card, app auto-adds a new blank query card.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#load-database-behavior",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#load-database-behavior",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "10.1 Load database behavior",
     "text": "10.1 Load database behavior\nTrigger:\n\nFile input event on sqliteFile.\n\nExpected behavior:\n\nIf no file selected:\n\nShow error in output area: Please select a file.\n\nHide no-file message, show loading message.\nIf not restoring:\n\nReset SQL card area to one fresh query card.\n\nInitialize Pyodide/sqlite3 if first run.\nWrite uploaded bytes to database.sqlite.\nQuery sqlite metadata:\n\nSELECT name FROM sqlite_master WHERE type='table';\nPRAGMA table_info(&lt;table&gt;)\n\nRender table cards and default each card to structure view.\nHide loading message.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#query-execution-behavior",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#query-execution-behavior",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "10.2 Query execution behavior",
     "text": "10.2 Query execution behavior\nTrigger:\n\nRun Query button on a card.\nKeyboard shortcut Ctrl-Enter or Cmd-Enter in CodeMirror.\n\nBehavior:\n\nIf Pyodide not initialized: return silently.\nRead SQL text from relevant CodeMirror editor.\nIf blank after trim: return silently.\nExecute query in Python:\n\ncursor.execute(\"\"\"&lt;query&gt;\"\"\")\ncolumns = [description[0] for description in cursor.description]\nrows = cursor.fetchall()\n\nRender HTML table output.\nUpdate or append matching queryHistory entry by card index.\nMark isSessionSaved = false.\nEnsure there is always one blank trailing query card.\n\nImportant current limitation:\n\nThe code assumes cursor.description exists.\nFor non-SELECT commands, cursor.description may be None, causing error output.\nThis is one reason current product effectively behaves as SELECT-oriented.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#table-structure-and-row-display",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#table-structure-and-row-display",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "10.3 Table structure and row display",
     "text": "10.3 Table structure and row display\n\n10.3.1 Structure\n\nshowTableStructure(tableName, columns) renders a two-column table:\n\nColumn\nType\n\n\n\n\n10.3.2 Rows\n\nshowTableData(tableName) executes:\n\nSELECT * FROM '&lt;tableName&gt;'\n\nRenders all rows in a scrollable HTML table.\nOn error, shows red error message in table info panel.\n\n\n\n10.3.3 Bulk operations\n\nshowAllTablesStructure() loops all table cards and reconstructs column metadata by parsing each structure button onclick string (string-parsing based; fragile but current behavior).\nshowAllTablesData() loops table cards and awaits row loading table-by-table.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#font-size-controls",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#font-size-controls",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "10.4 Font-size controls",
     "text": "10.4 Font-size controls\nImplemented at three levels:\n\nPer query editor wrapper\nPer table card\nGlobal for all table cards / all query cards\n\nCurrent clamp behavior:\n\nPer-card adjustments in adjustFontSize: 0.5 to 2 for specific target handling.\nGlobal setter/adjusters: typically 0.5 to 3.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#session-save-behavior-.yrslv",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#session-save-behavior-.yrslv",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "10.5 Session save behavior (.yrslv)",
     "text": "10.5 Session save behavior (.yrslv)\nTrigger:\n\nSave Session button.\n\nFlow:\n\nPrompt for base filename (default yrSqliteViewerSession).\nRebuild queryHistory from current editor contents:\n\nSaves non-empty query cards only.\nPreserves prior results when available.\n\nBuild JSON metadata file.\nBuild TXT summary file.\nRead current database.sqlite from Pyodide FS.\nZip JSON + TXT + DB into one .yrslv.\nDownload with FileSaver.\nMark session saved.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#session-restore-behavior-.yrslv",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#session-restore-behavior-.yrslv",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "10.6 Session restore behavior (.yrslv)",
     "text": "10.6 Session restore behavior (.yrslv)\nTrigger:\n\nRestore Session file input change.\n\nFlow:\n\nRead archive with JSZip.\nLocate .json entry.\nParse and validate:\n\njsonFormatVersion must equal \"0.1\".\n\nExtract DB by databaseName.\nWrite DB into Pyodide FS.\nLoad database via loadDatabase(file, true) (restore mode).\nRecreate query cards from session queries.\nRe-hydrate editor text and stored results tables.\nAdd one extra blank query card at end.\nReset restore input value for reselecting same file.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#clear-session-behavior",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#clear-session-behavior",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "10.7 Clear session behavior",
     "text": "10.7 Clear session behavior\nTrigger:\n\nClear Session button.\n\nFlow:\n\nConfirmation dialog.\nReset in-memory state.\nClear table list.\nReset to one query card.\nReset selected filename label.\nRe-show initial no-file instructional message.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#unsaved-change-warning",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#unsaved-change-warning",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "10.8 Unsaved-change warning",
     "text": "10.8 Unsaved-change warning\n\nwindow.onbeforeunload prompts user if:\n\nqueryHistory.length &gt; 0\nand isSessionSaved === false",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#container",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#container",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "11.1 Container",
     "text": "11.1 Container\n\nExtension: .yrslv\nActual format: ZIP archive",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#required-archive-members",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#required-archive-members",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "11.2 Required archive members",
     "text": "11.2 Required archive members\n\nOne JSON metadata file (name usually &lt;baseFilename&gt;.json)\nOne TXT summary file (name usually &lt;baseFilename&gt;.txt)\nOne SQLite file (name equals databaseName)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#json-schema-current",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#json-schema-current",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "11.3 JSON schema (current)",
     "text": "11.3 JSON schema (current)\n{\n  \"jsonFormatVersion\": \"0.1\",\n  \"yrSqliteViewerVersion\": \"0.1\",\n  \"databaseName\": \"sampleDatabase-books-v025.sqlite\",\n  \"queries\": [\n    {\n      \"query\": \"select ...\",\n      \"timestamp\": \"2025-06-26T15:53:40.968Z\",\n      \"results\": {\n        \"columns\": [\"colA\", \"colB\"],\n        \"rows\": [[\"v1\", \"v2\"]]\n      }\n    }\n  ]\n}\nNotes:\n\nyrSqliteViewerVersion in saved JSON is currently hardcoded to \"0.1\" and does not match displayed UI version.\nresults may be null for query text never executed before save.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
+    ]
+  },
+  {
+    "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#screenshots-currently-available",
+    "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#screenshots-currently-available",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
+    "section": "14.1 Screenshots currently available",
+    "text": "14.1 Screenshots currently available\nThe following screenshots are currently available from this documentation workflow (not the app behavior walkthrough):\n\n14.1.1 README included in docs landing page\n\n\n\n14.1.2 Earlier broken README link behavior (for historical context)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
+    ]
+  },
+  {
+    "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#todo-capture-runbook-for-remaining-app-screenshots",
+    "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#todo-capture-runbook-for-remaining-app-screenshots",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
+    "section": "14.2 TODO capture runbook for remaining app screenshots",
+    "text": "14.2 TODO capture runbook for remaining app screenshots\nThe screenshots below still need to be captured from yrSqliteViewer.html. Use this exact runbook to keep captures reproducible.\n\n14.2.1 01-initial-no-db.png\n\nOpen yrSqliteViewer.html in Chrome.\nDo not load any file.\nEnsure the instructional no-file message is visible.\nCapture full-page screenshot.\nSave as _doc-assets/spec-refactor-same-functionality-0.0.4-v001/01-initial-no-db.png.\n\n\n\n14.2.2 02-db-loaded-table-cards.png\n\nClick Load Database File.\nSelect sampleDatabase-books-v025.sqlite.\nWait for loading indicator to disappear.\nConfirm table cards are visible.\nCapture screenshot and save as 02-db-loaded-table-cards.png.\n\n\n\n14.2.3 03-table-structure.png\n\nStarting from loaded DB state.\nIn one table card, click Show Structure.\nEnsure the Column / Type structure table is visible.\nCapture screenshot and save as 03-table-structure.png.\n\n\n\n14.2.4 04-table-rows.png\n\nStarting from loaded DB state.\nIn one table card, click Show Rows.\nEnsure row data grid is visible in that table card.\nCapture screenshot and save as 04-table-rows.png.\n\n\n\n14.2.5 05-multi-query-output.png\n\nIn SQL Command 1, enter:\n\nselect * from titles limit 5;\n\nClick Run Query.\nIn the next SQL command card, enter:\n\nselect pub_name, city from publishers;\n\nClick Run Query.\nEnsure at least two query outputs are visible at once.\nCapture screenshot and save as 05-multi-query-output.png.\n\n\n\n14.2.6 06-save-session.png (optional if save dialog capture is OS-restricted)\n\nClick Save Session.\nEnter filename spec-save-check and confirm.\nIf OS blocks dialog capture, capture immediately after save with button state/context.\nSave as 06-save-session.png.\n\n\n\n14.2.7 07-restore-session.png\n\nClick Restore Session.\nSelect yrSqliteViewerSession-sample.yrslv.\nWait until SQL cards and outputs are restored.\nConfirm multiple restored SQL commands are visible.\nCapture screenshot and save as 07-restore-session.png.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#functional-smoke-tests",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#functional-smoke-tests",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "15.1 Functional smoke tests",
     "text": "15.1 Functional smoke tests\n\nLoad sampleDatabase-books-v025.sqlite.\nConfirm table list appears.\nConfirm “Show Structure (for all tables)” renders all structure sections.\nConfirm “Show Rows (for all tables)” renders all row tables.\nRun at least 3 SELECT queries in different cards.\nConfirm automatic blank next SQL card appears.\nSave session as .yrslv.\nReload app and restore session.\nConfirm query text and prior results are restored.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#compatibility-tests",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#compatibility-tests",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "15.2 Compatibility tests",
     "text": "15.2 Compatibility tests\n\nChrome latest (primary target, existing recommendation).\nAt least one other Chromium-based browser.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#data-fidelity-tests",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#data-fidelity-tests",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "15.3 Data fidelity tests",
     "text": "15.3 Data fidelity tests\n\nCompare row/column counts for representative tables between original and rebuilt app.\nValidate restored session JSON schema and content fields.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#m1-full-sqlite-command-support",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#m1-full-sqlite-command-support",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "16.1 M1: Full SQLite command support",
     "text": "16.1 M1: Full SQLite command support\n\n16.1.1 Goal\nSupport full SQLite command set (DDL, DML, PRAGMA, transaction control), not only SELECT-style outputs.\n\n\n16.1.2 Requirements\n\nExecute commands like:\n\nCREATE TABLE\nINSERT/UPDATE/DELETE\nALTER TABLE\nDROP\nPRAGMA\ntransaction commands\n\nFor non-result commands, display structured success metadata:\n\nrows affected\nlast insert rowid (if available)\nexecution time\n\nAllow multi-statement execution with clear per-statement status/output blocks.\nAdd safe-guard mode option for teaching:\n\nread-only mode toggle\nconfirm destructive statements",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#m2-tabbed-collections-of-sql-command-windows",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#m2-tabbed-collections-of-sql-command-windows",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "16.2 M2: Tabbed collections of SQL command windows",
     "text": "16.2 M2: Tabbed collections of SQL command windows\n\n16.2.1 Goal\nAllow grouping SQL command cards into named tab collections; support multiple collections.\n\n\n16.2.2 Requirements\n\nIntroduce “workspace tabs” (collection-level tabs).\nEach collection contains multiple SQL command cards.\nUser can:\n\ncreate/delete/rename collection tabs\nreorder collections\nduplicate collection\nmove SQL cards between collections\n\nSession format must persist full tab/collection structure.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#m3-expandcollapse-for-teaching-visibility-control",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#m3-expandcollapse-for-teaching-visibility-control",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "16.3 M3: Expand/collapse for teaching visibility control",
     "text": "16.3 M3: Expand/collapse for teaching visibility control\n\n16.3.1 Goal\nEnable quick focus while preserving ability to view many outputs at once.\n\n\n16.3.2 Requirements\n\nTable area:\n\nEach table card must have collapse/expand for output panel.\nGlobal expand/collapse all for table outputs.\n\nSQL area:\n\nEach SQL card must have independent collapse/expand for:\n\nquery editor panel\noutput panel\n\nGlobal controls for expand/collapse all SQL editors and outputs.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#m4-mermaid-er-diagrams-in-sessions",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#m4-mermaid-er-diagrams-in-sessions",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "16.4 M4: Mermaid ER diagrams in sessions",
     "text": "16.4 M4: Mermaid ER diagrams in sessions\n\n16.4.1 Goal\nAllow saving/rendering ER diagrams as Mermaid text with session portability.\n\n\n16.4.2 Requirements\n\nAdd Mermaid editor panel(s) in UI.\nSupport rendering Mermaid diagrams inline.\nPersist diagrams in session archive JSON.\nRestore diagrams exactly on session load.\nInclude export options:\n\nMermaid source text\nrendered image (optional future enhancement)",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   },
   {
     "objectID": "SPEC-refactor-same-functionality-0.0.4-v001.html#m5-multi-target-architecture-next.js-offline-options",
     "href": "SPEC-refactor-same-functionality-0.0.4-v001.html#m5-multi-target-architecture-next.js-offline-options",
-    "title": "4  SPEC: Refactor With Same Functionality",
+    "title": "4  SPEC-refactor-same-functionality-0.0.4-v001.qmd",
     "section": "16.5 M5: Multi-target architecture (Next.js + offline options)",
     "text": "16.5 M5: Multi-target architecture (Next.js + offline options)\n\n16.5.1 Goal\nBuild a modern app architecture that supports:\n\nNext.js connected mode\nDisconnected desktop app (Electron or similar) for macOS + Windows\nOptional pure .html mode (possibly SELECT-only)\n\n\n\n16.5.2 Requirements\n\nDefine shared core domain package:\n\nSQL execution abstraction\nsession schema\nquery history model\ntable metadata model\n\nEnsure cross-target session compatibility:\n\nsame session format family\nforward/backward compatibility strategy\n\nConnected mode can add online-only features later without breaking offline core.\nDesktop app must function fully disconnected.\nPure HTML mode may have constrained feature set (acceptable).\n\n\n\n16.5.3 Suggested target architecture\nflowchart LR\n  sharedCore[SharedCoreDomain] --&gt; nextApp[NextJsApp]\n  sharedCore --&gt; desktopApp[ElectronDesktopApp]\n  sharedCore --&gt; htmlLite[StandaloneHtmlLite]\n  nextApp --&gt; sessionFmt[SharedSessionFormat]\n  desktopApp --&gt; sessionFmt\n  htmlLite --&gt; sessionFmt",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC: Refactor With Same Functionality</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>SPEC-refactor-same-functionality-0.0.4-v001.qmd</span>"
     ]
   }
 ]

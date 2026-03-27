@@ -1,5 +1,5 @@
 ---
-title: "SPEC: Refactor With Same Functionality"
+title: "SPEC-refactor-same-functionality-0.0.4-v001.qmd"
 subtitle: "yrSqliteViewer 0.0.4 - v001"
 format: html
 toc: true
@@ -363,7 +363,7 @@ If screenshots are available, include at minimum these states in future revision
 6. Save session prompt and downloaded file confirmation.
 7. Restored session showing previously saved queries and outputs.
 
-Suggested filenames under `docs/images/spec-current/`:
+Suggested filenames under `docs/_doc-assets/spec-refactor-same-functionality-0.0.4-v001/`:
 
 - `01-initial-no-db.png`
 - `02-db-loaded-table-cards.png`
@@ -372,6 +372,83 @@ Suggested filenames under `docs/images/spec-current/`:
 - `05-multi-query-output.png`
 - `06-save-session.png`
 - `07-restore-session.png`
+
+Embed images in this spec using relative paths, for example:
+
+`![](_doc-assets/spec-refactor-same-functionality-0.0.4-v001/01-initial-no-db.png)`
+
+## Screenshots currently available
+
+The following screenshots are currently available from this documentation workflow (not the app behavior walkthrough):
+
+### README included in docs landing page
+
+![](_doc-assets/spec-refactor-same-functionality-0.0.4-v001/90-docs-readme-included.png)
+
+### Earlier broken README link behavior (for historical context)
+
+![](_doc-assets/spec-refactor-same-functionality-0.0.4-v001/91-docs-readme-link-broken-example.png)
+
+## TODO capture runbook for remaining app screenshots
+
+The screenshots below still need to be captured from `yrSqliteViewer.html`.
+Use this exact runbook to keep captures reproducible.
+
+### `01-initial-no-db.png`
+
+1. Open `yrSqliteViewer.html` in Chrome.
+2. Do not load any file.
+3. Ensure the instructional no-file message is visible.
+4. Capture full-page screenshot.
+5. Save as `_doc-assets/spec-refactor-same-functionality-0.0.4-v001/01-initial-no-db.png`.
+
+### `02-db-loaded-table-cards.png`
+
+1. Click **Load Database File**.
+2. Select `sampleDatabase-books-v025.sqlite`.
+3. Wait for loading indicator to disappear.
+4. Confirm table cards are visible.
+5. Capture screenshot and save as `02-db-loaded-table-cards.png`.
+
+### `03-table-structure.png`
+
+1. Starting from loaded DB state.
+2. In one table card, click **Show Structure**.
+3. Ensure the `Column` / `Type` structure table is visible.
+4. Capture screenshot and save as `03-table-structure.png`.
+
+### `04-table-rows.png`
+
+1. Starting from loaded DB state.
+2. In one table card, click **Show Rows**.
+3. Ensure row data grid is visible in that table card.
+4. Capture screenshot and save as `04-table-rows.png`.
+
+### `05-multi-query-output.png`
+
+1. In `SQL Command 1`, enter:
+   - `select * from titles limit 5;`
+2. Click **Run Query**.
+3. In the next SQL command card, enter:
+   - `select pub_name, city from publishers;`
+4. Click **Run Query**.
+5. Ensure at least two query outputs are visible at once.
+6. Capture screenshot and save as `05-multi-query-output.png`.
+
+### `06-save-session.png` (optional if save dialog capture is OS-restricted)
+
+1. Click **Save Session**.
+2. Enter filename `spec-save-check` and confirm.
+3. If OS blocks dialog capture, capture immediately after save with button state/context.
+4. Save as `06-save-session.png`.
+
+### `07-restore-session.png`
+
+1. Click **Restore Session**.
+2. Select `yrSqliteViewerSession-sample.yrslv`.
+3. Wait until SQL cards and outputs are restored.
+4. Confirm multiple restored SQL commands are visible.
+5. Capture screenshot and save as `07-restore-session.png`.
 
 # Acceptance test checklist for "same functionality" rebuild
 

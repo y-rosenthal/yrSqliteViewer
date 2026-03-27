@@ -1,6 +1,5 @@
 ---
-title: "yrSqliteViewer User Guide"
-subtitle: "For non-technical users"
+title: "USER-GUIDE-0.0.2-v001.qmd"
 format: gfm
 ---
 

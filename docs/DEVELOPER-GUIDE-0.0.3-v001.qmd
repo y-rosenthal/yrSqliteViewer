@@ -1,6 +1,5 @@
 ---
-title: "yrSqliteViewer Developer Guide"
-subtitle: "Version 0.0.3 - v001"
+title: "DEVELOPER-GUIDE-0.0.3-v001.qmd"
 format: gfm
 ---
 
@@ -71,3 +70,31 @@ Students can get archived files from:
 Direct raw-file pattern:
 
 `https://github.com/y-rosenthal/yrSqliteViewer/raw/master/archived-versions/yrSqliteViewer-v<version>.html`
+
+# Documentation asset convention
+
+To keep documentation maintainable, each `.qmd` file should own its assets in a folder with the same basename.
+
+Directory convention:
+
+`docs/_doc-assets/<qmd-basename>/`
+
+Examples:
+
+- `docs/_doc-assets/spec-refactor-same-functionality-0.0.4-v001/`
+- `docs/_doc-assets/user-guide-0.0.2-v001/`
+
+Asset naming convention (suggested):
+
+- Prefix with two-digit order and short description.
+- Use lowercase kebab-case names.
+
+Examples:
+
+- `01-initial-no-db.png`
+- `02-db-loaded-table-cards.png`
+
+Authoring rule:
+
+- In a `.qmd` file, reference assets with relative paths, for example:
+  - `![](_doc-assets/spec-refactor-same-functionality-0.0.4-v001/01-initial-no-db.png)`

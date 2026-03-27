@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; SPEC: Refactor With Same Functionality – yrSqliteViewer Documentation</title>
+<title>4&nbsp; SPEC-refactor-same-functionality-0.0.4-v001.qmd – yrSqliteViewer Documentation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./SPEC-refactor-same-functionality-0.0.4-v001.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SPEC: Refactor With Same Functionality</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./SPEC-refactor-same-functionality-0.0.4-v001.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SPEC-refactor-same-functionality-0.0.4-v001.qmd</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -144,25 +144,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">README</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">../README.md</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./DEVELOPER-GUIDE-0.0.3-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">yrSqliteViewer Developer Guide</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">DEVELOPER-GUIDE-0.0.3-v001.qmd</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./USER-GUIDE-0.0.2-v001.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">yrSqliteViewer User Guide</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">USER-GUIDE-0.0.2-v001.qmd</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./SPEC-refactor-same-functionality-0.0.4-v001.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SPEC: Refactor With Same Functionality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SPEC-refactor-same-functionality-0.0.4-v001.qmd</span></span></a>
   </div>
 </li>
     </ul>
@@ -220,7 +220,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#rebuild-fidelity-requirements-must-preserve-for-same-functionality" id="toc-rebuild-fidelity-requirements-must-preserve-for-same-functionality" class="nav-link" data-scroll-target="#rebuild-fidelity-requirements-must-preserve-for-same-functionality"><span class="header-section-number">12</span> Rebuild fidelity requirements (must preserve for “same functionality”)</a></li>
   <li><a href="#current-known-quirks-and-technical-debt-preserve-or-explicitly-fix" id="toc-current-known-quirks-and-technical-debt-preserve-or-explicitly-fix" class="nav-link" data-scroll-target="#current-known-quirks-and-technical-debt-preserve-or-explicitly-fix"><span class="header-section-number">13</span> Current known quirks and technical debt (preserve or explicitly fix)</a></li>
-  <li><a href="#screenshot-plan-and-placeholders" id="toc-screenshot-plan-and-placeholders" class="nav-link" data-scroll-target="#screenshot-plan-and-placeholders"><span class="header-section-number">14</span> Screenshot plan and placeholders</a></li>
+  <li><a href="#screenshot-plan-and-placeholders" id="toc-screenshot-plan-and-placeholders" class="nav-link" data-scroll-target="#screenshot-plan-and-placeholders"><span class="header-section-number">14</span> Screenshot plan and placeholders</a>
+  <ul class="collapse">
+  <li><a href="#screenshots-currently-available" id="toc-screenshots-currently-available" class="nav-link" data-scroll-target="#screenshots-currently-available"><span class="header-section-number">14.1</span> Screenshots currently available</a>
+  <ul class="collapse">
+  <li><a href="#readme-included-in-docs-landing-page" id="toc-readme-included-in-docs-landing-page" class="nav-link" data-scroll-target="#readme-included-in-docs-landing-page"><span class="header-section-number">14.1.1</span> README included in docs landing page</a></li>
+  <li><a href="#earlier-broken-readme-link-behavior-for-historical-context" id="toc-earlier-broken-readme-link-behavior-for-historical-context" class="nav-link" data-scroll-target="#earlier-broken-readme-link-behavior-for-historical-context"><span class="header-section-number">14.1.2</span> Earlier broken README link behavior (for historical context)</a></li>
+  </ul></li>
+  <li><a href="#todo-capture-runbook-for-remaining-app-screenshots" id="toc-todo-capture-runbook-for-remaining-app-screenshots" class="nav-link" data-scroll-target="#todo-capture-runbook-for-remaining-app-screenshots"><span class="header-section-number">14.2</span> TODO capture runbook for remaining app screenshots</a>
+  <ul class="collapse">
+  <li><a href="#initial-no-db.png" id="toc-initial-no-db.png" class="nav-link" data-scroll-target="#initial-no-db.png"><span class="header-section-number">14.2.1</span> <code>01-initial-no-db.png</code></a></li>
+  <li><a href="#db-loaded-table-cards.png" id="toc-db-loaded-table-cards.png" class="nav-link" data-scroll-target="#db-loaded-table-cards.png"><span class="header-section-number">14.2.2</span> <code>02-db-loaded-table-cards.png</code></a></li>
+  <li><a href="#table-structure.png" id="toc-table-structure.png" class="nav-link" data-scroll-target="#table-structure.png"><span class="header-section-number">14.2.3</span> <code>03-table-structure.png</code></a></li>
+  <li><a href="#table-rows.png" id="toc-table-rows.png" class="nav-link" data-scroll-target="#table-rows.png"><span class="header-section-number">14.2.4</span> <code>04-table-rows.png</code></a></li>
+  <li><a href="#multi-query-output.png" id="toc-multi-query-output.png" class="nav-link" data-scroll-target="#multi-query-output.png"><span class="header-section-number">14.2.5</span> <code>05-multi-query-output.png</code></a></li>
+  <li><a href="#save-session.png-optional-if-save-dialog-capture-is-os-restricted" id="toc-save-session.png-optional-if-save-dialog-capture-is-os-restricted" class="nav-link" data-scroll-target="#save-session.png-optional-if-save-dialog-capture-is-os-restricted"><span class="header-section-number">14.2.6</span> <code>06-save-session.png</code> (optional if save dialog capture is OS-restricted)</a></li>
+  <li><a href="#restore-session.png" id="toc-restore-session.png" class="nav-link" data-scroll-target="#restore-session.png"><span class="header-section-number">14.2.7</span> <code>07-restore-session.png</code></a></li>
+  </ul></li>
+  </ul></li>
   <li><a href="#acceptance-test-checklist-for-same-functionality-rebuild" id="toc-acceptance-test-checklist-for-same-functionality-rebuild" class="nav-link" data-scroll-target="#acceptance-test-checklist-for-same-functionality-rebuild"><span class="header-section-number">15</span> Acceptance test checklist for “same functionality” rebuild</a>
   <ul class="collapse">
   <li><a href="#functional-smoke-tests" id="toc-functional-smoke-tests" class="nav-link" data-scroll-target="#functional-smoke-tests"><span class="header-section-number">15.1</span> Functional smoke tests</a></li>
@@ -266,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SPEC: Refactor With Same Functionality</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">SPEC-refactor-same-functionality-0.0.4-v001.qmd</span></h1>
 <p class="subtitle lead">yrSqliteViewer 0.0.4 - v001</p>
 </div>
 
@@ -711,7 +728,7 @@ Goal: enable a modern AI coding workflow to recreate the existing product behavi
 <li>Save session prompt and downloaded file confirmation.</li>
 <li>Restored session showing previously saved queries and outputs.</li>
 </ol>
-<p>Suggested filenames under <code>docs/images/spec-current/</code>:</p>
+<p>Suggested filenames under <code>docs/_doc-assets/spec-refactor-same-functionality-0.0.4-v001/</code>:</p>
 <ul>
 <li><code>01-initial-no-db.png</code></li>
 <li><code>02-db-loaded-table-cards.png</code></li>
@@ -721,6 +738,98 @@ Goal: enable a modern AI coding workflow to recreate the existing product behavi
 <li><code>06-save-session.png</code></li>
 <li><code>07-restore-session.png</code></li>
 </ul>
+<p>Embed images in this spec using relative paths, for example:</p>
+<p><code>![](_doc-assets/spec-refactor-same-functionality-0.0.4-v001/01-initial-no-db.png)</code></p>
+<section id="screenshots-currently-available" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="screenshots-currently-available"><span class="header-section-number">14.1</span> Screenshots currently available</h2>
+<p>The following screenshots are currently available from this documentation workflow (not the app behavior walkthrough):</p>
+<section id="readme-included-in-docs-landing-page" class="level3" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="readme-included-in-docs-landing-page"><span class="header-section-number">14.1.1</span> README included in docs landing page</h3>
+<p><img src="_doc-assets/spec-refactor-same-functionality-0.0.4-v001/90-docs-readme-included.png" class="img-fluid"></p>
+</section>
+<section id="earlier-broken-readme-link-behavior-for-historical-context" class="level3" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="earlier-broken-readme-link-behavior-for-historical-context"><span class="header-section-number">14.1.2</span> Earlier broken README link behavior (for historical context)</h3>
+<p><img src="_doc-assets/spec-refactor-same-functionality-0.0.4-v001/91-docs-readme-link-broken-example.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="todo-capture-runbook-for-remaining-app-screenshots" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="todo-capture-runbook-for-remaining-app-screenshots"><span class="header-section-number">14.2</span> TODO capture runbook for remaining app screenshots</h2>
+<p>The screenshots below still need to be captured from <code>yrSqliteViewer.html</code>. Use this exact runbook to keep captures reproducible.</p>
+<section id="initial-no-db.png" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="initial-no-db.png"><span class="header-section-number">14.2.1</span> <code>01-initial-no-db.png</code></h3>
+<ol type="1">
+<li>Open <code>yrSqliteViewer.html</code> in Chrome.</li>
+<li>Do not load any file.</li>
+<li>Ensure the instructional no-file message is visible.</li>
+<li>Capture full-page screenshot.</li>
+<li>Save as <code>_doc-assets/spec-refactor-same-functionality-0.0.4-v001/01-initial-no-db.png</code>.</li>
+</ol>
+</section>
+<section id="db-loaded-table-cards.png" class="level3" data-number="14.2.2">
+<h3 data-number="14.2.2" class="anchored" data-anchor-id="db-loaded-table-cards.png"><span class="header-section-number">14.2.2</span> <code>02-db-loaded-table-cards.png</code></h3>
+<ol type="1">
+<li>Click <strong>Load Database File</strong>.</li>
+<li>Select <code>sampleDatabase-books-v025.sqlite</code>.</li>
+<li>Wait for loading indicator to disappear.</li>
+<li>Confirm table cards are visible.</li>
+<li>Capture screenshot and save as <code>02-db-loaded-table-cards.png</code>.</li>
+</ol>
+</section>
+<section id="table-structure.png" class="level3" data-number="14.2.3">
+<h3 data-number="14.2.3" class="anchored" data-anchor-id="table-structure.png"><span class="header-section-number">14.2.3</span> <code>03-table-structure.png</code></h3>
+<ol type="1">
+<li>Starting from loaded DB state.</li>
+<li>In one table card, click <strong>Show Structure</strong>.</li>
+<li>Ensure the <code>Column</code> / <code>Type</code> structure table is visible.</li>
+<li>Capture screenshot and save as <code>03-table-structure.png</code>.</li>
+</ol>
+</section>
+<section id="table-rows.png" class="level3" data-number="14.2.4">
+<h3 data-number="14.2.4" class="anchored" data-anchor-id="table-rows.png"><span class="header-section-number">14.2.4</span> <code>04-table-rows.png</code></h3>
+<ol type="1">
+<li>Starting from loaded DB state.</li>
+<li>In one table card, click <strong>Show Rows</strong>.</li>
+<li>Ensure row data grid is visible in that table card.</li>
+<li>Capture screenshot and save as <code>04-table-rows.png</code>.</li>
+</ol>
+</section>
+<section id="multi-query-output.png" class="level3" data-number="14.2.5">
+<h3 data-number="14.2.5" class="anchored" data-anchor-id="multi-query-output.png"><span class="header-section-number">14.2.5</span> <code>05-multi-query-output.png</code></h3>
+<ol type="1">
+<li>In <code>SQL Command 1</code>, enter:
+<ul>
+<li><code>select * from titles limit 5;</code></li>
+</ul></li>
+<li>Click <strong>Run Query</strong>.</li>
+<li>In the next SQL command card, enter:
+<ul>
+<li><code>select pub_name, city from publishers;</code></li>
+</ul></li>
+<li>Click <strong>Run Query</strong>.</li>
+<li>Ensure at least two query outputs are visible at once.</li>
+<li>Capture screenshot and save as <code>05-multi-query-output.png</code>.</li>
+</ol>
+</section>
+<section id="save-session.png-optional-if-save-dialog-capture-is-os-restricted" class="level3" data-number="14.2.6">
+<h3 data-number="14.2.6" class="anchored" data-anchor-id="save-session.png-optional-if-save-dialog-capture-is-os-restricted"><span class="header-section-number">14.2.6</span> <code>06-save-session.png</code> (optional if save dialog capture is OS-restricted)</h3>
+<ol type="1">
+<li>Click <strong>Save Session</strong>.</li>
+<li>Enter filename <code>spec-save-check</code> and confirm.</li>
+<li>If OS blocks dialog capture, capture immediately after save with button state/context.</li>
+<li>Save as <code>06-save-session.png</code>.</li>
+</ol>
+</section>
+<section id="restore-session.png" class="level3" data-number="14.2.7">
+<h3 data-number="14.2.7" class="anchored" data-anchor-id="restore-session.png"><span class="header-section-number">14.2.7</span> <code>07-restore-session.png</code></h3>
+<ol type="1">
+<li>Click <strong>Restore Session</strong>.</li>
+<li>Select <code>yrSqliteViewerSession-sample.yrslv</code>.</li>
+<li>Wait until SQL cards and outputs are restored.</li>
+<li>Confirm multiple restored SQL commands are visible.</li>
+<li>Capture screenshot and save as <code>07-restore-session.png</code>.</li>
+</ol>
+</section>
+</section>
 </section>
 <section id="acceptance-test-checklist-for-same-functionality-rebuild" class="level1" data-number="15">
 <h1 data-number="15"><span class="header-section-number">15</span> Acceptance test checklist for “same functionality” rebuild</h1>
@@ -1332,8 +1441,8 @@ Goal: enable a modern AI coding workflow to recreate the existing product behavi
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./USER-GUIDE-0.0.2-v001.html" class="pagination-link" aria-label="yrSqliteViewer User Guide">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">yrSqliteViewer User Guide</span></span>
+      <a href="./USER-GUIDE-0.0.2-v001.html" class="pagination-link" aria-label="USER-GUIDE-0.0.2-v001.qmd">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">USER-GUIDE-0.0.2-v001.qmd</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
